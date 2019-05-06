@@ -24,5 +24,5 @@ void main()
 	vec3 lightDirectionWS = normalize(-light);
 	float product = dot(lightDirectionWS, inNormal);
 	
-	Light.xyzw = vec4(product, product, product, 1.0f);
+	Light.xyzw = vec4(product, product, product, 1);
 }

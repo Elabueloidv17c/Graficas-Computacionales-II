@@ -75,7 +75,7 @@ void CDeviceContext::UpdateProjectionMatrix(CConstantBuffer& constantBuffer, CCa
 	m_pointer->UpdateSubresource(constantBuffer.m_Buffer, 0, NULL, &XMMatrixTranspose(projection), 0, 0);
 }
 
-void CDeviceContext::UpdateWorldMatrix(CConstantBuffer& constantBuffer, CMesh& mesh, unsigned int index)
+void CDeviceContext::UpdateModelMatrix(CConstantBuffer& constantBuffer, CMesh& mesh, unsigned int index)
 {
 	XMMATRIX model = XMMATRIX(&mesh.m_transforms[index][0][0]);
 	m_pointer->UpdateSubresource(constantBuffer.m_Buffer, 0, NULL, &XMMatrixTranspose(model), 0, 0);
@@ -83,12 +83,12 @@ void CDeviceContext::UpdateWorldMatrix(CConstantBuffer& constantBuffer, CMesh& m
 
 void CDeviceContext::UpdateMeshColor(CConstantBuffer& constantBuffer, CMesh& mesh)
 {
-	m_pointer->UpdateSubresource(constantBuffer.m_Buffer, 0, NULL, &mesh.m_color, 0, 0);
+	m_pointer->UpdateSubresource(constantBuffer.m_Buffer, 0, NULL, &mesh.m_colorData, 0, 0);
 }
 
-void CDeviceContext::UpdateLighting(CConstantBuffer& constantBuffer, Vector& direction)
+void CDeviceContext::UpdateLighting(CConstantBuffer& constantBuffer, LightingData& data)
 {
-	m_pointer->UpdateSubresource(constantBuffer.m_Buffer, 0, NULL, &direction, 0, 0);
+	m_pointer->UpdateSubresource(constantBuffer.m_Buffer, 0, NULL, &data, 0, 0);
 }
 
 void CDeviceContext::SetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY topology)

@@ -285,7 +285,7 @@ void CModel::Render(CDeviceContext& deviceContext, CShaderProgram& shaderProgram
 
 	for (int i = 0; i < m_meshes.size(); i++)
 	{
-		deviceContext.UpdateMeshColor(shaderProgram.m_colorCB, m_meshes[i]);
+		deviceContext.UpdateMeshColor(shaderProgram.m_colorDataCB, m_meshes[i]);
 		deviceContext.SetMesh(m_meshes[i]);
 
 		for (int j = 0; j < m_meshes[i].m_transforms.size(); j++)
@@ -306,7 +306,7 @@ void CModel::Render(CDeviceContext& deviceContext, CShaderProgram& shaderProgram
 				}
 			}
 
-			deviceContext.UpdateWorldMatrix(shaderProgram.m_worldCB, m_meshes[i], j);
+			deviceContext.UpdateModelMatrix(shaderProgram.m_modelCB, m_meshes[i], j);
 		}
 
 		deviceContext.Draw(m_meshes[i].m_numIndices);

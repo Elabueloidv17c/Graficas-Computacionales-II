@@ -11,7 +11,7 @@ public:
 	bool										m_isRotating;
 	bool										m_isParty;
 	float										m_scale;
-	Color										m_color;
+	ColorData									m_colorData;
 	std::vector <MATRIX4>						m_transforms;
 
 	CVertexBuffer								m_vertexBuffer;

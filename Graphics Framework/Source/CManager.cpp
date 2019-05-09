@@ -3,12 +3,15 @@
 CManager::CManager()
 {
 	m_time = 0;
-	m_lighting.directional = Vector{5, 0, 10};
+	m_lighting.directional = Vector{0, 0, 1};
+	m_lighting.specularPower = 0.8f;
 }
 
 #ifdef OPEN_GL
 void CManager::Initialize(Rect dimensions)
 {
+	m_world = glm::mat4(1.0f);
+
 	//Specify the models information
 	std::vector <ModelData> scene;
 	scene.push_back(ModelData{ "../Dwarf/DwarfWithEffectInstance.x", glm::translate(MATRIX4(1.0f), VECTOR3(0.0f, 0.0f, 0.0f))});
@@ -26,7 +29,15 @@ void CManager::Initialize(Rect dimensions)
 	m_renderTexture.Unbind();
 
 	//Create and set Shaders
-	m_shaderProgram.Initialize("../Header/Shader/VertexShader.glsl", "../Header/Shader/PixelShader.glsl");
+	std::string shadertype;
+
+#ifdef VERTEX_LIGHT
+	shadertype = "VertexLight";
+#else
+	shadertype = "";
+#endif
+
+	m_shaderProgram.Initialize("../Header/Shader/VertexShader" + shadertype + ".glsl", "../Header/Shader/PixelShader" + shadertype + ".glsl");
 
 	//Initialize the scene information user interface
 	m_userInterface.Initialize();
@@ -59,7 +70,16 @@ void CManager::Initialize(WNDPROC pWndProc, HINSTANCE hInstance, std::string tit
 	//---------------------------------------------------------------------------------------------------Shaders
 
 	//Load Shaders from file
-	if (!FAILED(m_shaderProgram.Initialize("../Header/Shader/Shaders.fx", "vs_4_0", "ps_4_0", "VS", "PS")))
+	
+	const char* shaderFile;
+
+#ifdef VERTEX_LIGHT
+ 	shaderFile = "../Header/Shader/ShadersVertexLight.fx";
+#else
+	shaderFile = "../Header/Shader/Shaders.fx";
+#endif
+
+	if (!FAILED(m_shaderProgram.Initialize(shaderFile, "vs_4_0", "ps_4_0", "VS", "PS")))
 	{
 		//Create and set the vertex shader
 		m_device.CreateVertexShader(m_shaderProgram);
@@ -74,24 +94,24 @@ void CManager::Initialize(WNDPROC pWndProc, HINSTANCE hInstance, std::string tit
 		m_deviceContext.SetInputLayout(m_shaderProgram);
 
 		//Create the constant buffers to pass information to the shader
+		m_device.CreateConstantBuffer(m_shaderProgram.m_modelCB, sizeof(MATRIX4));
 		m_device.CreateConstantBuffer(m_shaderProgram.m_viewCB, sizeof(MATRIX4));
 		m_device.CreateConstantBuffer(m_shaderProgram.m_projectionCB, sizeof(MATRIX4));
-		m_device.CreateConstantBuffer(m_shaderProgram.m_worldCB, sizeof(MATRIX4));
-		m_device.CreateConstantBuffer(m_shaderProgram.m_colorCB, sizeof(VECTOR4));
+		m_device.CreateConstantBuffer(m_shaderProgram.m_colorDataCB, sizeof(ColorData));
 		m_device.CreateConstantBuffer(m_shaderProgram.m_lightingDataCB, sizeof(VECTOR4));
 
 		//Set The constant buffers
-		m_deviceContext.SetVertexConstantBuffer(0, m_shaderProgram.m_viewCB);
-		m_deviceContext.SetVertexConstantBuffer(1, m_shaderProgram.m_projectionCB);
-		m_deviceContext.SetVertexConstantBuffer(2, m_shaderProgram.m_worldCB);
+		m_deviceContext.SetVertexConstantBuffer(0, m_shaderProgram.m_modelCB);
+		m_deviceContext.SetVertexConstantBuffer(1, m_shaderProgram.m_viewCB);
+		m_deviceContext.SetVertexConstantBuffer(2, m_shaderProgram.m_projectionCB);
 
 		//Set the vertex and pixel shaders to the constant buffers
-		m_deviceContext.SetVertexConstantBuffer(3, m_shaderProgram.m_colorCB);
-		m_deviceContext.SetPixelConstantBuffer(3, m_shaderProgram.m_colorCB);
+		m_deviceContext.SetVertexConstantBuffer(3, m_shaderProgram.m_colorDataCB);
+		m_deviceContext.SetPixelConstantBuffer(3, m_shaderProgram.m_colorDataCB);
 
 		m_deviceContext.SetVertexConstantBuffer(4, m_shaderProgram.m_lightingDataCB);
 		m_deviceContext.SetPixelConstantBuffer(4, m_shaderProgram.m_lightingDataCB);
-		m_deviceContext.UpdateLighting(m_shaderProgram.m_lightingDataCB, m_lighting.directional);
+		m_deviceContext.UpdateLighting(m_shaderProgram.m_lightingDataCB, m_lighting);
 	}
 
 	//----------------------------------------------------------------------------------------------------Scene
@@ -134,6 +154,7 @@ void CManager::Render()
 #ifdef OPEN_GL
 	m_shaderProgram.Bind();
 	m_shaderProgram.UpdateLight(m_lighting);
+	m_shaderProgram.UpdateWorld(m_world);
 
 	//--------------------------------------------------------------------------------------------------------------
 	//Render the scene on the secure camera

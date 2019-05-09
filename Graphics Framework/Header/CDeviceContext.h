@@ -41,9 +41,9 @@ public:
 
 	void UpdateViewMatrix(CConstantBuffer& constantBuffer, CCamera& camera);
 	void UpdateProjectionMatrix(CConstantBuffer& constantBuffer, CCamera& camera);
-	void UpdateWorldMatrix(CConstantBuffer& constantBuffer, CMesh& mesh, unsigned int index);
+	void UpdateModelMatrix(CConstantBuffer& constantBuffer, CMesh& mesh, unsigned int index);
 	void UpdateMeshColor(CConstantBuffer& constantBuffer, CMesh& mesh);
-	void UpdateLighting(CConstantBuffer& constantBuffer, Vector& direction);
+	void UpdateLighting(CConstantBuffer& constantBuffer, LightingData& data);
 
 	void SetMesh(CMesh& mesh);
 	void Draw(unsigned int numIndices);

@@ -3,6 +3,7 @@
 //--------------------------------------------------------------------------------------------------------------------------------
 #define DIRECT_X
 //#define OPEN_GL
+//#define VERTEX_LIGHT
 //--------------------------------------------------------------------------------------------------------------------------------
 
 //Common utilities
@@ -73,11 +74,6 @@ struct Vector
 	float z;
 };
 
-struct LightingData
-{
-	Vector	directional;
-};
-
 struct ModelData
 {
 	const char* path;
@@ -99,6 +95,18 @@ enum InputEvent
 	KeyF = 1024,
 	KeyT = 2048,
 	KeySpace = 4096
+};
+
+struct LightingData
+{
+	Vector	directional;
+	float specularPower;
+};
+
+struct ColorData
+{
+	Color diffuseColor;
+	Color specularColor;
 };
 
 #ifdef OPEN_GL
@@ -162,7 +170,6 @@ struct SwapChainData
 #endif
 
 #ifdef DIRECT_X
-
 //#define D3DReflect
 
 //ImGui

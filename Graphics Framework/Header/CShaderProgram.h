@@ -34,8 +34,8 @@ public:
 
 	CConstantBuffer							m_viewCB;
 	CConstantBuffer							m_projectionCB;
-	CConstantBuffer							m_worldCB;
-	CConstantBuffer							m_colorCB;
+	CConstantBuffer							m_modelCB;
+	CConstantBuffer							m_colorDataCB;
 	CConstantBuffer							m_lightingDataCB;
 
 	HRESULT CompileFromFile();
@@ -59,6 +59,7 @@ public:
 	bool UpdateMesh(CMesh& mesh, int index);
 	bool UpdateCamera(CCamera camera);
 	bool UpdateLight(LightingData data);
+	bool UpdateWorld(MATRIX4 data);
 #endif
 
 	CShaderProgram();

@@ -7,7 +7,9 @@ CMesh::CMesh()
 #endif
 
 	m_scale = 1.0f;
-	m_color = { 1.0f, 1.0f, 1.0f, 1.0f };
+	m_colorData.diffuseColor = { 1.0f, 1.0f, 1.0f, 1.0f };
+	m_colorData.specularColor = { 1.0f, 1.0f, 1.0f, 1.0f };
+
 	m_isParty = false;
 }
 
@@ -58,9 +60,9 @@ void CMesh::Update(float time, std::string modelPath)
 
 	if (m_isParty)
 	{
-		m_color.r = sinf(time * 1.0f) + 1.0f;
-		m_color.g = cosf(time * 3.0f) + 1.0f;
-		m_color.b = sinf(time * 5.0f) + 1.0f;
+		m_colorData.diffuseColor.r = sinf(time * 1.0f) + 1.0f;
+		m_colorData.diffuseColor.g = cosf(time * 3.0f) + 1.0f;
+		m_colorData.diffuseColor.b = sinf(time * 5.0f) + 1.0f;
 	}
 }
 
@@ -105,7 +107,7 @@ void CMesh::PartyMode()
 {
 	if (m_isParty)
 	{
-		m_color = { 1.0f, 1.0f, 1.0f, 1.0f };
+		m_colorData.diffuseColor = { 1.0f, 1.0f, 1.0f, 1.0f };
 	}
 
 	m_isParty = !m_isParty;

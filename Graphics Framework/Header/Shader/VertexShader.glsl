@@ -1,28 +1,26 @@
-#version 330 core
+#version 400 core
 
 layout (location = 0) in vec3 inPosition;
 layout (location = 1) in vec2 inTexCoord;
 layout (location = 2) in vec3 inNormal;
 
+uniform mat4 World;
+uniform mat4 Model;
+uniform mat4 View;
+uniform mat4 Projection;
+
+out vec3 Position;
+out vec3 Normal;
 out vec2 TexCoord;
-out vec4 MeshColor;
-out vec4 Light;
-
-uniform vec4 color;
-uniform vec3 light;
-
-uniform mat4 model;
-uniform mat4 view;
-uniform mat4 projection;
 
 void main()
 {
-    gl_Position = projection * view * model * vec4(inPosition, 1.0f);
-    TexCoord = vec2(inTexCoord.x, inTexCoord.y);
-	MeshColor = color;
+	Position = inPosition;
+    gl_Position = Projection * View * Model * vec4(inPosition, 1.0f);
 
-	vec3 lightDirectionWS = normalize(-light);
-	float product = dot(lightDirectionWS, inNormal);
+	TexCoord = vec2(inTexCoord.x, inTexCoord.y);
 	
-	Light.xyzw = vec4(product, product, product, 1);
+	vec4 normalWS = vec4((Model * vec4(inNormal, 0.0f)).xyzw);
+	
+	Normal = normalWS.xyz;
 }

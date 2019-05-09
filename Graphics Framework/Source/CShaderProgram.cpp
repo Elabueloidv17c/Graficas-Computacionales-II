@@ -1,6 +1,5 @@
 #include "../Header/CShaderProgram.h"
 
-
 CShaderProgram::CShaderProgram()
 {
 #ifdef OPEN_GL
@@ -121,7 +120,7 @@ bool CShaderProgram::UpdateCamera(CCamera camera)
 	int location;
 
 	// View Matrix
-	location = glGetUniformLocation(m_id, "view");
+	location = glGetUniformLocation(m_id, "View");
 
 	if (location != -1)
 	{
@@ -129,7 +128,7 @@ bool CShaderProgram::UpdateCamera(CCamera camera)
 	}
 
 	// Projection Matrix
-	location = glGetUniformLocation(m_id, "projection");
+	location = glGetUniformLocation(m_id, "Projection");
 
 	if (location != -1)
 	{
@@ -144,7 +143,7 @@ bool CShaderProgram::UpdateMesh(CMesh& mesh, int index)
 	int location;
 
 	// Camera Pos.
-	location = glGetUniformLocation(m_id, "model");
+	location = glGetUniformLocation(m_id, "Model");
 
 	if (location != -1)
 	{
@@ -152,11 +151,19 @@ bool CShaderProgram::UpdateMesh(CMesh& mesh, int index)
 	}
 
 	// Mesh Color.
-	location = glGetUniformLocation(m_id, "color");
+	location = glGetUniformLocation(m_id, "MeshColor");
 
 	if (location != -1)
 	{
-		glUniform4fv(location, 1, &mesh.m_color.r);
+		glUniform4fv(location, 1, &mesh.m_colorData.diffuseColor.r);
+	}
+
+	// Mesh Color.
+	location = glGetUniformLocation(m_id, "SpecularColor");
+
+	if (location != -1)
+	{
+		glUniform4fv(location, 1, &mesh.m_colorData.specularColor.r);
 	}
 
 	return true;
@@ -167,11 +174,33 @@ bool CShaderProgram::UpdateLight(LightingData data)
 	int location;
 
 	//Light
-	location = glGetUniformLocation(m_id, "light");
+	location = glGetUniformLocation(m_id, "DirectionalLight");
 
 	if (location != -1)
 	{
 		glUniform3fv(location, 1, &data.directional.x);
+	}
+
+	location = glGetUniformLocation(m_id, "SpecularPower");
+
+	if (location != -1)
+	{
+		glUniform1f(location, data.specularPower);
+	}
+
+	return true;
+}
+
+bool CShaderProgram::UpdateWorld(MATRIX4 data)
+{
+	int location;
+
+	//Light
+	location = glGetUniformLocation(m_id, "World");
+
+	if (location != -1)
+	{
+		glUniformMatrix4fv(location, 1, false, &data[0][0]);
 	}
 
 	return true;

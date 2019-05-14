@@ -70,8 +70,8 @@ void main()
 	vec3 Specular = SpecularIntensity * specularFactor * SpecularColor.xyz;
 	vec3 Ambient = AmbientIntensity * (1.0 - NormaldLightWS) * AmbientColor.xyz;
 
-	//FinalColor = texture(Texture, TexCoord) * vec4(Ambient.xyz + Diffuse.xyz + Specular.xyz, 1.0);
-	FinalColor = vec4(Ambient.xyz + Diffuse.xyz + Specular.xyz, 1.0);
+	FinalColor = texture(Texture, TexCoord) * vec4(Ambient.xyz + Diffuse.xyz + Specular.xyz, 1.0);
+	//FinalColor = vec4(Ambient.xyz + Diffuse.xyz + Specular.xyz, 1.0);
 #else
 	FinalColor = texture(Texture, TexCoord) * Color * Light;
 #endif

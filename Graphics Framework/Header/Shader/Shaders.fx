@@ -1,5 +1,5 @@
 #define PIXEL_LIGHT
-#define BLINN_PHONG
+//#define BLINN_PHONG
 
 //--------------------------------------------------------------------------------------
 // Constant Buffer Variables

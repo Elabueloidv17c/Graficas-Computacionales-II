@@ -1,0 +1,228 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Archivos de origen">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Archivos de encabezado">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Archivos de recursos">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Archivos de origen\ImGui">
+      <UniqueIdentifier>{787bfcc7-c20d-463b-875e-a4e6cba9b22e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de encabezado\ImGui">
+      <UniqueIdentifier>{ee91cd30-757a-4225-8209-239ec8b21ac2}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\Source\CWindow.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\CManager.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\CDevice.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\CTexture.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\CShader.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\CStringConverter.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\CShaderProgram.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\CSwapChain.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\CRenderTarget.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\CDepthStencil.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\CVertexBuffer.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\CViewportManager.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\CIndexBuffer.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\CScene.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\CMesh.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\CCamera.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\CInputManager.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\CDeviceContext.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\CCameraManager.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\CSamplerState.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\source.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\CConstantBuffer.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Header\imGUI\imgui.cpp">
+      <Filter>Archivos de origen\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Header\imGUI\imgui_draw.cpp">
+      <Filter>Archivos de origen\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Header\imGUI\imgui_impl_dx11.cpp">
+      <Filter>Archivos de origen\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Header\imGUI\imgui_impl_win32.cpp">
+      <Filter>Archivos de origen\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Header\imGUI\imgui_widgets.cpp">
+      <Filter>Archivos de origen\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\CUserInterface.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\imgui_impl_opengl3.cpp">
+      <Filter>Archivos de origen\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\CModel.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\CRenderToTexture.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\CMaterial.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\Header\Header.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CWindow.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CManager.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CDevice.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CTexture.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CShader.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CStringConverter.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CShaderProgram.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CSwapChain.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CRenderTarget.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CDepthStencil.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CVertexBuffer.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CViewportManager.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CIndexBuffer.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CScene.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CMesh.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CCamera.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CInputManager.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CDeviceContext.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CCameraManager.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CSamplerState.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CConstantBuffer.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\imGUI\imconfig.h">
+      <Filter>Archivos de encabezado\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\imGUI\imgui.h">
+      <Filter>Archivos de encabezado\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\imGUI\imgui_impl_dx11.h">
+      <Filter>Archivos de encabezado\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\imGUI\imgui_impl_win32.h">
+      <Filter>Archivos de encabezado\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\imGUI\imgui_internal.h">
+      <Filter>Archivos de encabezado\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\imGUI\imstb_rectpack.h">
+      <Filter>Archivos de encabezado\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\imGUI\imstb_textedit.h">
+      <Filter>Archivos de encabezado\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\imGUI\imstb_truetype.h">
+      <Filter>Archivos de encabezado\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CUserInterface.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\imgui_impl_opengl3.h">
+      <Filter>Archivos de encabezado\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CModel.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CRenderToTexture.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CMaterial.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

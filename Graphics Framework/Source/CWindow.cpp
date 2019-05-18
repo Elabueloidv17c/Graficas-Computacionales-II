@@ -34,7 +34,7 @@ void CWindow::Initialize(Rect dimensions, unsigned int displayMode, const char* 
 	std::cout << "OpenGL renderer:\t" << (char*)glGetString(GL_RENDERER) << std::endl;
 
 	//Scene
-	m_scene.Initialize(Vector{ 0, 0, 1 }, 0.2f, scene);
+	m_scene.Initialize(scene);
 	scene.clear();
 	
 	//Camera

@@ -24,20 +24,22 @@ public:
 	void ChangeSpecularColor(Color color);
 	void ChangeLightIntensity(float value);
 
+	void SetColorData(ColorData data);
+	void SetLightData(LightingData data);
+
 	unsigned int GetNumVertices();
 	unsigned int GetNumFaces();
 	unsigned int GetNumModels();
 	unsigned int GetNumMeshes();
 
-#ifdef OPEN_GL
-	bool Initialize(Vector directional, float specularity, std::vector <ModelData> models);
+#ifdef DIRECT_X
+	bool Initialize(std::vector <ModelData> models, CDevice& device);
+	void Render(CDeviceContext& deviceContext, CShaderProgram& shaderProgram, CCamera& camera, CCamera& otheCamera);
+#else
+	bool Initialize(std::vector <ModelData> models);
 	void Render(CShaderProgram& shaderProgram, CCamera& camera, CCamera& otheCamera);
 #endif
 
-#ifdef DIRECT_X
-	bool Initialize(Vector directional, float specularity, std::vector <ModelData> models, CDevice& device);
-	void Render(CDeviceContext& deviceContext, CShaderProgram& shaderProgram, CCamera& camera, CCamera& otheCamera);
-#endif
 	CScene();
 	~CScene() = default;
 };

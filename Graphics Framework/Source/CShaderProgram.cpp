@@ -187,7 +187,7 @@ bool CShaderProgram::UpdateLight(LightingData& data)
 
 	if (location != -1)
 	{
-		glUniform1f(location, data.specularIntensity);
+		glUniform1f(location, data.specularPower);
 	}
 
 	return true;

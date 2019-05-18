@@ -27,6 +27,31 @@ void CManager::Initialize(Rect dimensions)
 	//Create window with the models especified before
 	m_window.Initialize(dimensions, GLUT_RGB | GLUT_DOUBLE | GLUT_DEPTH | GLUT_STENCIL, "OpenGL", Color{ 0.0f, 0.3f, 0.6f, 1.0f }, scene);
 	m_viewport.Initialize(dimensions);
+	
+	//Load lighting and color data
+	m_window.m_scene.SetLightData(LightingData
+		{
+			Vector{0.0f, 0.0f, 1.0f},
+			0.7,
+			Vector{},
+			0.3f,
+			0.2f,
+			0.1f,
+			Vector{},
+			Vector{},
+			2.0f,
+			1.0f
+		});
+
+	m_window.m_scene.SetColorData(ColorData
+		{
+			Color{1.0f, 1.0f, 1.0f, 1.0f},
+			Color{1.0f, 1.0f, 1.0f, 1.0f},
+			Color{0.0f, 0.0f, 1.0f, 1.0f},
+			1.0f,
+			1.5f,
+			0.2f
+		});
 
 	//Create the second render target
 	m_renderTexture.Initialize(m_window.m_size.size, Color{ 0.8f, 0.1f, 0.0f, 1.0f });
@@ -86,7 +111,7 @@ void CManager::Initialize(WNDPROC pWndProc, HINSTANCE hInstance, std::string tit
 		m_device.CreateConstantBuffer(m_shaderProgram.m_viewCB, sizeof(MATRIX4));
 		m_device.CreateConstantBuffer(m_shaderProgram.m_projectionCB, sizeof(MATRIX4));
 		m_device.CreateConstantBuffer(m_shaderProgram.m_colorDataCB, sizeof(ColorData) + sizeof(float));
-		m_device.CreateConstantBuffer(m_shaderProgram.m_lightingDataCB, sizeof(VECTOR4));
+		m_device.CreateConstantBuffer(m_shaderProgram.m_lightingDataCB, sizeof(LightingData) + sizeof(float));
 
 		//Set The constant buffers
 		m_deviceContext.SetVertexConstantBuffer(0, m_shaderProgram.m_modelCB);
@@ -107,7 +132,7 @@ void CManager::Initialize(WNDPROC pWndProc, HINSTANCE hInstance, std::string tit
 	std::vector <ModelData> scene;
 
 	scene.push_back(ModelData{ "../Models/Batman/Batman.fbx", glm::rotate(
-	glm::translate(glm::mat4(1.0f), VECTOR3(0.0f, -50.0f, 0.0f)), glm::radians(180.0f), VECTOR3(0.0f, 1.0f, 0.0f)) });
+	glm::translate(glm::mat4(1.0f), VECTOR3(0.0f, -100.0f, 0.0f)), glm::radians(180.0f), VECTOR3(0.0f, 1.0f, 0.0f)) });
 
 	scene.push_back(ModelData{ "../Models/Dragon/Dragon.fbx", glm::translate(glm::mat4(1.0f), VECTOR3(150.0f, 0.0f, 0.0f)) });
 
@@ -118,20 +143,44 @@ void CManager::Initialize(WNDPROC pWndProc, HINSTANCE hInstance, std::string tit
 	glm::radians(180.0f), VECTOR3(0.0f, 0.0f, 1.0f)) });
 
 	//Load models from file
-	m_window.m_scene.Initialize(Vector{ 0, 0, 1 }, 0.7f, scene, m_device);
+	m_window.m_scene.Initialize(scene, m_device);
+
+	//Load lighting and color data
+	m_window.m_scene.SetLightData(LightingData
+	{
+		Vector{0.0f, 0.0f, 1.0f},
+		Vector{0.0f, 0.0f, 0.0f},
+		Vector{},
+		0.7f,
+		1.0f,
+		0.2f,
+		0.025f,
+		45.0f,
+		10.0f
+	});
+
+	m_window.m_scene.SetColorData(ColorData
+	{
+		Color{1.0f, 1.0f, 1.0f, 1.0f},
+		Color{1.0f, 1.0f, 1.0f, 1.0f},
+		Color{0.0f, 1.0f, 0.0f, 1.0f},
+		1.0f,
+		1.5f,
+		0.2f
+	});
 
 	//----------------------------------------------------------------------------------------------------Camera
 
-	//Initialize the main camera properties
+	//Add secundary camera to act as security camera
 	m_window.m_camera.Initialize(VECTOR3(0.0f, 400.0f, 0.0f), VECTOR3(0.0f, 0.0f, 1.0f),
 	VECTOR3(0.0f, -1.0f, 0.0f), VECTOR3(1.0f, 0.0f, 0.0f), -90.0f, 0.0f, 2.0f, 0.25f);
 
-	//Add secundary camera to act as security camera
-	m_window.m_camera.AddCamera(VECTOR3(0.0f, 0.0f, -400.0f), VECTOR3(0.0f, 1.0f, 0.0f),
+	//Initialize the main camera properties
+	m_window.m_camera.AddCamera(VECTOR3(0.0f, 0.0f, -200.0f), VECTOR3(0.0f, 1.0f, 0.0f),
 	VECTOR3(0.0f, 0.0f, 1.0f), VECTOR3(1.0f, 0.0f, 0.0f), 90.0f, 0.0f, 2.0f, 0.25f);
 
 	//Set The view matrix´s initial position
-	m_window.m_camera.SetViewMatrix((45.0f / 360.0f) * 6.283185307f, m_window.m_size.size, 0.1f, 500.0f);
+	m_window.m_camera.SetViewMatrix((45.0f / 360.0f) * 6.283185307f, m_window.m_size.size, 0.1f, 1000.0f);
 
 	//----------------------------------------------------------------------------------------------------User Interface
 
@@ -157,7 +206,7 @@ void CManager::Render()
 
 	//Set the rendered texture as the screeen model texture 
 	m_window.m_scene.m_models[3].m_meshes[0].m_material.m_diffuse.m_id = m_renderTexture.m_idTexture;
-	
+
 	m_renderTexture.Unbind();
 	//--------------------------------------------------------------------------------------------------------------
 	//Render the scene on the main camera
@@ -165,11 +214,11 @@ void CManager::Render()
 
 	m_window.Clear();
 	m_window.Render(m_shaderProgram, m_window.m_camera.m_cameras[1], m_window.m_camera.m_cameras[1]);
-	
+
 	//Render user interface to see the scene information
 	m_userInterface.Initframe();
-	m_userInterface.SetFrame((float)m_window.m_scene.GetNumVertices(), (float)m_window.m_scene.GetNumFaces(), 
-	(float)m_window.m_scene.GetNumMeshes(), (float)m_window.m_scene.GetNumModels());
+	m_userInterface.SetFrame((float)m_window.m_scene.GetNumVertices(), (float)m_window.m_scene.GetNumFaces(),
+		(float)m_window.m_scene.GetNumMeshes(), (float)m_window.m_scene.GetNumModels());
 	m_userInterface.RenderFrame();
 
 	//Present Frame
@@ -178,22 +227,25 @@ void CManager::Render()
 
 #ifdef DIRECT_X
 
-	//--------------------------------------------------------------------------------------------------------------
+	m_window.m_scene.m_lightingData.direction.x = m_window.m_camera.m_cameras[1].m_front.x;
+	m_window.m_scene.m_lightingData.direction.y = m_window.m_camera.m_cameras[1].m_front.y;
+	m_window.m_scene.m_lightingData.direction.z = m_window.m_camera.m_cameras[1].m_front.z;
+
+	m_deviceContext.UpdateLightingData(m_shaderProgram.m_lightingDataCB, m_window.m_scene.m_lightingData);
+	
 	//Render the scene on the secure camera
 	m_renderTexture.SetRenderTarget(m_deviceContext);
 	m_renderTexture.ClearRenderTarget(m_deviceContext);
-	m_deviceContext.UpdateLightingData(m_shaderProgram.m_lightingDataCB, m_window.m_scene.m_lightingData);
+	
 	m_window.m_scene.Render(m_deviceContext, m_shaderProgram, m_window.m_camera.m_cameras[0], m_window.m_camera.m_cameras[1]);
 
 	//Set the rendered texture as the screen model texture 
 	m_window.m_scene.m_models[3].m_meshes[0].m_material.m_diffuse.m_pointer = m_renderTexture.m_shaderResource;
 	
-	//--------------------------------------------------------------------------------------------------------------
 	//Render the scene on the main camera
 	m_deviceContext.SetRenderTarget(m_window.m_swapChain);
 	m_deviceContext.ClearColor(m_window.m_swapChain);
 	m_deviceContext.ClearDepthStencil(m_window.m_swapChain);
-	m_deviceContext.UpdateLightingData(m_shaderProgram.m_lightingDataCB, m_window.m_scene.m_lightingData);
 	m_window.m_scene.Render(m_deviceContext, m_shaderProgram, m_window.m_camera.m_cameras[1], m_window.m_camera.m_cameras[1]);
 
 	//Render user interface to see the scene information

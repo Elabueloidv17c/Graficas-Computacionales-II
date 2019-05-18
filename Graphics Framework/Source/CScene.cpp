@@ -6,27 +6,11 @@
 CScene::CScene()
 {
 	m_isParty = false;
-
-	m_colorData.diffuseColor = Color{ 1.0f, 1.0f, 1.0f, 1.0f };
-	m_colorData.specularColor = Color{ 1.0f, 1.0f, 1.0f, 1.0f };
-
-#ifdef DIRECT_X
-	m_colorData.ambientColor = Color{ 0.0f, 1.0f, 0.0f, 1.0f };
-#else
-	m_colorData.ambientColor = Color{ 0.0f, 0.0f, 1.0f, 1.0f };
-#endif
-
-	m_colorData.diffuseIntensity = 1.0f;
-	m_colorData.specularIntensity = 1.0f;
-	m_colorData.ambientIntensity = 0.20f;
 }
 
 #ifdef DIRECT_X
-bool CScene::Initialize(Vector directional, float specularity, std::vector <ModelData> models, CDevice& device)
+bool CScene::Initialize(std::vector <ModelData> models, CDevice& device)
 {
-	m_lightingData.directional = directional;
-	m_lightingData.specularIntensity = specularity;
-
 	m_models.resize(models.size());
 
 	for (int i = 0; i < models.size(); i++)
@@ -49,11 +33,8 @@ void CScene::Render(CDeviceContext& deviceContext, CShaderProgram& shaderProgram
 #endif
 
 #ifdef OPEN_GL
-bool CScene::Initialize(Vector directional, float specularity, std::vector <ModelData> models)
+bool CScene::Initialize(std::vector <ModelData> models)
 {
-	m_lightingData.directional = directional;
-	m_lightingData.specularIntensity = specularity;
-
 	m_models.resize(models.size());
 
 	for (int i = 0; i < models.size(); i++)
@@ -130,17 +111,47 @@ void CScene::RotateLight(float time)
 
 void CScene::ChangeLightIntensity(float value)
 {
-	m_lightingData.specularIntensity += value;
+	m_lightingData.specularPower += value;
 
-	if (m_lightingData.specularIntensity > 1.0f)
+	if (m_lightingData.specularPower > 1.0f)
 	{
-		m_lightingData.specularIntensity = 1.0f;
+		m_lightingData.specularPower = 1.0f;
 	}
 
-	else if (m_lightingData.specularIntensity < 0.0f)
+	else if (m_lightingData.specularPower < 0.0f)
 	{
-		m_lightingData.specularIntensity = 0.0f;
+		m_lightingData.specularPower = 0.0f;
 	}
+}
+
+void CScene::SetColorData(ColorData data)
+{
+	m_colorData.diffuseColor = data.diffuseColor;
+	m_colorData.specularColor = data.specularColor;
+
+#ifdef DIRECT_X
+	m_colorData.ambientColor = Color{ 0.0f, 1.0f, 0.0f, 1.0f };
+#else
+	m_colorData.ambientColor = Color{ 0.0f, 0.0f, 1.0f, 1.0f };
+#endif
+
+	m_colorData.diffuseIntensity = data.diffuseIntensity;
+	m_colorData.specularIntensity = data.specularIntensity;
+	m_colorData.ambientIntensity = data.ambientIntensity;
+}
+
+void CScene::SetLightData(LightingData data)
+{
+	m_lightingData.position = data.position;
+	m_lightingData.direction = data.direction;
+	m_lightingData.directional = data.directional;
+
+	m_lightingData.specularPower = data.specularPower;
+	m_lightingData.pointConstant = data.pointConstant;
+	m_lightingData.pointLinear = data.pointLinear;
+	m_lightingData.pointQuadratic = data.pointQuadratic;
+	m_lightingData.cutOff = data.cutOff;
+	m_lightingData.outerCutOff = data.outerCutOff;
 }
 
 unsigned int CScene::GetNumVertices()

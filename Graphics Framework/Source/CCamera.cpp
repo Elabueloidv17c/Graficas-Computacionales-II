@@ -99,7 +99,7 @@ void CCamera::MoveRight()
 
 void CCamera::MoveUp()
 {
-	m_position += m_worldUp * m_movementSpeed;
+	m_position += m_up * m_movementSpeed;
 	Update();
 }
 

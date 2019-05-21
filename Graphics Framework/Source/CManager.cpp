@@ -12,50 +12,49 @@ void CManager::Initialize(Rect dimensions)
 
 	//Specify the models information
 	std::vector <ModelData> scene;
-
-	scene.push_back(ModelData{ "../Models/Batman/Batman.fbx", glm::rotate(
-	glm::translate(glm::mat4(1.0f), VECTOR3(0.0f, -50.0f, 0.0f)), glm::radians(180.0f), VECTOR3(0.0f, 1.0f, 0.0f)) });
-
-	scene.push_back(ModelData{ "../Models/Dragon/Dragon.fbx", glm::translate(glm::mat4(1.0f), VECTOR3(150.0f, 0.0f, 0.0f)) });
-
-	scene.push_back(ModelData{ "../Models/Anubis/Anubis.fbx", glm::mat4(1.0f) });
-
-	scene.push_back(ModelData{ "../Models/Quad/Plane.fbx", glm::rotate(glm::scale(
-	glm::translate(MATRIX4(1.0f), VECTOR3(-150.0f, 0.0f, 0.0f)), VECTOR3(8.0f, 4.5f, 8.0f)), 
-	glm::radians(180.0f), VECTOR3(0.0f, 1.0f, 0.0f)) });
+	scene.push_back(ModelData{ "../Models/Scene/Scene.fbx", glm::rotate(glm::mat4(1.0f), glm::radians(180.0f), VECTOR3(0.0f, 1.0f, 0.0f)) });
 
 	//Create window with the models especified before
 	m_window.Initialize(dimensions, GLUT_RGB | GLUT_DOUBLE | GLUT_DEPTH | GLUT_STENCIL, "OpenGL", Color{ 0.0f, 0.3f, 0.6f, 1.0f }, scene);
 	m_viewport.Initialize(dimensions);
-	
+
+	m_window.m_scene.m_pointRadius = 2.0f;
+	m_window.m_scene.m_spotRadius = 3.0f;
+
 	//Load lighting and color data
 	m_window.m_scene.SetLightData(LightingData
-		{
-			Vector{0.0f, 0.0f, 1.0f},
-			0.7,
-			Vector{},
-			0.3f,
-			0.2f,
-			0.1f,
-			Vector{},
-			Vector{},
-			2.0f,
-			1.0f
-		});
+	{
+		Vector{0.0f, 0.0f, 0.0f},		//directional;
+		1.0f,							//specularPower;
+
+		Vector{0.0f, 0.3f, -3.8f},		//pointPosition;
+		m_window.m_scene.m_pointRadius,
+
+		Vector{0.0f, 0.0f, -10.0f},		//viewPosition;
+		m_window.m_scene.m_spotRadius,
+
+		Vector{10.0f, 5.0f, 2.0f},		//spotPosition;
+		0.04f,							//spotAlpha;
+
+		Vector{0.0f, 0.0f, 1.0f},		//spotDirection;
+		0.5f,							//spotBeta;
+	});
+
 
 	m_window.m_scene.SetColorData(ColorData
-		{
-			Color{1.0f, 1.0f, 1.0f, 1.0f},
-			Color{1.0f, 1.0f, 1.0f, 1.0f},
-			Color{0.0f, 0.0f, 1.0f, 1.0f},
-			1.0f,
-			1.5f,
-			0.2f
-		});
+	{
+		Color{1.0f, 1.0f, 1.0f, 1.0f},
+		Color{1.0f, 1.0f, 1.0f, 1.0f},
+		Color{0.0f, 1.0f, 0.0f, 1.0f},
+
+		1.0f,
+		1.0f,
+		0.2f
+	});
 
 	//Create the second render target
-	m_renderTexture.Initialize(m_window.m_size.size, Color{ 0.8f, 0.1f, 0.0f, 1.0f });
-	m_renderTexture.Unbind();
+	//m_renderTexture.Initialize(m_window.m_size.size, Color{ 0.8f, 0.1f, 0.0f, 1.0f });
+	//m_renderTexture.Unbind();
 
 	m_shaderProgram.Initialize("../Header/Shader/VertexShader.glsl", "../Header/Shader/PixelShader.glsl");
 
@@ -89,9 +88,6 @@ void CManager::Initialize(WNDPROC pWndProc, HINSTANCE hInstance, std::string tit
 	//---------------------------------------------------------------------------------------------------Shaders
 
 	//Load Shaders from file
-	
-	const char* shaderFile;
-
 	if (!FAILED(m_shaderProgram.Initialize("../Header/Shader/Shaders.fx", "vs_4_0", "ps_4_0", "VS", "PS")))
 	{
 		//Create and set the vertex shader
@@ -111,7 +107,7 @@ void CManager::Initialize(WNDPROC pWndProc, HINSTANCE hInstance, std::string tit
 		m_device.CreateConstantBuffer(m_shaderProgram.m_viewCB, sizeof(MATRIX4));
 		m_device.CreateConstantBuffer(m_shaderProgram.m_projectionCB, sizeof(MATRIX4));
 		m_device.CreateConstantBuffer(m_shaderProgram.m_colorDataCB, sizeof(ColorData) + sizeof(float));
-		m_device.CreateConstantBuffer(m_shaderProgram.m_lightingDataCB, sizeof(LightingData) + sizeof(float));
+		m_device.CreateConstantBuffer(m_shaderProgram.m_lightingDataCB, sizeof(LightingData));
 
 		//Set The constant buffers
 		m_deviceContext.SetVertexConstantBuffer(0, m_shaderProgram.m_modelCB);
@@ -130,57 +126,57 @@ void CManager::Initialize(WNDPROC pWndProc, HINSTANCE hInstance, std::string tit
 	
 	//Specify the models information
 	std::vector <ModelData> scene;
-
-	scene.push_back(ModelData{ "../Models/Batman/Batman.fbx", glm::rotate(
-	glm::translate(glm::mat4(1.0f), VECTOR3(0.0f, -100.0f, 0.0f)), glm::radians(180.0f), VECTOR3(0.0f, 1.0f, 0.0f)) });
-
-	scene.push_back(ModelData{ "../Models/Dragon/Dragon.fbx", glm::translate(glm::mat4(1.0f), VECTOR3(150.0f, 0.0f, 0.0f)) });
-
-	scene.push_back(ModelData{ "../Models/Anubis/Anubis.fbx", glm::mat4(1.0f) });
-
-	scene.push_back(ModelData{ "../Models/Quad/Plane.fbx", glm::rotate(glm::scale(
-	glm::translate(MATRIX4(1.0f), VECTOR3(-150.0f, 0.0f, 0.0f)), VECTOR3(8.0f, 4.5f, 8.0f)),
-	glm::radians(180.0f), VECTOR3(0.0f, 0.0f, 1.0f)) });
+	scene.push_back(ModelData{ "../Models/Scene/Scene.fbx", glm::rotate(glm::mat4(1.0f), glm::radians(180.0f), VECTOR3(0.0f, 1.0f, 0.0f)) });
 
 	//Load models from file
 	m_window.m_scene.Initialize(scene, m_device);
 
+	m_window.m_scene.m_pointRadius = 2.0f;
+	m_window.m_scene.m_spotRadius = 3.0f;
+
 	//Load lighting and color data
 	m_window.m_scene.SetLightData(LightingData
 	{
-		Vector{0.0f, 0.0f, 1.0f},
-		Vector{0.0f, 0.0f, 0.0f},
-		Vector{},
-		0.7f,
-		1.0f,
-		0.2f,
-		0.025f,
-		45.0f,
-		10.0f
+		Vector{0.0f, 0.0f, 0.0f},		//directional;
+		1.0f,							//specularPower;
+		
+		Vector{0.0f, 0.3f, -3.8f},		//pointPosition;
+		m_window.m_scene.m_pointRadius,
+		
+		Vector{0.0f, 0.0f, -10.0f},		//viewPosition;
+		m_window.m_scene.m_spotRadius,
+		
+		Vector{10.0f, 5.0f, 2.0f},		//spotPosition;
+		0.04f,							//spotAlpha;
+		
+		Vector{0.0f, 0.0f, 1.0f},		//spotDirection;
+		0.5f,							//spotBeta;
 	});
+
 
 	m_window.m_scene.SetColorData(ColorData
 	{
 		Color{1.0f, 1.0f, 1.0f, 1.0f},
 		Color{1.0f, 1.0f, 1.0f, 1.0f},
 		Color{0.0f, 1.0f, 0.0f, 1.0f},
+
 		1.0f,
-		1.5f,
+		1.0f,
 		0.2f
 	});
 
 	//----------------------------------------------------------------------------------------------------Camera
 
-	//Add secundary camera to act as security camera
-	m_window.m_camera.Initialize(VECTOR3(0.0f, 400.0f, 0.0f), VECTOR3(0.0f, 0.0f, 1.0f),
-	VECTOR3(0.0f, -1.0f, 0.0f), VECTOR3(1.0f, 0.0f, 0.0f), -90.0f, 0.0f, 2.0f, 0.25f);
+	//Add secundary camera
+	m_window.m_camera.Initialize(VECTOR3(0.0f, 15.0f, 0.0f), VECTOR3(0.0f, 0.0f, 1.0f),
+	VECTOR3(0.0f, -1.0f, 0.0f), VECTOR3(1.0f, 0.0f, 0.0f), -90.0f, 0.0f, 0.003f, 0.25f);
 
 	//Initialize the main camera properties
-	m_window.m_camera.AddCamera(VECTOR3(0.0f, 0.0f, -200.0f), VECTOR3(0.0f, 1.0f, 0.0f),
-	VECTOR3(0.0f, 0.0f, 1.0f), VECTOR3(1.0f, 0.0f, 0.0f), 90.0f, 0.0f, 2.0f, 0.25f);
+	m_window.m_camera.AddCamera(VECTOR3(0.0f, 3.0f, -10.0f), VECTOR3(0.0f, 1.0f, 0.0f),
+	VECTOR3(0.0f, 0.0f, 1.0f), VECTOR3(1.0f, 0.0f, 0.0f), 90.0f, 0.0f, 0.003f, 0.20f);
 
 	//Set The view matrix´s initial position
-	m_window.m_camera.SetViewMatrix((45.0f / 360.0f) * 6.283185307f, m_window.m_size.size, 0.1f, 1000.0f);
+	m_window.m_camera.SetViewMatrix((60.0f / 360.0f) * 6.283185307f, m_window.m_size.size, 0.1f, 1000.0f);
 
 	//----------------------------------------------------------------------------------------------------User Interface
 
@@ -196,24 +192,19 @@ void CManager::Render()
 #ifdef OPEN_GL
 	m_shaderProgram.Bind();
 	m_shaderProgram.UpdateWorld(m_world);
+	m_shaderProgram.UpdateCamera(*m_window.m_camera.GetActiveCamera());
 
-	//--------------------------------------------------------------------------------------------------------------
-	//Render the scene on the secure camera
-	m_shaderProgram.UpdateCamera(m_window.m_camera.m_cameras[0]);
-	m_renderTexture.Bind(m_window.m_size.size);
-	m_renderTexture.Clear();
-	m_window.Render(m_shaderProgram, m_window.m_camera.m_cameras[0], m_window.m_camera.m_cameras[1]);
+	//Lighting Update
+	m_window.m_scene.m_lightingData.viewPosition.x = m_window.m_camera.GetActiveCamera()->m_position.x;
+	m_window.m_scene.m_lightingData.viewPosition.y = m_window.m_camera.GetActiveCamera()->m_position.y;
+	m_window.m_scene.m_lightingData.viewPosition.z = m_window.m_camera.GetActiveCamera()->m_position.z;
 
-	//Set the rendered texture as the screeen model texture 
-	m_window.m_scene.m_models[3].m_meshes[0].m_material.m_diffuse.m_id = m_renderTexture.m_idTexture;
-
-	m_renderTexture.Unbind();
-	//--------------------------------------------------------------------------------------------------------------
-	//Render the scene on the main camera
-	m_shaderProgram.UpdateCamera(m_window.m_camera.m_cameras[1]);
+	m_window.m_scene.m_lightingData.spotDirection.x = m_window.m_camera.GetActiveCamera()->m_front.x;
+	m_window.m_scene.m_lightingData.spotDirection.y = m_window.m_camera.GetActiveCamera()->m_front.y;
+	m_window.m_scene.m_lightingData.spotDirection.z = m_window.m_camera.GetActiveCamera()->m_front.z;
 
 	m_window.Clear();
-	m_window.Render(m_shaderProgram, m_window.m_camera.m_cameras[1], m_window.m_camera.m_cameras[1]);
+	m_window.Render(m_shaderProgram, *m_window.m_camera.GetActiveCamera(), *m_window.m_camera.GetSecundaryCamera());
 
 	//Render user interface to see the scene information
 	m_userInterface.Initframe();
@@ -227,26 +218,32 @@ void CManager::Render()
 
 #ifdef DIRECT_X
 
-	m_window.m_scene.m_lightingData.direction.x = m_window.m_camera.m_cameras[1].m_front.x;
-	m_window.m_scene.m_lightingData.direction.y = m_window.m_camera.m_cameras[1].m_front.y;
-	m_window.m_scene.m_lightingData.direction.z = m_window.m_camera.m_cameras[1].m_front.z;
+	//Lighting Update
+	m_window.m_scene.m_lightingData.viewPosition.x = m_window.m_camera.GetActiveCamera()->m_position.x;
+	m_window.m_scene.m_lightingData.viewPosition.y = m_window.m_camera.GetActiveCamera()->m_position.y;
+	m_window.m_scene.m_lightingData.viewPosition.z = m_window.m_camera.GetActiveCamera()->m_position.z;
 
-	m_deviceContext.UpdateLightingData(m_shaderProgram.m_lightingDataCB, m_window.m_scene.m_lightingData);
+	m_window.m_scene.m_lightingData.spotDirection.x = m_window.m_camera.GetActiveCamera()->m_front.x;
+	m_window.m_scene.m_lightingData.spotDirection.y = m_window.m_camera.GetActiveCamera()->m_front.y;
+	m_window.m_scene.m_lightingData.spotDirection.z = m_window.m_camera.GetActiveCamera()->m_front.z;
+
+	m_deviceContext.UpdateLightingData(
+	m_shaderProgram.m_lightingDataCB, 
+	m_window.m_scene.m_lightingData
+	);
 	
 	//Render the scene on the secure camera
-	m_renderTexture.SetRenderTarget(m_deviceContext);
-	m_renderTexture.ClearRenderTarget(m_deviceContext);
-	
-	m_window.m_scene.Render(m_deviceContext, m_shaderProgram, m_window.m_camera.m_cameras[0], m_window.m_camera.m_cameras[1]);
-
+	//m_renderTexture.SetRenderTarget(m_deviceContext);
+	//m_renderTexture.ClearRenderTarget(m_deviceContext);
+	//m_window.m_scene.Render(m_deviceContext, m_shaderProgram, m_window.m_camera.m_cameras[0], m_window.m_camera.m_cameras[1]);
 	//Set the rendered texture as the screen model texture 
-	m_window.m_scene.m_models[3].m_meshes[0].m_material.m_diffuse.m_pointer = m_renderTexture.m_shaderResource;
+	//m_window.m_scene.m_models[3].m_meshes[0].m_material.m_diffuse.m_pointer = m_renderTexture.m_shaderResource;
 	
 	//Render the scene on the main camera
 	m_deviceContext.SetRenderTarget(m_window.m_swapChain);
 	m_deviceContext.ClearColor(m_window.m_swapChain);
 	m_deviceContext.ClearDepthStencil(m_window.m_swapChain);
-	m_window.m_scene.Render(m_deviceContext, m_shaderProgram, m_window.m_camera.m_cameras[1], m_window.m_camera.m_cameras[1]);
+	m_window.m_scene.Render(m_deviceContext, m_shaderProgram, *m_window.m_camera.GetActiveCamera(), *m_window.m_camera.GetSecundaryCamera());
 
 	//Render user interface to see the scene information
 	m_userInterface.Initframe();

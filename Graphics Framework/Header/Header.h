@@ -1,8 +1,8 @@
 #pragma once
 
 //--------------------------------------------------------------------------------------------------------------------------------
-#define DIRECT_X
-//#define OPEN_GL
+//#define DIRECT_X
+#define OPEN_GL
 //--------------------------------------------------------------------------------------------------------------------------------
 
 //Common utilities
@@ -106,15 +106,19 @@ enum InputEvent
 struct LightingData
 {
 	Vector	directional;
-	Vector	position;
-	Vector	direction;
-
 	float   specularPower;
-	float   pointConstant;
-	float   pointLinear;
-	float   pointQuadratic;
-	float   cutOff;
-	float   outerCutOff;
+
+	Vector	pointPosition;
+	float   PointRadius;
+	
+	Vector	viewPosition;
+	float   SpotRadius;
+
+	Vector	spotPosition;
+	float   spotAlpha;
+	
+	Vector	spotDirection;
+	float   spotBeta;
 };
 
 struct ColorData

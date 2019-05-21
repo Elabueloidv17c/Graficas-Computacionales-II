@@ -190,6 +190,62 @@ bool CShaderProgram::UpdateLight(LightingData& data)
 		glUniform1f(location, data.specularPower);
 	}
 
+	location = glGetUniformLocation(m_id, "PointPosition");
+
+	if (location != -1)
+	{
+		glUniform3fv(location, 1, &data.pointPosition.x);
+	}
+
+	location = glGetUniformLocation(m_id, "PointRadius");
+
+	if (location != -1)
+	{
+		glUniform1f(location, data.PointRadius);
+	}
+
+	location = glGetUniformLocation(m_id, "ViewPosition");
+
+	if (location != -1)
+	{
+		glUniform3fv(location, 1, &data.viewPosition.x);
+	}
+
+	location = glGetUniformLocation(m_id, "SpotRadius");
+
+	if (location != -1)
+	{
+		glUniform1f(location, data.SpotRadius);
+	}
+
+	location = glGetUniformLocation(m_id, "SpotPosition");
+
+	if (location != -1)
+	{
+		glUniform3fv(location, 1, &data.spotPosition.x);
+	}
+
+	location = glGetUniformLocation(m_id, "SpotAlpha");
+
+	if (location != -1)
+	{
+		glUniform1f(location, data.spotAlpha);
+	}
+
+	location = glGetUniformLocation(m_id, "SpotLightDirection");
+
+	if (location != -1)
+	{
+		glUniform3fv(location, 1, &data.spotDirection.x);
+	}
+
+	location = glGetUniformLocation(m_id, "SpotBeta");
+
+	if (location != -1)
+	{
+		glUniform1f(location, data.spotAlpha);
+	}
+
 	return true;
 }
 

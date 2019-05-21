@@ -29,4 +29,5 @@ public:
 	void Zoom();
 
 	CCamera* GetActiveCamera();
+	CCamera* GetSecundaryCamera();
 };

@@ -96,3 +96,15 @@ CCamera* CCameraManager::GetActiveCamera()
 {
 	return &m_cameras[m_activeCamera];
 }
+
+CCamera* CCameraManager::GetSecundaryCamera()
+{
+	if (m_activeCamera == 1)
+	{
+		return &m_cameras[0];
+	}
+	else
+	{
+		return &m_cameras[1];
+	}
+}

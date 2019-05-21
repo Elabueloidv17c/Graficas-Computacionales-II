@@ -91,7 +91,7 @@ bool CModel::Initialize(ModelData data)
 	m_modelPath = data.path;
 
 	//Load mesh from file
-	const aiScene* model = aiImportFile(data.path, aiProcessPreset_TargetRealtime_MaxQuality);
+	const aiScene* model = aiImportFile(data.path, aiProcess_FlipUVs | aiProcess_GenSmoothNormals | aiProcess_Triangulate);
 
 	if (!model)
 	{
@@ -99,39 +99,34 @@ bool CModel::Initialize(ModelData data)
 		return false;
 	}
 
-	std::vector < const aiMaterial* > aiTextures;
-
 	//Resize the software container
 	m_meshes.resize(model->mNumMeshes);
 
 	for (int i = 0; i < m_meshes.size(); i++)
 	{
 		//Load Indices
-		unsigned int numFaces = model->mMeshes[i]->mNumFaces;
+		m_meshes[i].m_indices.resize(model->mMeshes[i]->mNumFaces * 3);
 
-		m_meshes[i].m_indices.resize(numFaces * 3);
-
-		for (unsigned int j = 0; j < numFaces; j++)
+		for (unsigned int j = 0; j < model->mMeshes[i]->mNumFaces; j++)
 		{
 			for (unsigned int k = 0; k < 3; k++)
 			{
-				m_meshes[i].m_indices[(3 * j) + k] = model->mMeshes[i]->mFaces[j].mIndices[k];
+				m_meshes[i].m_indices[(3 * j) + k] = model->mMeshes[i]->mFaces[j].mIndices[2 - k];
 			}
 		}
 
 		//Load vertices
-		unsigned int numVertices = model->mMeshes[i]->mNumVertices;
+		m_meshes[i].m_vertices.resize(model->mMeshes[i]->mNumVertices);
 		aiVector3D* UVs = model->mMeshes[i]->mTextureCoords[0];
-		m_meshes[i].m_vertices.resize(numVertices);
 
-		for (unsigned int j = 0; j < numVertices; j++)
+		for (unsigned int j = 0; j < m_meshes[i].m_vertices.size(); j++)
 		{
 			m_meshes[i].m_vertices[j].Position = VECTOR3{ model->mMeshes[i]->mVertices[j].x,
 			model->mMeshes[i]->mVertices[j].y, model->mMeshes[i]->mVertices[j].z };
 
 			if (model->mMeshes[i]->HasTextureCoords(0))
 			{
-				m_meshes[i].m_vertices[j].TexCoord = VECTOR2{ UVs[j].x, 1.0f - UVs[j].y };
+				m_meshes[i].m_vertices[j].TexCoord = VECTOR2{ UVs[j].x, UVs[j].y };
 			}
 
 			if (model->mMeshes[i]->HasNormals())
@@ -147,36 +142,51 @@ bool CModel::Initialize(ModelData data)
 			}
 		}
 
+		//In this point, the program just supports 2 texture types, diffuse and normal map
 		std::vector <std::string> textureNames;
 		textureNames.resize(2);
 
-		if (model->HasMaterials())
-		{
-			//Diffuse
-			const aiMaterial* material = model->mMaterials[model->mMeshes[i]->mMaterialIndex];
+		const aiMaterial* material = model->mMaterials[model->mMeshes[i]->mMaterialIndex];
 
+		//Diffuse
+		if (material->GetTextureCount(aiTextureType_DIFFUSE))
+		{
 			aiString filePath;
 			material->GetTexture(aiTextureType_DIFFUSE, 0, &filePath, NULL, NULL, NULL, NULL);
 
+			std::string texture;
+			texture = filePath.data;
+			int format = texture.find(".tga");
+
+			if (format >= 0)
+			{
+				texture.erase(format);
+				texture += ".png";
+			}
+
 			if (filePath.length)
 			{
-				for (unsigned int i = strlen(data.path) - 1; i >= 0; i--)
+				for (int j = strlen(data.path) - 1; j >= 0; j--)
 				{
-					if (data.path[i] == '/')
+					if (data.path[j] == '/')
 					{
-						for (unsigned int j = 0; j <= i; j++)
+						for (unsigned int k = 0; k <= j; k++)
 						{
-							textureNames[0].append(&data.path[j], 1);
+							textureNames[0].append(&data.path[k], 1);
 						}
 
-						textureNames[0] += filePath.data;
+						textureNames[0] += texture;
 
 						break;
 					}
 				}
 			}
+		}
 
-			filePath = "";
+		//Normals
+		if (material->GetTextureCount(aiTextureType_NORMALS))
+		{
+			aiString filePath;
 			material->GetTexture(aiTextureType_NORMALS, 0, &filePath, NULL, NULL, NULL, NULL);
 
 			if (filePath.length)
@@ -197,7 +207,19 @@ bool CModel::Initialize(ModelData data)
 				}
 			}
 		}
+		else
+		{
+			textureNames[1] = textureNames[0];
+			int replace = textureNames[1].find("a.png");
 
+			if (replace >= 0)
+			{
+				textureNames[1].erase(replace);
+				textureNames[1] += "n.png";
+			}
+		}
+
+		//Create Mesh
 		m_meshes[i].Initialize(textureNames);
 	}
 
@@ -242,7 +264,7 @@ bool CModel::Initialize(ModelData data, CDevice& device)
 	m_modelPath = data.path;
 
 	//Load mesh from file
-	const aiScene* model = aiImportFile(data.path, aiProcessPreset_TargetRealtime_MaxQuality);
+	const aiScene* model = aiImportFile(data.path, aiProcess_FlipUVs | aiProcess_GenSmoothNormals | aiProcess_Triangulate);
 
 	if (!model)
 	{
@@ -253,16 +275,12 @@ bool CModel::Initialize(ModelData data, CDevice& device)
 	//Resize the software container
 	m_meshes.resize(model->mNumMeshes);
 
-	std::vector < const aiMaterial* > aiTextures;
-
 	for (int i = 0; i < m_meshes.size(); i++)
 	{
 		//Load Indices
-		unsigned int numFaces = model->mMeshes[i]->mNumFaces;
+		m_meshes[i].m_indices.resize(model->mMeshes[i]->mNumFaces * 3);
 
-		m_meshes[i].m_indices.resize(numFaces * 3);
-
-		for (unsigned int j = 0; j < numFaces; j++)
+		for (unsigned int j = 0; j < model->mMeshes[i]->mNumFaces; j++)
 		{
 			for (unsigned int k = 0; k < 3; k++)
 			{
@@ -271,18 +289,17 @@ bool CModel::Initialize(ModelData data, CDevice& device)
 		}
 
 		//Load vertices
-		unsigned int numVertices = model->mMeshes[i]->mNumVertices;
+		m_meshes[i].m_vertices.resize(model->mMeshes[i]->mNumVertices);
 		aiVector3D* UVs = model->mMeshes[i]->mTextureCoords[0];
-		m_meshes[i].m_vertices.resize(numVertices);
 
-		for (unsigned int j = 0; j < numVertices; j++)
+		for (unsigned int j = 0; j < m_meshes[i].m_vertices.size(); j++)
 		{
 			m_meshes[i].m_vertices[j].Position = VECTOR3{model->mMeshes[i]->mVertices[j].x, 
 			model->mMeshes[i]->mVertices[j].y, model->mMeshes[i]->mVertices[j].z };
 
 			if (model->mMeshes[i]->HasTextureCoords(0))
 			{
-				m_meshes[i].m_vertices[j].TexCoord = VECTOR2{ UVs[j].x, 1.0f - UVs[j].y };
+				m_meshes[i].m_vertices[j].TexCoord = VECTOR2{ UVs[j].x, UVs[j].y };
 			}
 
 			if (model->mMeshes[i]->HasNormals())
@@ -298,36 +315,51 @@ bool CModel::Initialize(ModelData data, CDevice& device)
 			}
 		}
 
+		//In this point, the program just supports 2 texture types, diffuse and normal map
 		std::vector <std::string> textureNames;
 		textureNames.resize(2);
 
-		if (model->HasMaterials())
-		{
-			//Diffuse
-			const aiMaterial* material = model->mMaterials[model->mMeshes[i]->mMaterialIndex];
+		const aiMaterial* material = model->mMaterials[model->mMeshes[i]->mMaterialIndex];
 
+		//Diffuse
+		if (material->GetTextureCount(aiTextureType_DIFFUSE))
+		{
 			aiString filePath;
 			material->GetTexture(aiTextureType_DIFFUSE, 0, &filePath, NULL, NULL, NULL, NULL);
-			
+
+			std::string texture;
+			texture = filePath.data;
+			int format = texture.find(".tga");
+
+			if (format >= 0)
+			{
+				texture.erase(format);
+				texture += ".png";
+			}
+
 			if (filePath.length)
 			{
-				for (unsigned int i = strlen(data.path) - 1; i >= 0; i--)
+				for (int j = strlen(data.path) - 1; j >= 0; j--)
 				{
-					if (data.path[i] == '/')
+					if (data.path[j] == '/')
 					{
-						for (unsigned int j = 0; j <= i; j++)
+						for (unsigned int k = 0; k <= j; k++)
 						{
-							textureNames[0].append(&data.path[j], 1);
+							textureNames[0].append(&data.path[k], 1);
 						}
 
-						textureNames[0] += filePath.data;
+						textureNames[0] += texture;
 
 						break;
 					}
 				}
 			}
+		}
 
-			filePath = "";
+		//Normals
+		if (material->GetTextureCount(aiTextureType_NORMALS))
+		{
+			aiString filePath;
 			material->GetTexture(aiTextureType_NORMALS, 0, &filePath, NULL, NULL, NULL, NULL);
 
 			if (filePath.length)
@@ -348,7 +380,19 @@ bool CModel::Initialize(ModelData data, CDevice& device)
 				}
 			}
 		}
+		else
+		{
+			textureNames[1] = textureNames[0];
+			int replace = textureNames[1].find("a.png");
 
+			if (replace >= 0)
+			{
+				textureNames[1].erase(replace);
+				textureNames[1] += "n.png";
+			}
+		}
+
+		//Create Mesh
 		m_meshes[i].Initialize(textureNames);
 		device.CreateBuffers(m_meshes[i]);
 		device.CreateTexture(m_meshes[i]);
@@ -396,3 +440,13 @@ void CModel::Render(CDeviceContext& deviceContext, CShaderProgram& shaderProgram
 	}
 }
 #endif
+
+void InvertString(std::string& str)
+{
+	int n = str.length();
+
+	for (int i = 0; i < n / 2; i++)
+	{
+		std::swap(str[i], str[n - i - 1]);
+	}
+}

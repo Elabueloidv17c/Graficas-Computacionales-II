@@ -36,15 +36,17 @@ void CWindow::Initialize(Rect dimensions, unsigned int displayMode, const char* 
 	//Scene
 	m_scene.Initialize(scene);
 	scene.clear();
-	
-	//Camera
-	m_camera.Initialize(VECTOR3(0.0f, 400.0f, 0.0f), VECTOR3(0.0f, 0.0f, 1.0f),
-	VECTOR3(0.0f, -1.0f, 0.0f), VECTOR3(1.0f, 0.0f, 0.0f), -90.0f, 0.0f, 2.0f, 0.25f);
 
-	m_camera.AddCamera(VECTOR3(0.0f, 0.0f, -400.0f), VECTOR3(0.0f, 1.0f, 0.0f),
-	VECTOR3(0.0f, 0.0f, 1.0f), VECTOR3(1.0f, 0.0f, 0.0f), 90.0f, 0.0f, 2.0f, 0.25f);
+	//Add secundary camera
+	m_camera.Initialize(VECTOR3(0.0f, 15.0f, 0.0f), VECTOR3(0.0f, 0.0f, 1.0f),
+	VECTOR3(0.0f, -1.0f, 0.0f), VECTOR3(1.0f, 0.0f, 0.0f), -90.0f, 0.0f, 0.08f, 0.25f);
 
-	m_camera.SetViewMatrix((45.0f / 360.0f) * 6.283185307f, m_size.size, 0.1f, 500.0f);
+	//Initialize the main camera properties
+	m_camera.AddCamera(VECTOR3(0.0f, 3.0f, -10.0f), VECTOR3(0.0f, 1.0f, 0.0f),
+	VECTOR3(0.0f, 0.0f, 1.0f), VECTOR3(1.0f, 0.0f, 0.0f), 90.0f, 0.0f, 0.08f, 0.20f);
+
+	//Set The view matrix´s initial position
+	m_camera.SetViewMatrix((60.0f / 360.0f) * 6.283185307f, m_size.size, 0.1f, 1000.0f);
 }
 
 void CWindow::Render(CShaderProgram& shaderProgram, CCamera& camera, CCamera& otherCamera)

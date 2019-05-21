@@ -67,26 +67,6 @@ void CScene::PartyMode()
 	m_isParty = !m_isParty;
 }
 
-void CScene::ChangeSpecularColor(Color color)
-{
-	if (m_colorData.specularColor.r >= 1.0f || m_colorData.specularColor.r <= 0.0f)
-	{
-		color.r = -color.r;
-	}
-	if (m_colorData.specularColor.g >= 1.0f || m_colorData.specularColor.g <= 0.0f)
-	{
-		color.g = -color.g;
-	}
-	if (m_colorData.specularColor.b >= 1.0f || m_colorData.specularColor.b <= 0.0f)
-	{
-		color.b = -color.b;
-	}
-
-	m_colorData.specularColor.r += color.r;
-	m_colorData.specularColor.g += color.g;
-	m_colorData.specularColor.b += color.b;
-}
-
 void CScene::Update(float time)
 {
 	for (int i = 0; i < m_models.size(); i++)
@@ -142,17 +122,19 @@ void CScene::SetColorData(ColorData data)
 
 void CScene::SetLightData(LightingData data)
 {
-	m_lightingData.position = data.position;
-	m_lightingData.direction = data.direction;
 	m_lightingData.directional = data.directional;
+	m_lightingData.viewPosition = data.viewPosition;
+	m_lightingData.pointPosition = data.pointPosition;
+	m_lightingData.spotPosition = data.spotPosition;
+	m_lightingData.spotDirection = data.spotDirection;
 
+	m_lightingData.PointRadius = data.PointRadius;
+	m_lightingData.SpotRadius =	data.SpotRadius;
+	m_lightingData.spotBeta = data.spotBeta;
+	m_lightingData.spotAlpha =	data.spotAlpha;
 	m_lightingData.specularPower = data.specularPower;
-	m_lightingData.pointConstant = data.pointConstant;
-	m_lightingData.pointLinear = data.pointLinear;
-	m_lightingData.pointQuadratic = data.pointQuadratic;
-	m_lightingData.cutOff = data.cutOff;
-	m_lightingData.outerCutOff = data.outerCutOff;
 }
+
 
 unsigned int CScene::GetNumVertices()
 {

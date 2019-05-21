@@ -295,15 +295,31 @@ void CInputManager::Update(CCameraManager& camera, CScene& scene, float time)
 	}
 	if (m_events & InputEvent::KeyJ)
 	{
-		scene.ChangeSpecularColor(Color{ 0.00001f, 0, 0, 0});
+
 	}
 	if (m_events & InputEvent::KeyK)
 	{
-		scene.ChangeSpecularColor(Color{ 0, 0.00001f, 0, 0 });
+		if (scene.m_lightingData.SpotRadius > 0.0f)
+		{
+			scene.m_lightingData.SpotRadius = 0.0f;
+		}
+		else
+		{
+			scene.m_lightingData.SpotRadius = scene.m_spotRadius;
+		}
+		m_events &= ~(InputEvent::KeyK);
 	}
 	if (m_events & InputEvent::KeyL)
 	{
-		scene.ChangeSpecularColor(Color{ 0, 0, 0.00001f, 0 });
+		if (scene.m_lightingData.PointRadius > 0.0f)
+		{
+			scene.m_lightingData.PointRadius = 0.0f;
+		}
+		else
+		{
+			scene.m_lightingData.PointRadius = scene.m_pointRadius;
+		}
+		m_events &= ~(InputEvent::KeyL);
 	}
 	if (m_events & InputEvent::KeyE)
 	{

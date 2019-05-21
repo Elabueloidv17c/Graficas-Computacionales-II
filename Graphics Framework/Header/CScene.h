@@ -12,16 +12,19 @@ class CScene
 {
 public:
 
+	std::string				m_path;
+	std::vector <CModel>	m_models;
+
 	bool					m_isParty;
 	ColorData				m_colorData;
 	LightingData			m_lightingData;
+	float					m_spotRadius;
+	float					m_pointRadius;
 
-	std::vector <CModel>	m_models;
 
 	void PartyMode();
 	void Update(float time);
 	void RotateLight(float time);
-	void ChangeSpecularColor(Color color);
 	void ChangeLightIntensity(float value);
 
 	void SetColorData(ColorData data);

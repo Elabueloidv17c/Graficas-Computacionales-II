@@ -20,11 +20,7 @@ void CCamera::Initialize(VECTOR3 position, VECTOR3 up, VECTOR3 front, VECTOR3 ri
 	m_yaw = yaw;
 	m_pitch = pitch;
 
-#ifdef DIRECT_X
-	m_movementSpeed = speed * 0.080f;
-#else
 	m_movementSpeed = speed;
-#endif
 
 	m_rotateSpeed = rotateSpeed;
 

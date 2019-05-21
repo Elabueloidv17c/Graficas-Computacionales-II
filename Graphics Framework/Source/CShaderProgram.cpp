@@ -243,7 +243,7 @@ bool CShaderProgram::UpdateLight(LightingData& data)
 
 	if (location != -1)
 	{
-		glUniform1f(location, data.spotAlpha);
+		glUniform1f(location, data.spotBeta);
 	}
 
 	return true;

@@ -253,12 +253,28 @@ bool CShaderProgram::UpdateColor(ColorData& data)
 {
 	int location;
 
-	// Diffuse Color.
-	location = glGetUniformLocation(m_id, "DiffuseColor");
+	// Directional Light Color.
+	location = glGetUniformLocation(m_id, "DirectionalColor");
 
 	if (location != -1)
 	{
-		glUniform4fv(location, 1, &data.diffuseColor.r);
+		glUniform4fv(location, 1, &data.directionalColor.r);
+	}
+
+	// Point Light Color.
+	location = glGetUniformLocation(m_id, "PointColor");
+
+	if (location != -1)
+	{
+		glUniform4fv(location, 1, &data.pointColor.r);
+	}
+
+	// Spot Light Color.
+	location = glGetUniformLocation(m_id, "SpotColor");
+
+	if (location != -1)
+	{
+		glUniform4fv(location, 1, &data.spotColor.r);
 	}
 
 	// Mesh Color.
@@ -334,7 +350,7 @@ HRESULT CShaderProgram::CompileFromFile()
 {
 	HRESULT hr = S_OK;
 
-	DWORD dwShaderFlags = D3DCOMPILE_ENABLE_STRICTNESS;
+	DWORD dwShaderFlags = D3DXSHADER_DEBUG;
 
 	ID3DBlob* pErrorBlob;
 

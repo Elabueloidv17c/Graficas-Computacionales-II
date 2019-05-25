@@ -43,7 +43,10 @@ void CManager::Initialize(Rect dimensions)
 
 	m_window.m_scene.SetColorData(ColorData
 	{
-		Color{1.0f, 1.0f, 1.0f, 1.0f},
+		Color{1.0f, 1.0f, 1.0f, 1.0f},	//Directional Light
+		Color{0.0f, 1.0f, 0.0f, 1.0f},	//Point Light
+		Color{0.0f, 0.0f, 1.0f, 1.0f},	//Spot Light
+
 		Color{1.0f, 1.0f, 1.0f, 1.0f},
 		Color{0.0f, 1.0f, 0.0f, 1.0f},
 
@@ -155,15 +158,18 @@ void CManager::Initialize(WNDPROC pWndProc, HINSTANCE hInstance, std::string tit
 
 
 	m_window.m_scene.SetColorData(ColorData
-	{
-		Color{1.0f, 1.0f, 1.0f, 1.0f},
-		Color{1.0f, 1.0f, 1.0f, 1.0f},
-		Color{0.0f, 1.0f, 0.0f, 1.0f},
+		{
+			Color{1.0f, 1.0f, 1.0f, 1.0f},	//Directional Light
+			Color{0.0f, 1.0f, 0.0f, 1.0f},	//Point Light
+			Color{0.0f, 0.0f, 1.0f, 1.0f},	//Spot Light
 
-		1.0f,
-		1.0f,
-		0.2f
-	});
+			Color{1.0f, 1.0f, 1.0f, 1.0f},
+			Color{0.0f, 1.0f, 0.0f, 1.0f},
+
+			1.0f,
+			1.0f,
+			0.2f
+		});
 
 	//----------------------------------------------------------------------------------------------------Camera
 
@@ -284,6 +290,8 @@ void CManager::Update()
 	}
 #endif
 
+	m_window.m_scene.RotateLight(m_time);
+
 	//Check for resize event in the app
 	Resize();
 
@@ -303,13 +311,8 @@ void CManager::Resize()
 		m_viewport.Resize(m_window.m_size);
 
 
-		//Resize the render texture
-#ifdef OPEN_GL
-		m_renderTexture.Initialize(m_window.m_size.size, m_renderTexture.m_color);
-#endif
-
 #ifdef DIRECT_X
-		m_renderTexture.Initialize(m_device, m_window.m_size.size, m_renderTexture.m_color);
+		//m_renderTexture.Initialize(m_device, m_window.m_size.size, m_renderTexture.m_color);
 
 		m_window.m_swapChain.Resize(m_window.m_size.size);
 

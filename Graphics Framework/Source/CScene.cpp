@@ -61,7 +61,7 @@ void CScene::PartyMode()
 {
 	if (m_isParty)
 	{
-		m_colorData.diffuseColor = { 1.0f, 1.0f, 1.0f, 1.0f };
+		m_colorData.directionalColor = { 1.0f, 1.0f, 1.0f, 1.0f };
 	}
 
 	m_isParty = !m_isParty;
@@ -76,16 +76,16 @@ void CScene::Update(float time)
 
 	if (m_isParty)
 	{
-		m_colorData.diffuseColor.r = sinf(time * 1.0f) + 1.0f;
-		m_colorData.diffuseColor.g = cosf(time * 3.0f) + 1.0f;
-		m_colorData.diffuseColor.b = sinf(time * 5.0f) + 1.0f;
+		m_colorData.directionalColor.r = sinf(time * 1.0f) + 1.0f;
+		m_colorData.directionalColor.g = cosf(time * 3.0f) + 1.0f;
+		m_colorData.directionalColor.b = sinf(time * 5.0f) + 1.0f;
 	}
 }
 
 void CScene::RotateLight(float time)
 {
-	m_lightingData.directional.x = cos(time);
-	m_lightingData.directional.y = sin(time);
+	m_lightingData.directional.x = sin(time);
+	m_lightingData.directional.y = cos(time);
 	m_lightingData.directional.z = cos(time) + sin(time);
 }
 
@@ -106,7 +106,10 @@ void CScene::ChangeLightIntensity(float value)
 
 void CScene::SetColorData(ColorData data)
 {
-	m_colorData.diffuseColor = data.diffuseColor;
+	m_colorData.directionalColor = data.directionalColor;
+	m_colorData.pointColor = data.pointColor;
+	m_colorData.spotColor = data.spotColor;
+
 	m_colorData.specularColor = data.specularColor;
 
 #ifdef DIRECT_X

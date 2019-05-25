@@ -17,7 +17,10 @@ in vec2 TexCoord;
 
 	uniform mat4	Model;
 
-	uniform vec4	DiffuseColor;
+	uniform vec4	DirectionalColor;
+	uniform vec4	PointColor;
+	uniform vec4	SpotColor;
+
 	uniform vec4	SpecularColor;
 	uniform vec4	AmbientColor;
 
@@ -129,19 +132,19 @@ void main()
 #endif
 
 	// Light aportation
-	vec3 Diffuse = DiffuseColor.xyz * DiffuseIntensity * NormalDotLightWS;
+	vec3 Diffuse = DirectionalColor.xyz * DiffuseIntensity * NormalDotLightWS;
 	vec3 Specular = SpecularColor.xyz * SpecularIntensity * SpecularFactor;
 	float Ambient = AmbientIntensity * (1.0 - NormalDotLightWS);
 
 #ifdef POINT_LIGHT
-	Diffuse += DiffuseColor.xyz * DiffuseIntensity * PointNormalDotLightWS;
+	Diffuse += PointColor.xyz * DiffuseIntensity * PointNormalDotLightWS;
 	Specular += SpecularColor.xyz * SpecularIntensity * PointSpecularFactor;
 	Ambient *= (1.0 - PointNormalDotLightWS);
 	//Diffuse /= LightNumber.xxx;
 #endif
 
 #ifdef SPOT_LIGHT
-	Diffuse += DiffuseColor.xyz * DiffuseIntensity * SpotNormalDotLightWS;
+	Diffuse += SpotColor.xyz * DiffuseIntensity * SpotNormalDotLightWS;
 	Specular += SpecularColor.xyz * SpecularIntensity * SpotSpecularFactor;
 	Ambient *= (1.0 - SpotNormalDotLightWS);
 	//Specular /= LightNumber.xxx;

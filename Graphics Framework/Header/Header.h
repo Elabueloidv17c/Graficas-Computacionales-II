@@ -123,7 +123,10 @@ struct LightingData
 
 struct ColorData
 {
-	Color diffuseColor;
+	Color directionalColor;
+	Color pointColor;
+	Color spotColor;
+
 	Color specularColor;
 	Color ambientColor;
 

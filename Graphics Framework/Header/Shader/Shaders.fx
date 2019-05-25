@@ -31,7 +31,10 @@ cbuffer projectionMatrix : register(b2)
 
 cbuffer color : register(b3)
 {
-	float4 DiffuseColor;
+	float4 DirectionalColor;
+	float4 PointColor;
+	float4 SpotColor;
+
 	float4 SpecularColor;
 	float4 AmbientColor;
 
@@ -78,7 +81,7 @@ struct PS_INPUT
 #ifdef PIXEL_LIGHT
 	float3 Nor	 : NORMAL;
 	float3 Tan	 : TANGENT;
-	float4 PosWS : WS_POSITION;
+	float3 PosWS : WS_POS;
 #else
 	float4 Col : COLOR;
 #endif
@@ -91,19 +94,24 @@ PS_INPUT VS(VS_INPUT input)
 {
 	PS_INPUT output = (PS_INPUT)0;
 
-	float4 PosWS = mul(input.Pos, Model);
-
-	output.Pos = mul(input.Pos, Model);
-	output.Pos = mul(output.Pos, View);
-	output.Pos = mul(output.Pos, Projection);
-
 	output.Tex = input.Tex;
 
-	#ifdef PIXEL_LIGHT
-		output.Nor = mul(float4(input.Nor.xyz, 0), Model).xyz;
-		output.Tan = mul(float4(input.Tan.xyz, 0), Model).xyz;
-		output.PosWS = PosWS;
-	#else
+#ifdef PIXEL_LIGHT
+	output.Nor = mul(float4(input.Nor.xyz, 0), Model).xyz;
+	output.Tan = mul(float4(input.Tan.xyz, 0), Model).xyz;
+
+	output.Pos = mul(input.Pos, Model);
+	output.PosWS = input.Pos;
+
+	output.Pos = mul(output.Pos, View);
+	output.Pos = mul(output.Pos, Projection);
+#else
+
+	output.Pos = mul(input.Pos, Model);
+	float4 PosWS = output.Pos;
+
+	output.Pos = mul(output.Pos, View);
+	output.Pos = mul(output.Pos, Projection);
 
 	float3 NormalWS = normalize(mul(float4(input.Nor.xyz, 0), Model)).xyz;
 
@@ -175,19 +183,18 @@ PS_INPUT VS(VS_INPUT input)
 	#endif
 	
 	// Light aportation
-	float3 Diffuse = DiffuseIntensity * DiffuseColor * NormalDotLightWS;
+	float3 Diffuse = DiffuseIntensity * DirectionalColor * NormalDotLightWS;
 	float3 Specular = SpecularIntensity * SpecularColor * SpecularFactor;
 	float3 Ambient = AmbientIntensity * (1.0 - NormalDotLightWS);
 
 	#ifdef POINT_LIGHT
-		Diffuse += DiffuseIntensity * DiffuseColor * PointNormalDotLightWS;
+		Diffuse += DiffuseIntensity * PointColor * PointNormalDotLightWS;
 		Specular += SpecularIntensity * SpecularColor * PointSpecularFactor;
 		Ambient *= (1.0 - PointNormalDotLightWS);
 		//Diffuse /= LightNumber.xxx;
 	#endif
-
 	#ifdef SPOT_LIGHT
-		Diffuse += DiffuseIntensity * DiffuseColor * SpotNormalDotLightWS;
+		Diffuse += DiffuseIntensity * SpotColor * SpotNormalDotLightWS;
 		Specular += SpecularIntensity * SpecularColor * SpotSpecularFactor;
 		Ambient *= (1.0 - SpotNormalDotLightWS);
 		//Specular /= LightNumber.xxx;
@@ -279,19 +286,18 @@ float4 PS(PS_INPUT input) : SV_Target
 	#endif
 
 	// Light aportation
-	float3 Diffuse = DiffuseIntensity * DiffuseColor * NormalDotLightWS;
+	float3 Diffuse = DiffuseIntensity * DirectionalColor * NormalDotLightWS;
 	float3 Specular = SpecularIntensity * SpecularColor * SpecularFactor;
 	float3 Ambient = AmbientIntensity * (1.0 - NormalDotLightWS);
 
 	#ifdef POINT_LIGHT
-		Diffuse += DiffuseIntensity * DiffuseColor * PointNormalDotLightWS;
+		Diffuse += DiffuseIntensity * PointColor * PointNormalDotLightWS;
 		Specular += SpecularIntensity * SpecularColor * PointSpecularFactor;
 		Ambient *= (1.0 - PointNormalDotLightWS);
 		//Diffuse /= LightNumber.xxx;
 	#endif
-	
 	#ifdef SPOT_LIGHT
-		Diffuse += DiffuseIntensity * DiffuseColor * SpotNormalDotLightWS;
+		Diffuse += DiffuseIntensity * SpotColor * SpotNormalDotLightWS;
 		Specular += SpecularIntensity * SpecularColor * SpotSpecularFactor;
 		Ambient *= (1.0 - SpotNormalDotLightWS);
 		//Specular /= LightNumber.xxx;

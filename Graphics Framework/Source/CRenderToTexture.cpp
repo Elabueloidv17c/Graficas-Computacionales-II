@@ -30,15 +30,15 @@ bool CRenderToTexture::Initialize(Size size, Color color)
 		glGenFramebuffers(1, &m_idFrameBuffer);
 		glGenRenderbuffers(1, &m_idDepth);
 		glGenTextures(1, &m_idTexture);
-
+	
 		m_color = color;
 	}
-
+	
 	glBindTexture(GL_TEXTURE_2D, m_idTexture);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, size.width, size.height, 0, GL_RGB, GL_UNSIGNED_BYTE, 0);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-
+	
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, size.width, size.height, 0, GL_RGBA, GL_FLOAT, 0);
 	
 	glBindRenderbuffer(GL_RENDERBUFFER, m_idDepth);
@@ -47,20 +47,22 @@ bool CRenderToTexture::Initialize(Size size, Color color)
 	glBindFramebuffer(GL_FRAMEBUFFER, m_idFrameBuffer);
 	glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, m_idDepth);
 	glFramebufferTexture(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, m_idTexture, 0);
-
+	
 	GLenum DrawBuffers[1] = { GL_COLOR_ATTACHMENT0 };
 	glDrawBuffers(1, DrawBuffers);
-
-
+	
+	
 	if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
 	{
 		return false;
 	}
-
+	
 	else
 	{
 		return true;
 	}
+
+	return true;
 }
 
 void CRenderToTexture::Bind(Size size)

@@ -66,18 +66,18 @@ void CMesh::Initialize(std::vector <std::string>& texturePaths)
 void CMesh::Render(unsigned int shaderProgram)
 {
 	m_material.Render(shaderProgram);
-
+	
 	m_vertexBuffer.Bind();
 	m_indexBuffer.Bind();
-
+	
 	glEnable(GL_DEPTH_TEST);
 	glDepthFunc(GL_LESS);
 	glClearDepth(1.0f);
-
+	
 	glDrawElements(GL_TRIANGLES, m_indices.size(), GL_UNSIGNED_INT, NULL);
-
+	
 	m_material.EndRender();
-
+	
 	glBindVertexArray(0);
 }
 #endif

@@ -26,17 +26,17 @@ void CDepthStencil::Initialize(Size size, bool stencil)
 {
 	glGenRenderbuffersEXT(1, &m_id);
 	glBindRenderbufferEXT(GL_RENDERBUFFER_EXT, m_id);
-
+	
 	if (stencil)
 	{
 		glRenderbufferStorageEXT(GL_RENDERBUFFER_EXT, GL_DEPTH24_STENCIL8, size.width, size.height);
 	}
-
+	
 	else
 	{
 		glRenderbufferStorageEXT(GL_RENDERBUFFER_EXT, GL_DEPTH_COMPONENT24, size.width, size.height);
 	}
-
+	
 	glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, m_id);
 }
 

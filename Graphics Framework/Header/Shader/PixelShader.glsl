@@ -1,19 +1,9 @@
-#version 400 core
-
-#define PIXEL_LIGHT
-
-#define DIRECTIONAL_LIGHT
-#define POINT_LIGHT
-#define SPOT_LIGHT
-
-#define BLINN_PHONG
-
 in vec2 TexCoord;
 
 #ifdef PIXEL_LIGHT
-	in vec3 inPosWS;
-	in vec3 Normal;
-	in vec3 Tangent;
+	in vec3			inPosWS;
+	in vec3			Normal;
+	in vec3			Tangent;
 
 	uniform mat4	Model;
 
@@ -80,13 +70,11 @@ void main()
 	float SpotSpecularFactor;
 
 	float Distance;
-	//float LightNumber = 1.0f + max(0.0f, (SpotRadius / SpotRadius)) + max(0.0f, (PointRadius / PointRadius));
 
-#ifdef DIRECTIONAL_LIGHT
 	LightDirectionWS = -normalize(DirectionalLight.xyz);
 	ViewDirectionWS = -normalize(DirectionalLight.xyz);
 	NormalDotLightWS = max(0.0f, dot(LightDirectionWS, NormalWS.xyz));
-#endif
+
 #ifdef POINT_LIGHT
 	PointLightDirectionWS = -normalize(PosWS.xyz - (Model * vec4(PointPosition.xyz, 1.0f)).xyz);
 	PointViewDirectionWS = PointLightDirectionWS;
@@ -140,14 +128,12 @@ void main()
 	Diffuse += PointColor.xyz * DiffuseIntensity * PointNormalDotLightWS;
 	Specular += SpecularColor.xyz * SpecularIntensity * PointSpecularFactor;
 	Ambient *= (1.0 - PointNormalDotLightWS);
-	//Diffuse /= LightNumber.xxx;
 #endif
 
 #ifdef SPOT_LIGHT
 	Diffuse += SpotColor.xyz * DiffuseIntensity * SpotNormalDotLightWS;
 	Specular += SpecularColor.xyz * SpecularIntensity * SpotSpecularFactor;
 	Ambient *= (1.0 - SpotNormalDotLightWS);
-	//Specular /= LightNumber.xxx;
 #endif
 
 	FinalColor = texture(Texture, TexCoord) * vec4(vec3(Ambient, Ambient, Ambient) + Diffuse.xyz + Specular.xyz, 1.0);

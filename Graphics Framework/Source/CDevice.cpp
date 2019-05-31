@@ -87,20 +87,21 @@ void CDevice::CreateSamplerState(CSamplerState& sampler)
 
 void CDevice::CreateInputLayout(CShaderProgram& shader)
 {
-	m_pointer->CreateInputLayout(&shader.m_layout[0], shader.m_layoutSize, shader.m_pVertexBlob->GetBufferPointer(), 
-	shader.m_pVertexBlob->GetBufferSize(), &shader.m_pLayout);
+	m_pointer->CreateInputLayout(&shader.m_vertexShader.m_layout[0], shader.m_vertexShader.m_layout.size(), 
+	shader.m_vertexShader.m_blob->GetBufferPointer(), shader.m_vertexShader.m_blob->GetBufferSize(), 
+	&shader.m_vertexShader.m_pLayout);
 }
 
 void CDevice::CreateVertexShader(CShaderProgram& shader)
 {
-	m_pointer->CreateVertexShader(shader.m_pVertexBlob->GetBufferPointer(), shader.m_pVertexBlob->GetBufferSize(), 
-	NULL, &shader.m_pVertex);
+	m_pointer->CreateVertexShader(shader.m_vertexShader.m_blob->GetBufferPointer(), 
+	shader.m_vertexShader.m_blob->GetBufferSize(),NULL, &shader.m_vertexShader.m_pointer);
 }
 
 void CDevice::CreatePixelShader(CShaderProgram& shader)
 {
-	m_pointer->CreatePixelShader(shader.m_pPixelBlob->GetBufferPointer(), shader.m_pPixelBlob->GetBufferSize(), 
-	NULL, &shader.m_pPixel);
+	m_pointer->CreatePixelShader(shader.m_pixelShader.m_blob->GetBufferPointer(), shader.m_pixelShader.m_blob->GetBufferSize(),
+	NULL, &shader.m_pixelShader.m_pointer);
 }
 
 void CDevice::CreateConstantBuffer(CConstantBuffer& buffer, unsigned int size)

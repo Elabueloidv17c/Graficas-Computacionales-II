@@ -24,7 +24,7 @@ void CViewportManager::Initialize(Rect dimensions)
 		m_activeViewPort = 0;
 		m_vieports.push_back(dimensions);
 	}
-
+	
 	glViewport(dimensions.pos.x, dimensions.pos.y, dimensions.size.width, dimensions.size.height);
 #endif
 

@@ -1,9 +1,19 @@
-#pragma once
+//------------------------------------------------------------------------------------------------------------------------------
+//API
+//------------------------------------------------------------------------------------------------------------------------------
 
-//--------------------------------------------------------------------------------------------------------------------------------
-//#define DIRECT_X
-#define OPEN_GL
-//--------------------------------------------------------------------------------------------------------------------------------
+#pragma once
+#define DIRECT_X
+//#define OPEN_GL
+
+//------------------------------------------------------------------------------------------------------------------------------
+//Shaders
+//------------------------------------------------------------------------------------------------------------------------------
+
+#define POINT_LIGHT
+#define SPOT_LIGHT
+
+//------------------------------------------------------------------------------------------------------------------------------
 
 //Common utilities
 #include <iostream>
@@ -135,12 +145,32 @@ struct ColorData
 	float ambientIntensity;
 };
 
+struct ShaderData
+{
+	const char*	filePath;
+#ifdef DIRECT_X
+	const char*	entryPoint;
+	const char*	shaderModel;
+#endif
+#ifdef OPEN_GL
+	int typeFlag;
+#endif
+	bool isVertex;
+	bool isBlinn;
+};
+
+struct ShaderProgramData
+{
+	ShaderData vertex;
+	ShaderData pixel;
+};
+
 #ifdef OPEN_GL
 //GLEW
 #include <GL/glew.h>
 
-//GLUT
-#include <GL/glut.h>
+//GLFW
+#include <GLFW/glfw3.h>
 
 typedef unsigned char* TextureData;
 
@@ -196,19 +226,17 @@ struct SwapChainData
 #endif
 
 #ifdef DIRECT_X
-//#define D3DReflect
-
 //ImGui
 #include "ImGUI/imgui_impl_dx11.h"
 
 #include "CStringConverter.h"
 #include "Resource.h"
 
-#include <Windows.h>
-
+#include <d3d11shader.h>
 #include <D3DCompiler.h>
 #include <D3dx9math.h>
 #include <xnamath.h>
+#include <Windows.h>
 #include <d3dx11.h>
 #include <d3d11.h>
 #include <winnt.h>

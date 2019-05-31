@@ -40,17 +40,17 @@ void CDeviceContext::ClearDepthStencil(CSwapChain& swapchain)
 
 void CDeviceContext::SetInputLayout(CShaderProgram& shader)
 {
-	m_pointer->IASetInputLayout(shader.m_pLayout);
+	m_pointer->IASetInputLayout(shader.m_vertexShader.m_pLayout);
 }
 
 void CDeviceContext::SetVertexShader(CShaderProgram& shader)
 {
-	m_pointer->VSSetShader(shader.m_pVertex, NULL, 0);
+	m_pointer->VSSetShader(shader.m_vertexShader.m_pointer, NULL, 0);
 }
 
 void CDeviceContext::SetPixelShader(CShaderProgram& shader)
 {
-	m_pointer->PSSetShader(shader.m_pPixel, NULL, 0);
+	m_pointer->PSSetShader(shader.m_pixelShader.m_pointer, NULL, 0);
 }
 
 void CDeviceContext::SetVertexConstantBuffer(unsigned int index, CConstantBuffer& constantBuffer)

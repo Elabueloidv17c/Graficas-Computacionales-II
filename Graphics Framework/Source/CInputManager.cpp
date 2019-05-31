@@ -348,47 +348,47 @@ void CInputManager::Update(CCameraManager& camera, CScene& scene, float time)
 #ifdef OPEN_GL
 void CInputManager::MouseKey(int button, int state)
 {
-	// Left down
-	if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN)
-	{
-		m_events |= InputEvent::LeftMouse;
-		std::cout << "Left mouse button down" << std::endl;
-	}
-
-	// Left Up
-	if (button == GLUT_LEFT_BUTTON && state == GLUT_UP)
-	{
-		m_events &= ~(InputEvent::LeftMouse);
-		std::cout << "Left mouse button up" << std::endl;
-	}
-
-	// Right down
-	if (button == GLUT_RIGHT_BUTTON && state == GLUT_DOWN)
-	{
-		m_events |= InputEvent::RightMouse;
-		std::cout << "Right mouse button down" << std::endl;
-	}
-
-	// Right Up
-	if (button == GLUT_RIGHT_BUTTON && state == GLUT_UP)
-	{
-		m_events &= ~(InputEvent::RightMouse);
-		std::cout << "Right mouse button Up" << std::endl;
-	}
-
-	// Mid down
-	if (button == GLUT_MIDDLE_BUTTON && state == GLUT_DOWN)
-	{
-		m_events |= InputEvent::MiddleMouse;
-		std::cout << "Middle mouse button down" << std::endl;
-	}
-
-	// Mid up
-	if (button == GLUT_MIDDLE_BUTTON && state == GLUT_UP)
-	{
-		m_events &= ~(InputEvent::MiddleMouse);
-		std::cout << "Middle mouse button up" << std::endl;
-	}
+	//// Left down
+	//if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN)
+	//{
+	//	m_events |= InputEvent::LeftMouse;
+	//	std::cout << "Left mouse button down" << std::endl;
+	//}
+	//
+	//// Left Up
+	//if (button == GLUT_LEFT_BUTTON && state == GLUT_UP)
+	//{
+	//	m_events &= ~(InputEvent::LeftMouse);
+	//	std::cout << "Left mouse button up" << std::endl;
+	//}
+	//
+	//// Right down
+	//if (button == GLUT_RIGHT_BUTTON && state == GLUT_DOWN)
+	//{
+	//	m_events |= InputEvent::RightMouse;
+	//	std::cout << "Right mouse button down" << std::endl;
+	//}
+	//
+	//// Right Up
+	//if (button == GLUT_RIGHT_BUTTON && state == GLUT_UP)
+	//{
+	//	m_events &= ~(InputEvent::RightMouse);
+	//	std::cout << "Right mouse button Up" << std::endl;
+	//}
+	//
+	//// Mid down
+	//if (button == GLUT_MIDDLE_BUTTON && state == GLUT_DOWN)
+	//{
+	//	m_events |= InputEvent::MiddleMouse;
+	//	std::cout << "Middle mouse button down" << std::endl;
+	//}
+	//
+	//// Mid up
+	//if (button == GLUT_MIDDLE_BUTTON && state == GLUT_UP)
+	//{
+	//	m_events &= ~(InputEvent::MiddleMouse);
+	//	std::cout << "Middle mouse button up" << std::endl;
+	//}
 }
 #endif
 
@@ -406,6 +406,20 @@ void CInputManager::MouseKey(InputEvent button, bool isPressed)
 	if (button == InputEvent::LeftMouse && !isPressed)
 	{
 		m_events &= ~(InputEvent::LeftMouse);
+		std::cout << "Right mouse button up" << std::endl;
+	}
+
+	// Right down
+	if (button == InputEvent::RightMouse && isPressed)
+	{
+		m_events |= InputEvent::RightMouse;
+		std::cout << "Right mouse button down" << std::endl;
+	}
+
+	// Righ up
+	if (button == InputEvent::RightMouse && !isPressed)
+	{
+		m_events &= ~(InputEvent::RightMouse);
 		std::cout << "Right mouse button up" << std::endl;
 	}
 }

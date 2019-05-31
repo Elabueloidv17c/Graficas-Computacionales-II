@@ -17,10 +17,11 @@ public:
 	Rect				m_size;
 
 #ifdef OPEN_GL
-	unsigned int		m_id;
+	GLFWwindow*			m_pointer;
 	Color				m_clearColor;
 
 	void Initialize(Rect dimensions, unsigned int displayMode, const char* name, Color color, std::vector <ModelData>& scene);
+	GLFWwindow* GetPointer();
 	void Clear();
 #endif
 
@@ -36,13 +37,12 @@ public:
 	void Initialize(WNDPROC pWndProc, HINSTANCE hInstance, std::string title, std::string className, Size size, Color color, INT nCmdShow);
 #endif
 
-	CWindow() = default;
-	~CWindow() = default;
+	CWindow();
+	~CWindow();
 
 	void Render(CShaderProgram& shaderProgram, CCamera& camera, CCamera& otherCamera);
 	bool Resize();
 
-	unsigned int GetId();
 
 	Color GetClearColor();
 	void SetClearColor(Color color);

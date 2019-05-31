@@ -1,10 +1,10 @@
 #pragma once
 #include "CViewportManager.h"
 #include "CRenderToTexture.h"
+#include "CShaderManager.h"
 #include "CUserInterface.h"
-#include "CSamplerState.h"
-#include "CShaderProgram.h"
 #include "CDeviceContext.h"
+#include "CSamplerState.h"
 #include "CInputManager.h"
 #include "CWindow.h"
 #include "CDevice.h"
@@ -20,7 +20,9 @@ public:
 	CRenderToTexture		m_renderTexture;
 	CUserInterface			m_userInterface;
 	CViewportManager		m_viewport;
-	CShaderProgram			m_shaderProgram;
+
+	CShaderManager			m_shaderManager;
+
 	CInputManager			m_inputHandler;
 	CSamplerState			m_sampler;
 	CWindow					m_window;
@@ -31,6 +33,8 @@ public:
 	MATRIX4					m_world;
 
 #ifdef OPEN_GL
+	float					m_lastFrame;
+
 	void Initialize(Rect dimensions);
 #endif
 

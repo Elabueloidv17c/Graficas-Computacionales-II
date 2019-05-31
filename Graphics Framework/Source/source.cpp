@@ -8,6 +8,7 @@
 
 CManager app;
 
+#ifdef DIRECT_X
 extern LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
 
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
@@ -16,8 +17,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	{
 		return false;
 	}
-
-#ifdef DIRECT_X
 	unsigned char keycode = static_cast<unsigned char>(wParam);
 	Point mousePosition = { LOWORD(lParam), HIWORD(lParam) };
 
@@ -26,6 +25,22 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 	switch (message)
 	{
+	case WM_RBUTTONDOWN:
+	{
+		app.m_inputHandler.MouseKey(InputEvent::RightMouse, true);
+		break;
+	}
+	case WM_RBUTTONUP:
+	{
+		app.m_inputHandler.MouseKey(InputEvent::RightMouse, false);
+	}
+	case WM_MOUSEMOVE:
+	{
+		if (app.m_inputHandler.m_events & InputEvent::RightMouse)
+		{
+			app.m_window.m_camera.Rotate(mousePosition.x, mousePosition.y);
+		}
+	}
 	case WM_LBUTTONDOWN:
 	{
 		app.m_inputHandler.MouseKey(InputEvent::LeftMouse, true);
@@ -34,13 +49,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	case WM_LBUTTONUP:
 	{
 		app.m_inputHandler.MouseKey(InputEvent::LeftMouse, false);
-	}
-	case WM_MOUSEMOVE:
-	{
-		if (app.m_inputHandler.m_events & InputEvent::LeftMouse)
-		{
-			app.m_window.m_camera.Rotate(mousePosition.x, mousePosition.y);
-		}
 	}
 	case WM_KEYDOWN:
 	{
@@ -69,14 +77,16 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	}
 	}
 	return 0;
-#endif
-}
 
-#ifdef DIRECT_X
+}
+#endif
+
 int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, INT nCmdShow)
 {
 	UNREFERENCED_PARAMETER(hPrevInstance);
 	UNREFERENCED_PARAMETER(lpCmdLine);
+
+#ifdef DIRECT_X
 
 	app.Initialize(WndProc, hInstance, "DirectX", "class", Size{ 1280, 720 }, Color{ 0.0f, 0.5f, 0.125f, 1.0f }, nCmdShow);
 
@@ -96,76 +106,20 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 		}
 	}
 	return (int)msg.wParam;
-}
 #endif //DirectX
-
 #ifdef OPEN_GL
-void Render()
-{
-	app.Render();
-}
-
-void KeyBoardDown(unsigned char key, int x, int y)
-{
-	app.m_inputHandler.KeyBoardDown(key);
-}
-
-void KeyBoardUp(unsigned char key, int x, int y)
-{
-	app.m_inputHandler.KeyBoardUp(key);
-}
-
-void MouseKey(int button, int state, int x, int y)
-{
-	app.m_inputHandler.MouseKey(button, state);
-}
-
-void CameraMovement(int x, int y)
-{
-	if (app.m_inputHandler.m_events & InputEvent::LeftMouse)
-	{
-		app.m_window.m_camera.Rotate(x, y);
-	}
-}
-
-void Update()
-{
-	glutPostRedisplay();
-	app.Update();
-	app.m_inputHandler.Update(app.m_window.m_camera, app.m_window.m_scene, app.m_time);
-}
-
-void SetCallbackFunctions()
-{
-	// Set render function
-	glutDisplayFunc(Render);
-
-	// Set update function
-	glutIdleFunc(Update);
-
-	// Set Mouse Movement function
-	glutMotionFunc(CameraMovement);
-
-	// Set Mouse input function
-	glutMouseFunc(MouseKey);
-
-	// Set Keyboard press function
-	glutKeyboardFunc(KeyBoardDown);
-
-	// Set keyboard release func
-	glutKeyboardUpFunc(KeyBoardUp);
-}
-
-int main(int argc, char** argv)
-{
-	glutInit(&argc, argv);
-
 	app.Initialize(Rect{ 0, 0, 1280, 720 });
-	SetCallbackFunctions();
 
-	glutMainLoop();
+	while (!glfwWindowShouldClose(app.m_window.m_pointer))
+	{        
+		// Check if any events have been activiated
+		glfwPollEvents();
 
-	return 0;
-}
+		//Update and render the app
+		app.Update();
+		app.Render();
+	}
 
+	glfwTerminate();
 #endif //OpenGL
+}

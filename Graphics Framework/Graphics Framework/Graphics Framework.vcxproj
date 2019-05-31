@@ -70,16 +70,32 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>$(SolutionDir)Header;$(DXSDK_DIR)include;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)Header;$(DXSDK_DIR)include;$(DEVLIBS)Soil2\include\;$(DEVLIBS)Glew\include\;$(DEVLIBS)Assimp\include\;$(DEVLIBS)GLFW\include\;$(IncludePath)</IncludePath>
     <ReferencePath>$(ReferencePath)</ReferencePath>
-    <LibraryPath>$(SolutionDir)lib\x64;$(DXSDK_DIR)lib/x64;$(LibraryPath)</LibraryPath>
+    <LibraryPath>$(DXSDK_DIR)lib\$(PlatformTarget);$(DEVLIBS)Assimp\lib\$(PlatformTarget);$(DEVLIBS)Glew\lib\$(PlatformTarget);$(DEVLIBS)Soil2\lib\$(PlatformTarget);$(DEVLIBS)GLFW\lib\$(PlatformTarget);$(LibraryPath)</LibraryPath>
     <ExecutablePath>$(SolutionDir)bin\x64;$(ExecutablePath)</ExecutablePath>
+    <OutDir>$(SolutionDir)build\$(PlatformTarget)\$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)intermediate\$(PlatformTarget)\$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>$(SolutionDir)Header;$(DXSDK_DIR)include;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)lib\x86;$(DXSDK_DIR)lib/x86;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)Header;$(DXSDK_DIR)include;$(DEVLIBS)Soil2\include\;$(DEVLIBS)Glew\include\;$(DEVLIBS)Assimp\include\;$(DEVLIBS)GLFW\include\;$(IncludePath)</IncludePath>
+    <LibraryPath>$(DXSDK_DIR)lib\$(PlatformTarget);$(DEVLIBS)Assimp\lib\$(PlatformTarget);$(DEVLIBS)Glew\lib\$(PlatformTarget);$(DEVLIBS)Soil2\lib\$(PlatformTarget);$(DEVLIBS)GLFW\lib\$(PlatformTarget);$(LibraryPath)</LibraryPath>
     <ReferencePath>$(ReferencePath)</ReferencePath>
     <ExecutablePath>$(ExecutablePath)</ExecutablePath>
+    <OutDir>$(SolutionDir)build\$(PlatformTarget)\$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)intermediate\$(PlatformTarget)\$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>$(SolutionDir)build\$(PlatformTarget)\$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)intermediate\$(PlatformTarget)\$(Configuration)\</IntDir>
+    <IncludePath>$(SolutionDir)Header;$(DXSDK_DIR)include;$(DEVLIBS)Soil2\include\;$(DEVLIBS)Glew\include\;$(DEVLIBS)Assimp\include\;$(DEVLIBS)GLFW\include\;$(IncludePath)</IncludePath>
+    <LibraryPath>$(DXSDK_DIR)lib\$(PlatformTarget);$(DEVLIBS)Assimp\lib\$(PlatformTarget);$(DEVLIBS)Glew\lib\$(PlatformTarget);$(DEVLIBS)Soil2\lib\$(PlatformTarget);$(DEVLIBS)GLFW\lib\$(PlatformTarget);$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <OutDir>$(SolutionDir)build\$(PlatformTarget)\$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)intermediate\$(PlatformTarget)\$(Configuration)\</IntDir>
+    <IncludePath>$(SolutionDir)Header;$(DXSDK_DIR)include;$(DEVLIBS)Soil2\include\;$(DEVLIBS)Glew\include\;$(DEVLIBS)Assimp\include\;$(DEVLIBS)GLFW\include\;$(IncludePath)</IncludePath>
+    <LibraryPath>$(DXSDK_DIR)lib\$(PlatformTarget);$(DEVLIBS)Assimp\lib\$(PlatformTarget);$(DEVLIBS)Glew\lib\$(PlatformTarget);$(DEVLIBS)Soil2\lib\$(PlatformTarget);$(DEVLIBS)GLFW\lib\$(PlatformTarget);$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -88,9 +104,10 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(DEVLIBS)GLEW\include\;$(DEVLIBS)GLFW\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>assimp.lib;glew32.lib;glew32s.lib;glut32.lib;glu32.lib;soil2-debug.lib;dxgi.lib;d3d11.lib;d3dx11.lib;d3dx10.lib;D3Dcompiler.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>assimp-vc141-mtd.lib;soil2-debug.lib;opengl32.lib;glew32.lib;glfw3d.lib;dxgi.lib;d3d11.lib;d3dx11.lib;d3dx10.lib;D3Dcompiler.lib;dxguid.lib</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -99,9 +116,10 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>$(DEVLIBS)GLEW\include\;$(DEVLIBS)GLFW\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>assimp.lib;glew32sd.lib;glew32.lib;glut32.lib;glu32.lib;soil2-debug.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>assimp-vc141-mtd.lib;soil2-debug.lib;opengl32.lib;glew32.lib;glfw3d.lib;dxgi.lib;d3d11.lib;d3dx11.lib;d3dx10.lib;D3Dcompiler.lib;dxguid.lib</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -112,10 +130,12 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>$(DEVLIBS)GLEW\include\;$(DEVLIBS)GLFW\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalDependencies>assimp-vc141-mt.lib;glew32.lib;opengl32.lib;glfw3.lib;soil2.lib;dxgi.lib;d3d11.lib;d3dx11.lib;d3dx10.lib;D3Dcompiler.lib;dxguid.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -126,10 +146,12 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>$(DEVLIBS)GLEW\include\;$(DEVLIBS)GLFW\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalDependencies>assimp-vc141-mt.lib;glew32.lib;opengl32.lib;glfw3.lib;soil2.lib;dxgi.lib;d3d11.lib;d3dx11.lib;d3dx10.lib;D3Dcompiler.lib;dxguid.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -147,16 +169,18 @@
     <ClCompile Include="..\Source\CMaterial.cpp" />
     <ClCompile Include="..\Source\CMesh.cpp" />
     <ClCompile Include="..\Source\CModel.cpp" />
+    <ClCompile Include="..\Source\CPixelShader.cpp" />
     <ClCompile Include="..\Source\CRenderToTexture.cpp" />
     <ClCompile Include="..\Source\CSamplerState.cpp" />
     <ClCompile Include="..\Source\CScene.cpp" />
+    <ClCompile Include="..\Source\CShaderManager.cpp" />
     <ClCompile Include="..\Source\CUserInterface.cpp" />
     <ClCompile Include="..\Source\CVertexBuffer.cpp" />
     <ClCompile Include="..\Source\CDepthStencil.cpp" />
     <ClCompile Include="..\Source\CDevice.cpp" />
     <ClCompile Include="..\Source\CManager.cpp" />
     <ClCompile Include="..\Source\CRenderTarget.cpp" />
-    <ClCompile Include="..\Source\CShader.cpp" />
+    <ClCompile Include="..\Source\CVertexShader.cpp" />
     <ClCompile Include="..\Source\CShaderProgram.cpp" />
     <ClCompile Include="..\Source\CStringConverter.cpp" />
     <ClCompile Include="..\Source\CSwapChain.cpp" />
@@ -176,16 +200,18 @@
     <ClInclude Include="..\Header\CMaterial.h" />
     <ClInclude Include="..\Header\CMesh.h" />
     <ClInclude Include="..\Header\CModel.h" />
+    <ClInclude Include="..\Header\CPixelShader.h" />
     <ClInclude Include="..\Header\CRenderToTexture.h" />
     <ClInclude Include="..\Header\CSamplerState.h" />
     <ClInclude Include="..\Header\CScene.h" />
+    <ClInclude Include="..\Header\CShaderManager.h" />
     <ClInclude Include="..\Header\CUserInterface.h" />
     <ClInclude Include="..\Header\CVertexBuffer.h" />
     <ClInclude Include="..\Header\CDepthStencil.h" />
     <ClInclude Include="..\Header\CDevice.h" />
     <ClInclude Include="..\Header\CManager.h" />
     <ClInclude Include="..\Header\CRenderTarget.h" />
-    <ClInclude Include="..\Header\CShader.h" />
+    <ClInclude Include="..\Header\CVertexShader.h" />
     <ClInclude Include="..\Header\CShaderProgram.h" />
     <ClInclude Include="..\Header\CStringConverter.h" />
     <ClInclude Include="..\Header\CSwapChain.h" />

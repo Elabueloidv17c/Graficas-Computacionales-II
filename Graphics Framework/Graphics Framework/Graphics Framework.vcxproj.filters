@@ -84,26 +84,8 @@
     <ClCompile Include="..\Source\CConstantBuffer.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
-    <ClCompile Include="..\Header\imGUI\imgui.cpp">
-      <Filter>Archivos de origen\ImGui</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Header\imGUI\imgui_draw.cpp">
-      <Filter>Archivos de origen\ImGui</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Header\imGUI\imgui_impl_dx11.cpp">
-      <Filter>Archivos de origen\ImGui</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Header\imGUI\imgui_impl_win32.cpp">
-      <Filter>Archivos de origen\ImGui</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Header\imGUI\imgui_widgets.cpp">
-      <Filter>Archivos de origen\ImGui</Filter>
-    </ClCompile>
     <ClCompile Include="..\Source\CUserInterface.cpp">
       <Filter>Archivos de origen</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\imgui_impl_opengl3.cpp">
-      <Filter>Archivos de origen\ImGui</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\CModel.cpp">
       <Filter>Archivos de origen</Filter>
@@ -122,6 +104,27 @@
     </ClCompile>
     <ClCompile Include="..\Source\CVertexShader.cpp">
       <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Header\imGUI\imgui.cpp">
+      <Filter>Archivos de origen\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Header\imGUI\imgui_draw.cpp">
+      <Filter>Archivos de origen\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Header\imGUI\imgui_impl_dx11.cpp">
+      <Filter>Archivos de origen\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Header\imGUI\imgui_impl_glfw.cpp">
+      <Filter>Archivos de origen\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Header\imGUI\imgui_impl_opengl3.cpp">
+      <Filter>Archivos de origen\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Header\imGUI\imgui_impl_win32.cpp">
+      <Filter>Archivos de origen\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Header\imGUI\imgui_widgets.cpp">
+      <Filter>Archivos de origen\ImGui</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -188,35 +191,8 @@
     <ClInclude Include="..\Header\CConstantBuffer.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\imGUI\imconfig.h">
-      <Filter>Archivos de encabezado\ImGui</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\imGUI\imgui.h">
-      <Filter>Archivos de encabezado\ImGui</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\imGUI\imgui_impl_dx11.h">
-      <Filter>Archivos de encabezado\ImGui</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\imGUI\imgui_impl_win32.h">
-      <Filter>Archivos de encabezado\ImGui</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\imGUI\imgui_internal.h">
-      <Filter>Archivos de encabezado\ImGui</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\imGUI\imstb_rectpack.h">
-      <Filter>Archivos de encabezado\ImGui</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\imGUI\imstb_textedit.h">
-      <Filter>Archivos de encabezado\ImGui</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\imGUI\imstb_truetype.h">
-      <Filter>Archivos de encabezado\ImGui</Filter>
-    </ClInclude>
     <ClInclude Include="..\Header\CUserInterface.h">
       <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\imgui_impl_opengl3.h">
-      <Filter>Archivos de encabezado\ImGui</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CModel.h">
       <Filter>Archivos de encabezado</Filter>
@@ -235,6 +211,36 @@
     </ClInclude>
     <ClInclude Include="..\Header\CVertexShader.h">
       <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\imGUI\imconfig.h">
+      <Filter>Archivos de encabezado\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\imGUI\imgui.h">
+      <Filter>Archivos de encabezado\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\imGUI\imgui_impl_dx11.h">
+      <Filter>Archivos de encabezado\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\imGUI\imgui_impl_glfw.h">
+      <Filter>Archivos de encabezado\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\imGUI\imgui_impl_opengl3.h">
+      <Filter>Archivos de encabezado\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\imGUI\imgui_impl_win32.h">
+      <Filter>Archivos de encabezado\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\imGUI\imgui_internal.h">
+      <Filter>Archivos de encabezado\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\imGUI\imstb_rectpack.h">
+      <Filter>Archivos de encabezado\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\imGUI\imstb_textedit.h">
+      <Filter>Archivos de encabezado\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\imGUI\imstb_truetype.h">
+      <Filter>Archivos de encabezado\ImGui</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -9,8 +9,6 @@ CManager::CManager()
 }
 
 #ifdef OPEN_GL
-#include <Windows.h>
-
 void CManager::Initialize(Rect dimensions)
 {
 	m_world = glm::mat4(1.0f);
@@ -70,18 +68,18 @@ void CManager::Initialize(Rect dimensions)
 	shaders[0] = ShaderProgramData{ ShaderData{ "../Header/Shader/VertexShader.glsl", GL_VERTEX_SHADER, false, false },
 	ShaderData{ "../Header/Shader/PixelShader.glsl", GL_FRAGMENT_SHADER, false, false } };
 	shaders[1] = ShaderProgramData{ ShaderData{ "../Header/Shader/VertexShader.glsl", GL_VERTEX_SHADER, false, true },
-	ShaderData{ "../Header/Shader/PixelShader.glsl", GL_FRAGMENT_SHADER, false, false } };
+	ShaderData{ "../Header/Shader/PixelShader.glsl", GL_FRAGMENT_SHADER, false, true } };
 	shaders[2] = ShaderProgramData{ ShaderData{ "../Header/Shader/VertexShader.glsl", GL_VERTEX_SHADER, true, false },
-	ShaderData{ "../Header/Shader/PixelShader.glsl", GL_FRAGMENT_SHADER, false, false } };
+	ShaderData{ "../Header/Shader/PixelShader.glsl", GL_FRAGMENT_SHADER, true, false } };
 	shaders[3] = ShaderProgramData{ ShaderData{ "../Header/Shader/VertexShader.glsl", GL_VERTEX_SHADER, true, true },
-	ShaderData{ "../Header/Shader/PixelShader.glsl", GL_FRAGMENT_SHADER, false, false } };
+	ShaderData{ "../Header/Shader/PixelShader.glsl", GL_FRAGMENT_SHADER, true, true } };
 
 	m_shaderManager.Initialize(shaders);
 	m_shaderManager.SetActiveShader(0);
 
 	//Initialize the scene information user interface
 	m_userInterface.Initialize();
-	ImGui_ImplWin32_Init(m_window.m_pointer);
+	ImGui_ImplGlfw_InitForOpenGL(m_window.m_pointer, true);
 	ImGui_ImplOpenGL3_Init("#version 400 core");
 }
 #endif
@@ -254,13 +252,15 @@ void CManager::Render()
 	m_window.Render(*m_shaderManager.GetActiveShader(), *m_window.m_camera.GetActiveCamera(), *m_window.m_camera.GetSecundaryCamera());
 
 	//Render user interface to see the scene information
+	m_userInterface.Initframe();
+
 	m_userInterface.SetFrame((float)m_window.m_scene.GetNumVertices(), (float)m_window.m_scene.GetNumFaces(),
 	(float)m_window.m_scene.GetNumMeshes(), (float)m_window.m_scene.GetNumModels(), m_shaderManager.m_isVertex,
 	m_shaderManager.m_isBlinn, m_window.m_scene.m_lightingData.SpotRadius, m_window.m_scene.m_lightingData.spotAlpha,
 	m_window.m_scene.m_lightingData.spotBeta, m_window.m_scene.m_lightingData.PointRadius,
 	m_window.m_scene.m_colorData.directionalColor, m_window.m_scene.m_colorData.pointColor,
 	m_window.m_scene.m_colorData.spotColor);
-	
+
 	m_userInterface.RenderFrame();
 
 	//Present Frame

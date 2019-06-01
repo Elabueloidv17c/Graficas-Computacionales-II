@@ -51,7 +51,7 @@ void CWindow::Initialize(Rect dimensions, unsigned int displayMode, const char* 
 	glShadeModel(GL_SMOOTH);
 	glEnable(GL_BLEND);
 	glEnable(GL_TEXTURE_2D);
-	
+
 	//Scene
 	m_scene.Initialize(scene);
 	scene.clear();

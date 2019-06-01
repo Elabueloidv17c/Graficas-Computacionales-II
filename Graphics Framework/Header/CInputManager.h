@@ -19,14 +19,14 @@ public:
 	CInputManager();
 	~CInputManager();
 
-	void KeyBoardUp(unsigned char key);
-	void KeyBoardDown(unsigned char key);
 
 #ifdef OPEN_GL
-	void MouseKey(int button, int state);
+	void ProcessInput(GLFWwindow* window, int key, int action);
 #endif
 
 #ifdef DIRECT_X
+	void KeyBoardUp(unsigned char key);
+	void KeyBoardDown(unsigned char key);
 	void MouseKey(InputEvent button, bool isPressed);
 #endif
 

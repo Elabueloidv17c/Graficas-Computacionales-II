@@ -158,6 +158,8 @@
     <ClCompile Include="..\Header\imGUI\imgui.cpp" />
     <ClCompile Include="..\Header\imGUI\imgui_draw.cpp" />
     <ClCompile Include="..\Header\imGUI\imgui_impl_dx11.cpp" />
+    <ClCompile Include="..\Header\imGUI\imgui_impl_glfw.cpp" />
+    <ClCompile Include="..\Header\imGUI\imgui_impl_opengl3.cpp" />
     <ClCompile Include="..\Header\imGUI\imgui_impl_win32.cpp" />
     <ClCompile Include="..\Header\imGUI\imgui_widgets.cpp" />
     <ClCompile Include="..\Source\CCamera.cpp" />
@@ -187,7 +189,6 @@
     <ClCompile Include="..\Source\CTexture.cpp" />
     <ClCompile Include="..\Source\CViewportManager.cpp" />
     <ClCompile Include="..\Source\CWindow.cpp" />
-    <ClCompile Include="..\Source\imgui_impl_opengl3.cpp" />
     <ClCompile Include="..\Source\source.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -222,12 +223,13 @@
     <ClInclude Include="..\Header\imGUI\imconfig.h" />
     <ClInclude Include="..\Header\imGUI\imgui.h" />
     <ClInclude Include="..\Header\imGUI\imgui_impl_dx11.h" />
+    <ClInclude Include="..\Header\imGUI\imgui_impl_glfw.h" />
+    <ClInclude Include="..\Header\imGUI\imgui_impl_opengl3.h" />
     <ClInclude Include="..\Header\imGUI\imgui_impl_win32.h" />
     <ClInclude Include="..\Header\imGUI\imgui_internal.h" />
     <ClInclude Include="..\Header\imGUI\imstb_rectpack.h" />
     <ClInclude Include="..\Header\imGUI\imstb_textedit.h" />
     <ClInclude Include="..\Header\imGUI\imstb_truetype.h" />
-    <ClInclude Include="..\Header\imgui_impl_opengl3.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

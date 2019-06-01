@@ -81,6 +81,71 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 }
 #endif
 
+#ifdef OPEN_GL
+void MouseMovement(GLFWwindow* window, double x, double y)
+{
+	if (app.m_inputHandler.m_events & InputEvent::RightMouse)
+	{
+		app.m_window.m_camera.Rotate(x, y);
+	}
+}
+
+void MouseButtons(GLFWwindow* window, int button, int action, int mods)
+{
+	//--------------------------------------------------------------------
+	//Mouse Buttons
+	//--------------------------------------------------------------------
+
+	// Left down
+	if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS)
+	{
+		app.m_inputHandler.m_events |= InputEvent::LeftMouse;
+		std::cout << "Left mouse button down" << std::endl;
+	}
+	//Left up
+	if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_RELEASE)
+	{
+		app.m_inputHandler.m_events &= ~(InputEvent::LeftMouse);
+		std::cout << "Left mouse button up" << std::endl;
+	}
+	//Right down
+	if (button == GLFW_MOUSE_BUTTON_RIGHT && action == GLFW_PRESS)
+	{
+		app.m_inputHandler.m_events |= InputEvent::RightMouse;
+		std::cout << "Right mouse button down" << std::endl;
+	}
+	//Right up
+	if (button == GLFW_MOUSE_BUTTON_RIGHT && action == GLFW_RELEASE)
+	{
+		app.m_inputHandler.m_events &= ~(InputEvent::RightMouse);
+		std::cout << "Right mouse button Up" << std::endl;
+	}
+	if (button == GLFW_MOUSE_BUTTON_MIDDLE && action == GLFW_PRESS)
+	{
+		app.m_inputHandler.m_events |= InputEvent::MiddleMouse;
+		std::cout << "Middle mouse button down" << std::endl;
+	}
+	if (button == GLFW_MOUSE_BUTTON_MIDDLE && action == GLFW_RELEASE)
+	{
+		app.m_inputHandler.m_events &= ~(InputEvent::MiddleMouse);
+		std::cout << "Middle mouse button up" << std::endl;
+	}
+}
+
+void KeyboardInput(GLFWwindow* window, int key, int scancode, int action, int mods)
+{
+	app.m_inputHandler.ProcessInput(window, key, action);
+}
+
+void SetCallBackFunctions()
+{
+	glfwSetInputMode(app.m_window.m_pointer, GLFW_STICKY_KEYS, GLFW_TRUE);
+	glfwSetCursorPosCallback(app.m_window.m_pointer, MouseMovement);
+	glfwSetMouseButtonCallback(app.m_window.m_pointer, MouseButtons);
+	glfwSetKeyCallback(app.m_window.m_pointer, KeyboardInput);
+}
+#endif
+
 int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, INT nCmdShow)
 {
 	UNREFERENCED_PARAMETER(hPrevInstance);
@@ -107,8 +172,11 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 	}
 	return (int)msg.wParam;
 #endif //DirectX
+
 #ifdef OPEN_GL
+
 	app.Initialize(Rect{ 0, 0, 1280, 720 });
+	SetCallBackFunctions();
 
 	while (!glfwWindowShouldClose(app.m_window.m_pointer))
 	{        

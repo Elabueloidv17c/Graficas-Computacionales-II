@@ -3,8 +3,8 @@
 //------------------------------------------------------------------------------------------------------------------------------
 
 #pragma once
-#define DIRECT_X
-//#define OPEN_GL
+//#define DIRECT_X
+#define OPEN_GL
 
 //------------------------------------------------------------------------------------------------------------------------------
 //Shaders
@@ -34,8 +34,8 @@
 
 //User Interface
 #include "imGUI/imgui.h"
-#include "imGUI/imgui_impl_win32.h"
- 
+#include "imGUI/imgui_impl_opengl3.h" 
+
 //Type definitions
 typedef glm::vec2   VECTOR2;
 typedef glm::vec3   VECTOR3;
@@ -169,16 +169,16 @@ struct ShaderProgramData
 //GLEW
 #include <GL/glew.h>
 
-//GLFW
-#include <GLFW/glfw3.h>
-
 typedef unsigned char* TextureData;
 
 //SOIL
 #include <SOIL2/SOIL2.h>
 
 //ImGui
-#include "../Header/imgui_impl_opengl3.h"
+#include "imGUI/imgui_impl_glfw.h"
+
+//GLFW
+#include <GLFW/glfw3.h>
 
 struct TextureDescription
 {
@@ -224,10 +224,10 @@ struct SwapChainData
 	}
 };
 #endif
-
 #ifdef DIRECT_X
 //ImGui
 #include "ImGUI/imgui_impl_dx11.h"
+#include "imGUI/imgui_impl_win32.h"
 
 #include "CStringConverter.h"
 #include "Resource.h"

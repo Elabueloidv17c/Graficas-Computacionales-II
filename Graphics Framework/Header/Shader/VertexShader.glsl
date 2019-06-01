@@ -128,17 +128,17 @@ void main()
 	vec3 Specular = SpecularColor.xyz * SpecularIntensity * SpecularFactor;
 	float Ambient = AmbientIntensity * (1.0 - NormalDotLightWS);
 
-	#ifdef POINT_LIGHT
-		Diffuse += PointColor.xyz * DiffuseIntensity * PointNormalDotLightWS;
-		Specular += SpecularColor.xyz * SpecularIntensity * PointSpecularFactor;
-		Ambient *= (1.0 - PointNormalDotLightWS);
-	#endif
-	
-	#ifdef SPOT_LIGHT
-		Diffuse += SpotColor.xyz * DiffuseIntensity * SpotNormalDotLightWS;
-		Specular += SpecularColor.xyz * SpecularIntensity * SpotSpecularFactor;
-		Ambient *= (1.0 - SpotNormalDotLightWS);
-	#endif
+#ifdef POINT_LIGHT
+	Diffuse += PointColor.xyz * DiffuseIntensity * PointNormalDotLightWS;
+	Specular += SpecularColor.xyz * SpecularIntensity * PointSpecularFactor;
+	Ambient *= (1.0 - PointNormalDotLightWS);
+#endif
+
+#ifdef SPOT_LIGHT
+	Diffuse += SpotColor.xyz * DiffuseIntensity * SpotNormalDotLightWS;
+	Specular += SpecularColor.xyz * SpecularIntensity * SpotSpecularFactor;
+	Ambient *= (1.0 - SpotNormalDotLightWS);
+#endif
 
 	Color = vec4(vec3(Ambient, Ambient, Ambient) + Diffuse.xyz + Specular.xyz, 1.0);
 #endif

@@ -6,13 +6,15 @@
 
 CUserInterface::~CUserInterface()
 {
-	ImGui_ImplWin32_Shutdown();
 
 #ifdef OPEN_GL
 	ImGui_ImplOpenGL3_Shutdown();
+	ImGui_ImplGlfw_Shutdown();
+	ImGui::DestroyContext();
 #endif
 
 #ifdef DIRECT_X
+	ImGui_ImplWin32_Shutdown();
 	ImGui_ImplDX11_Shutdown();
 #endif
 }
@@ -28,20 +30,21 @@ void CUserInterface::Initframe()
 {
 #ifdef DIRECT_X
 	ImGui_ImplDX11_NewFrame();
+	ImGui_ImplWin32_NewFrame();
 #endif
-
 #ifdef OPEN_GL
 	ImGui_ImplOpenGL3_NewFrame();
+	ImGui_ImplGlfw_NewFrame();
 #endif
-	ImGui_ImplWin32_NewFrame();
+
+	ImGui::NewFrame();
 }
 
 void CUserInterface::SetFrame(float vertices, float faces, float meshes, float models, bool& isVertex, bool& isBlinn,
 float& spotRadius, float& spotAlpha, float& spotBeta, float& pointRadius, Color& directionalColor, Color& pointColor, 
 Color& spotColor)
 {
-	ImGui::NewFrame();
-		ImGui::Begin("Scene Information");
+	ImGui::Begin("Scene Information");
 		ImGui::Text("     ------Performance------");
 		ImGui::Text("");
 		ImGui::Text("Frame Rate:			  %.1f/s", ImGui::GetIO().Framerate);
@@ -58,8 +61,8 @@ Color& spotColor)
 	ImGui::Begin("Controllers");
 		ImGui::Text("     ------Shader Parameters------");
 		ImGui::Text("");
-		ImGui::Checkbox("Vertex Calc", &isVertex);
-		ImGui::Checkbox("Blinn Reflect", &isBlinn);
+		ImGui::Checkbox("Vertex Processing", &isVertex);
+		ImGui::Checkbox("Blinn Reflection", &isBlinn);
 		ImGui::Text("");
 		ImGui::Text("     ------Light Parameters------");
 		ImGui::Text("");

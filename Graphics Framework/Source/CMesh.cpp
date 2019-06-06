@@ -50,15 +50,8 @@ void CMesh::Initialize(std::vector <std::string>& texturePaths)
 
 	m_material.Initialize(texturePaths);
 
-#ifdef DIRECT_X
-	m_vertexBuffer.Initialize(&m_vertices[0], m_vertices.size());
-	m_indexBuffer.Initialize(&m_indices[0], m_indices.size());
-#endif
-
-#ifdef OPEN_GL
-	m_vertexBuffer.Initialize(m_vertices);
-	m_indexBuffer.Initialize(m_indices);
-#endif
+	m_vertexBuffer.Initialize(m_vertices.data(), m_vertices.size());
+	m_indexBuffer.Initialize(m_indices.data(), m_indices.size());
 
 }
 

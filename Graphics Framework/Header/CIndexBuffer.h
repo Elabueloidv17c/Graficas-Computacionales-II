@@ -8,13 +8,10 @@ public:
 #ifdef OPEN_GL
 	unsigned int m_id;													
 
-	void Initialize(std::vector<unsigned int> data);
-
 	unsigned int GetID();
 	void Bind();
 	void Unbind();
 	void Erase();
-	
 #endif
 
 #ifdef DIRECT_X
@@ -26,9 +23,9 @@ public:
 
 	unsigned int				m_offset;
 
-	void Initialize(unsigned int* data, unsigned int size);
 #endif
 
+	void Initialize(unsigned int* data, unsigned int size);
 
 	CIndexBuffer();
 	~CIndexBuffer();

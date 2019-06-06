@@ -1,4 +1,6 @@
 #include "../Header/CUserInterface.h"
+#include "../Header/CShaderManager.h"
+#include "../Header/CScene.h"
 
 #ifdef OPEN_GL
 #include <windows.h>
@@ -40,43 +42,55 @@ void CUserInterface::Initframe()
 	ImGui::NewFrame();
 }
 
-void CUserInterface::SetFrame(float vertices, float faces, float meshes, float models, bool& isVertex, bool& isBlinn,
-float& spotRadius, float& spotAlpha, float& spotBeta, float& pointRadius, Color& directionalColor, Color& pointColor, 
-Color& spotColor)
+void CUserInterface::SetFrame(ColorData& color, LightingData& light, bool& isVertex, bool& isBlinn, 
+bool& isSpotOn, bool&isSpotChanged, bool& isPointOn, bool&isPointChanged)
 {
-	ImGui::Begin("Scene Information");
-		ImGui::Text("     ------Performance------");
+	bool spot = isSpotOn;
+	bool point = isPointOn;
+
+	ImGui::Begin("Performance");
 		ImGui::Text("");
 		ImGui::Text("Frame Rate:			  %.1f/s", ImGui::GetIO().Framerate);
 		ImGui::Text("Frame Pacing:			%.1f ms", 1000.0f / ImGui::GetIO().Framerate);
-		ImGui::Text("");
-		ImGui::Text("     -------Geometry-------");
-		ImGui::Text("");
-		ImGui::Text("Models:				 %.0f", models);
-		ImGui::Text("Meshes:				 %.0f", meshes);
-		ImGui::Text("Vertices:			   %.0f", vertices);
-		ImGui::Text("Faces:				  %.0f", faces);
 	ImGui::End();
-	
-	ImGui::Begin("Controllers");
+
+	ImGui::Begin("Light and Color Controllers");
 		ImGui::Text("     ------Shader Parameters------");
 		ImGui::Text("");
-		ImGui::Checkbox("Vertex Processing", &isVertex);
+		ImGui::Checkbox("Vertex Shader Light", &isVertex);
 		ImGui::Checkbox("Blinn Reflection", &isBlinn);
 		ImGui::Text("");
 		ImGui::Text("     ------Light Parameters------");
 		ImGui::Text("");
-		ImGui::SliderFloat("Spot Radius", &spotRadius, 0.0f, 10.0f);
-		ImGui::SliderFloat("Spot Alpha", &spotAlpha, 0.0f, 1.0f);
-		ImGui::SliderFloat("Spot Beta", &spotBeta, 0.0f, 1.0f);
+		ImGui::SliderFloat("Point Radius", &light.PointRadius, 0.0f, 10.0f);
+		ImGui::SliderFloat("Spot Radius", &light.SpotRadius, 0.0f, 10.0f);
+		ImGui::SliderFloat("Spot Alpha", &light.spotAlpha, 0.0f, 1.0f);
+		ImGui::SliderFloat("Spot Beta", &light.spotBeta, 0.0f, 1.0f);
 		ImGui::Text("");
-		ImGui::SliderFloat("Point Radius", &pointRadius, 0.0f, 10.0f);
+		ImGui::Checkbox("Point Light On/Off ", &isPointOn);
+		ImGui::Checkbox("Spot Light On/Off ", &isSpotOn);
+		ImGui::Text("");
+		ImGui::SliderFloat("Diffuse Intensity", &color.diffuseIntensity, 0.0f, 10.0f);
+		ImGui::SliderFloat("Ambient Intensity", &color.ambientIntensity, 0.0f, 10.0f);
+		ImGui::SliderFloat("Specular Intensity", &color.specularIntensity, 0.0f, 1.0f);
 		ImGui::Text("");
 		ImGui::Text("     ------Color Parameters------");
-		ImGui::ColorEdit3("Directional", &directionalColor.r);
-		ImGui::ColorEdit3("Point", &pointColor.r);
-		ImGui::ColorEdit3("Spot", &spotColor.r);
+		ImGui::ColorEdit3("Diffuse Color", &color.diffuseColor.r);
+		ImGui::ColorEdit3("Specular Color", &color.specularColor.r);
+		ImGui::ColorEdit3("Ambient Color", &color.ambientColor.r);
+		ImGui::Text("");
+		ImGui::ColorEdit3("Point Color", &color.pointColor.r);
+		ImGui::ColorEdit3("Spot Color", &color.spotColor.r);
 	ImGui::End();
+
+	if (spot != isSpotOn)
+	{
+		isSpotChanged = true;
+	}
+	if (point != isPointOn)
+	{
+		isPointChanged = true;
+	}
 }
 
 void CUserInterface::RenderFrame()

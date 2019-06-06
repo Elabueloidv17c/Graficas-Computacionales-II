@@ -3,8 +3,8 @@
 //------------------------------------------------------------------------------------------------------------------------------
 
 #pragma once
-//#define DIRECT_X
-#define OPEN_GL
+#define DIRECT_X
+//#define OPEN_GL
 
 //------------------------------------------------------------------------------------------------------------------------------
 //Shaders
@@ -34,7 +34,6 @@
 
 //User Interface
 #include "imGUI/imgui.h"
-#include "imGUI/imgui_impl_opengl3.h" 
 
 //Type definitions
 typedef glm::vec2   VECTOR2;
@@ -133,10 +132,10 @@ struct LightingData
 
 struct ColorData
 {
-	Color directionalColor;
 	Color pointColor;
 	Color spotColor;
 
+	Color diffuseColor;
 	Color specularColor;
 	Color ambientColor;
 
@@ -176,6 +175,7 @@ typedef unsigned char* TextureData;
 
 //ImGui
 #include "imGUI/imgui_impl_glfw.h"
+#include "imGUI/imgui_impl_opengl3.h" 
 
 //GLFW
 #include <GLFW/glfw3.h>
@@ -243,3 +243,17 @@ struct SwapChainData
 
 typedef ID3D11Texture2D* TextureData;
 #endif
+
+struct WindowData
+{
+	std::string title;
+	Rect dimensions;
+	Color color;
+
+#ifdef DIRECT_X
+	std::string className;
+	WNDPROC pWndProc;
+	HINSTANCE hInstance;
+	INT nCmdShow;
+#endif
+};

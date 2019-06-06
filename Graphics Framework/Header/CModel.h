@@ -2,14 +2,11 @@
 #include "Header.h"
 
 class CShaderProgram;
-class CCamera;
 class CMesh;
 
-#ifdef DIRECT_X
 #include "CDeviceContext.h"
 #include "CCamera.h"
 #include "CDevice.h"
-#endif
 
 class CModel
 {
@@ -34,15 +31,8 @@ public:
 	unsigned int GetNumFaces();
 	void AddTransform(MATRIX4 transform);
 
-#ifdef OPEN_GL
-	bool Initialize(ModelData data);
-	void Render(CShaderProgram& shaderProgram, CCamera& camera, CCamera& otherCamera);
-#endif
-
-#ifdef DIRECT_X
 	bool Initialize(ModelData data, CDevice& device);
 	void Render(CDeviceContext& deviceContext, CShaderProgram& shaderProgram, CCamera& camera, CCamera& otherCamera);
-#endif
 
 	void Erase();
 };

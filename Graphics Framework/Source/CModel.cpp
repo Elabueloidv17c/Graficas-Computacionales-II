@@ -85,180 +85,6 @@ void CModel::Erase()
 	m_transforms.clear();
 }
 
-#ifdef OPEN_GL
-bool CModel::Initialize(ModelData data)
-{
-	m_modelPath = data.path;
-
-	//Load mesh from file
-	const aiScene* model = aiImportFile(data.path, aiProcess_FlipUVs | aiProcess_GenSmoothNormals | aiProcess_Triangulate);
-
-	if (!model)
-	{
-		std::cout << "Error:  Scene not found" << std::endl;
-		return false;
-	}
-
-	//Resize the software container
-	m_meshes.resize(model->mNumMeshes);
-
-	for (int i = 0; i < m_meshes.size(); i++)
-	{
-		//Load Indices
-		m_meshes[i].m_indices.resize(model->mMeshes[i]->mNumFaces * 3);
-
-		for (unsigned int j = 0; j < model->mMeshes[i]->mNumFaces; j++)
-		{
-			for (unsigned int k = 0; k < 3; k++)
-			{
-				m_meshes[i].m_indices[(3 * j) + k] = model->mMeshes[i]->mFaces[j].mIndices[2 - k];
-			}
-		}
-
-		//Load vertices
-		m_meshes[i].m_vertices.resize(model->mMeshes[i]->mNumVertices);
-		aiVector3D* UVs = model->mMeshes[i]->mTextureCoords[0];
-
-		for (unsigned int j = 0; j < m_meshes[i].m_vertices.size(); j++)
-		{
-			m_meshes[i].m_vertices[j].Position = VECTOR3{ model->mMeshes[i]->mVertices[j].x,
-			model->mMeshes[i]->mVertices[j].y, model->mMeshes[i]->mVertices[j].z };
-
-			if (model->mMeshes[i]->HasTextureCoords(0))
-			{
-				m_meshes[i].m_vertices[j].TexCoord = VECTOR2{ UVs[j].x, UVs[j].y };
-			}
-
-			if (model->mMeshes[i]->HasNormals())
-			{
-				m_meshes[i].m_vertices[j].Normals = VECTOR3{ model->mMeshes[i]->mNormals[j].x,
-				model->mMeshes[i]->mNormals[j].y, model->mMeshes[i]->mNormals[j].z };
-			}
-
-			if (model->mMeshes[i]->HasTangentsAndBitangents())
-			{
-				m_meshes[i].m_vertices[j].Tangents = VECTOR3{ model->mMeshes[i]->mTangents[j].x,
-				model->mMeshes[i]->mTangents[j].y, model->mMeshes[i]->mTangents[j].z };
-			}
-		}
-
-		//In this point, the program just supports 2 texture types, diffuse and normal map
-		std::vector <std::string> textureNames;
-		textureNames.resize(2);
-
-		const aiMaterial* material = model->mMaterials[model->mMeshes[i]->mMaterialIndex];
-
-		//Diffuse
-		if (material->GetTextureCount(aiTextureType_DIFFUSE))
-		{
-			aiString filePath;
-			material->GetTexture(aiTextureType_DIFFUSE, 0, &filePath, NULL, NULL, NULL, NULL);
-
-			std::string texture;
-			texture = filePath.data;
-			int format = texture.find(".tga");
-
-			if (format >= 0)
-			{
-				texture.erase(format);
-				texture += ".png";
-			}
-
-			if (filePath.length)
-			{
-				for (int j = strlen(data.path) - 1; j >= 0; j--)
-				{
-					if (data.path[j] == '/')
-					{
-						for (unsigned int k = 0; k <= j; k++)
-						{
-							textureNames[0].append(&data.path[k], 1);
-						}
-
-						textureNames[0] += texture;
-
-						break;
-					}
-				}
-			}
-		}
-
-		//Normals
-		if (material->GetTextureCount(aiTextureType_NORMALS))
-		{
-			aiString filePath;
-			material->GetTexture(aiTextureType_NORMALS, 0, &filePath, NULL, NULL, NULL, NULL);
-
-			if (filePath.length)
-			{
-				for (unsigned int i = strlen(data.path) - 1; i >= 0; i--)
-				{
-					if (data.path[i] == '/')
-					{
-						for (unsigned int j = 0; j <= i; j++)
-						{
-							textureNames[1].append(&data.path[j], 1);
-						}
-
-						textureNames[1] += filePath.data;
-
-						break;
-					}
-				}
-			}
-		}
-		else
-		{
-			textureNames[1] = textureNames[0];
-			int replace = textureNames[1].find("a.png");
-
-			if (replace >= 0)
-			{
-				textureNames[1].erase(replace);
-				textureNames[1] += "n.png";
-			}
-		}
-
-		//Create Mesh
-		m_meshes[i].Initialize(textureNames);
-	}
-
-	AddTransform(data.transform);
-
-	return true;
-};
-
-void CModel::Render(CShaderProgram& shaderProgram, CCamera& camera, CCamera& otherCamera)
-{
-	for (int i = 0; i < m_meshes.size(); i++)
-	{
-		for (int j = 0; j < m_transforms.size(); j++)
-		{
-			if (m_modelPath == "../Models/Anubis/Anubis.fbx")
-			{
-				if (otherCamera.m_viewMatrix == camera.m_viewMatrix)
-				{
-					m_transforms[0] = glm::rotate(glm::rotate(glm::translate(glm::mat4(1.0f), camera.m_position),
-					glm::radians(-camera.m_yaw + 90.0f), VECTOR3(0.0f, 1.0f, 0.0f)), glm::radians(-camera.m_pitch),
-					VECTOR3(1.0f, 0.0f, 0.0f));
-				}
-				else
-				{
-					m_transforms[0] = glm::rotate(glm::rotate(glm::translate(glm::mat4(1.0f), otherCamera.m_position),
-					glm::radians(-otherCamera.m_yaw + 90.0f), VECTOR3(0.0f, 1.0f, 0.0f)), glm::radians(-otherCamera.m_pitch),
-					VECTOR3(1.0f, 0.0f, 0.0f));
-				}
-			}
-
-			shaderProgram.UpdateModel(m_transforms[j]);
-		}
-
-		m_meshes[i].Render(shaderProgram.m_id);
-	}
-}
-#endif
-
-#ifdef DIRECT_X
 bool CModel::Initialize(ModelData data, CDevice& device)
 {
 	m_modelPath = data.path;
@@ -394,11 +220,13 @@ bool CModel::Initialize(ModelData data, CDevice& device)
 
 		//Create Mesh
 		m_meshes[i].Initialize(textureNames);
+
+#ifdef DIRECT_X
 		device.CreateBuffers(m_meshes[i]);
 		device.CreateTexture(m_meshes[i]);
 		m_meshes[i].m_vertices.clear();
 		m_meshes[i].m_indices.clear();
-
+#endif
 	}
 
 	AddTransform(data.transform);
@@ -408,6 +236,7 @@ bool CModel::Initialize(ModelData data, CDevice& device)
 
 void CModel::Render(CDeviceContext& deviceContext, CShaderProgram& shaderProgram, CCamera& camera, CCamera& otherCamera)
 {
+#ifdef DIRECT_X
 	deviceContext.UpdateViewMatrix(shaderProgram.m_viewCB, camera);
 	deviceContext.UpdateProjectionMatrix(shaderProgram.m_projectionCB, camera);
 
@@ -417,29 +246,24 @@ void CModel::Render(CDeviceContext& deviceContext, CShaderProgram& shaderProgram
 
 		for (int j = 0; j < m_transforms.size(); j++)
 		{
-			if (m_modelPath == "../Models/Anubis/Anubis.fbx")
-			{
-				if (otherCamera.m_viewMatrix == camera.m_viewMatrix)
-				{
-					m_transforms[0] = glm::rotate(glm::rotate(glm::translate(glm::mat4(1.0f), camera.m_position),
-					glm::radians(-camera.m_yaw + 90.0f), VECTOR3(0.0f, 1.0f, 0.0f)), glm::radians(-camera.m_pitch), 
-					VECTOR3(1.0f, 0.0f, 0.0f));
-				}
-				else
-				{
-					m_transforms[0] = glm::rotate(glm::rotate(glm::translate(glm::mat4(1.0f), otherCamera.m_position),
-					glm::radians(-otherCamera.m_yaw + 90.0f), VECTOR3(0.0f, 1.0f, 0.0f)), glm::radians(-otherCamera.m_pitch),
-						VECTOR3(1.0f, 0.0f, 0.0f));
-				}
-			}
-
 			deviceContext.UpdateModelMatrix(shaderProgram.m_modelCB, *this, j);
 		}
 
 		deviceContext.Draw(m_meshes[i].m_numIndices);
 	}
-}
 #endif
+#ifdef OPEN_GL
+	for (int i = 0; i < m_meshes.size(); i++)
+	{
+		for (int j = 0; j < m_transforms.size(); j++)
+		{
+			shaderProgram.UpdateModel(m_transforms[j]);
+		}
+
+		m_meshes[i].Render(shaderProgram.m_id);
+	}
+#endif
+}
 
 void InvertString(std::string& str)
 {

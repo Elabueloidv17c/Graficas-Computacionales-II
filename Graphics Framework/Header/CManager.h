@@ -16,6 +16,7 @@ class CManager
 public:
 
 	float					m_time;
+	float					m_lastFrame;
 
 	CRenderToTexture		m_renderTexture;
 	CUserInterface			m_userInterface;
@@ -32,15 +33,9 @@ public:
 
 	MATRIX4					m_world;
 
-#ifdef OPEN_GL
-	float					m_lastFrame;
 
-	void Initialize(Rect dimensions);
-#endif
+	void Initialize(WindowData data);
 
-#ifdef DIRECT_X
-	void Initialize(WNDPROC pWndProc, HINSTANCE hInstance, std::string title, std::string className, Size size, Color color, INT nCmdShow);
-#endif
 	CManager();
 	~CManager() = default;
 

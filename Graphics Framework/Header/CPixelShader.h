@@ -17,6 +17,7 @@ public:
 #endif
 #ifdef OPEN_GL
 	int m_id;
+	int GetId();
 #endif
 
 
@@ -26,5 +27,4 @@ public:
 	bool Initialize(const ShaderData& data);
 	bool LoadSource(const ShaderData& data);
 	void Erase();
-	int GetId();
 };

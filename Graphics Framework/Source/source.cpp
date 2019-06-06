@@ -152,8 +152,7 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 	UNREFERENCED_PARAMETER(lpCmdLine);
 
 #ifdef DIRECT_X
-
-	app.Initialize(WndProc, hInstance, "DirectX", "class", Size{ 1280, 720 }, Color{ 0.0f, 0.5f, 0.125f, 1.0f }, nCmdShow);
+	app.Initialize(WindowData{ "DirectX", Rect{ 0, 0, 1280, 720 }, Color{ 0.0f, 0.5f, 0.125f, 1.0f }, "class", WndProc, hInstance,  nCmdShow });
 
 	MSG msg = { 0 };
 	while (WM_QUIT != msg.message)
@@ -175,7 +174,7 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 
 #ifdef OPEN_GL
 
-	app.Initialize(Rect{ 0, 0, 1280, 720 });
+	app.Initialize(WindowData{ "OpenGL", Rect{ 0, 0, 1280, 720 }, Color{ 0.0f, 0.5f, 0.125f, 1.0f } });
 	SetCallBackFunctions();
 
 	while (!glfwWindowShouldClose(app.m_window.m_pointer))

@@ -8,9 +8,8 @@ public:
 	void Initframe();
 	void RenderFrame();
 	
-	void SetFrame(float vertices, float faces, float meshes, float models, bool& isVertex, bool& isBlinn,
-	float& spotRadius, float& spotAlpha, float& spotBeta, float& pointRadius, Color& directionalColor,
-	Color& pointColor, Color& spotColor);
+	void SetFrame(ColorData& color, LightingData& light, bool& isVertex, bool& isBlinn, 
+	bool& isSpotOn, bool&isSpotChanged, bool& isPointOn, bool&isPointChanged);
 
 	CUserInterface() = default;
 	~CUserInterface();

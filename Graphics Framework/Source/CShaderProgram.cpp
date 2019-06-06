@@ -229,14 +229,6 @@ bool CShaderProgram::UpdateColor(ColorData& data)
 {
 	int location;
 
-	// Directional Light Color.
-	location = glGetUniformLocation(m_id, "DirectionalColor");
-
-	if (location != -1)
-	{
-		glUniform4fv(location, 1, &data.directionalColor.r);
-	}
-
 	// Point Light Color.
 	location = glGetUniformLocation(m_id, "PointColor");
 
@@ -253,7 +245,15 @@ bool CShaderProgram::UpdateColor(ColorData& data)
 		glUniform4fv(location, 1, &data.spotColor.r);
 	}
 
-	// Mesh Color.
+	// Diffuse Color.
+	location = glGetUniformLocation(m_id, "DiffuseColor");
+
+	if (location != -1)
+	{
+		glUniform4fv(location, 1, &data.diffuseColor.r);
+	}
+
+	// Specular Color.
 	location = glGetUniformLocation(m_id, "SpecularColor");
 
 	if (location != -1)
@@ -261,7 +261,7 @@ bool CShaderProgram::UpdateColor(ColorData& data)
 		glUniform4fv(location, 1, &data.specularColor.r);
 	}
 
-	// Mesh Color.
+	// Ambient Color.
 	location = glGetUniformLocation(m_id, "AmbientColor");
 
 	if (location != -1)

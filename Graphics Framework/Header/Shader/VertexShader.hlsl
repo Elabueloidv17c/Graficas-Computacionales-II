@@ -24,17 +24,16 @@ cbuffer projectionMatrix : register(b2)
 
 cbuffer color : register(b3)
 {
-	float4 DirectionalColor;
 	float4 PointColor;
 	float4 SpotColor;
 
+	float4 DiffuseColor;
 	float4 SpecularColor;
 	float4 AmbientColor;
 
 	float DiffuseIntensity;
 	float SpecularIntensity;
 	float AmbientIntensity;
-	
 };
 
 cbuffer lighting : register(b4)
@@ -177,7 +176,7 @@ PS_INPUT VS(VS_INPUT input)
 	#endif
 	
 	// Light aportation
-	float3 Diffuse = DiffuseIntensity * DirectionalColor * NormalDotLightWS;
+	float3 Diffuse = DiffuseIntensity * DiffuseColor * NormalDotLightWS;
 	float3 Specular = SpecularIntensity * SpecularColor * SpecularFactor;
 	float3 Ambient = AmbientIntensity * (1.0 - NormalDotLightWS);
 
@@ -185,13 +184,11 @@ PS_INPUT VS(VS_INPUT input)
 		Diffuse += DiffuseIntensity * PointColor * PointNormalDotLightWS;
 		Specular += SpecularIntensity * SpecularColor * PointSpecularFactor;
 		Ambient *= (1.0 - PointNormalDotLightWS);
-		//Diffuse /= LightNumber.xxx;
 	#endif
 	#ifdef SPOT_LIGHT
 		Diffuse += DiffuseIntensity * SpotColor * SpotNormalDotLightWS;
 		Specular += SpecularIntensity * SpecularColor * SpotSpecularFactor;
 		Ambient *= (1.0 - SpotNormalDotLightWS);
-		//Specular /= LightNumber.xxx;
 	#endif
 
 	output.Col.xyz = Ambient.xyz + Diffuse.xyz + Specular.xyz;

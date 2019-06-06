@@ -16,6 +16,13 @@ public:
 	std::vector <CModel>	m_models;
 
 	bool					m_isParty;
+
+	bool					m_isPointOn;
+	bool					m_isPointChanged;
+
+	bool					m_isSpotOn;
+	bool					m_isSpotChanged;
+
 	ColorData				m_colorData;
 	LightingData			m_lightingData;
 	float					m_spotRadius;
@@ -35,13 +42,9 @@ public:
 	unsigned int GetNumModels();
 	unsigned int GetNumMeshes();
 
-#ifdef DIRECT_X
 	bool Initialize(std::vector <ModelData> models, CDevice& device);
 	void Render(CDeviceContext& deviceContext, CShaderProgram& shaderProgram, CCamera& camera, CCamera& otheCamera);
-#else
-	bool Initialize(std::vector <ModelData> models);
-	void Render(CShaderProgram& shaderProgram, CCamera& camera, CCamera& otheCamera);
-#endif
+	void Update();
 
 	CScene();
 	~CScene() = default;

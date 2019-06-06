@@ -13,10 +13,10 @@ uniform mat4 Projection;
 	out vec3 Normal;
 	out vec3 Tangent;
 #else
-	uniform vec4	DirectionalColor;
 	uniform vec4	PointColor;
 	uniform vec4	SpotColor;
 
+	uniform vec4	DiffuseColor;
 	uniform vec4	SpecularColor;
 	uniform vec4	AmbientColor;
 	
@@ -124,7 +124,7 @@ void main()
 #endif
 
 	// Light aportation
-	vec3 Diffuse = DirectionalColor.xyz * DiffuseIntensity * NormalDotLightWS;
+	vec3 Diffuse = DiffuseColor.xyz * DiffuseIntensity * NormalDotLightWS;
 	vec3 Specular = SpecularColor.xyz * SpecularIntensity * SpecularFactor;
 	float Ambient = AmbientIntensity * (1.0 - NormalDotLightWS);
 

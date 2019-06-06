@@ -1,7 +1,7 @@
 #include "../Header/CWindow.h"
 
 #ifdef OPEN_GL
-void CWindow::Initialize(Rect dimensions, unsigned int displayMode, const char* name, Color color, std::vector <ModelData>& scene)
+void CWindow::Initialize(CDevice& device, Rect dimensions, unsigned int displayMode, const char* name, Color color, std::vector <ModelData>& scene)
 {
 	m_clearColor.r = color.r;
 	m_clearColor.g = color.g;
@@ -53,7 +53,7 @@ void CWindow::Initialize(Rect dimensions, unsigned int displayMode, const char* 
 	glEnable(GL_TEXTURE_2D);
 
 	//Scene
-	m_scene.Initialize(scene);
+	m_scene.Initialize(scene, device);
 	scene.clear();
 	
 	//Add secundary camera
@@ -66,21 +66,6 @@ void CWindow::Initialize(Rect dimensions, unsigned int displayMode, const char* 
 	
 	//Set The view matrix´s initial position
 	m_camera.SetViewMatrix((60.0f / 360.0f) * 6.283185307f, m_size.size, 0.1f, 1000.0f);
-}
-
-void CWindow::Render(CShaderProgram& shaderProgram, CCamera& camera, CCamera& otherCamera)
-{	
-	if (m_scene.m_models.size() == 0)
-	{
-		std::cout << "Warning: Scene not loaded in window" << std::endl;
-	}
-	else
-	{
-		for (int i = 0; i < m_scene.m_models.size(); i++)
-		{
-			m_scene.Render(shaderProgram, camera, otherCamera);
-		}
-	}
 }
 
 GLFWwindow* CWindow::GetPointer()
@@ -144,6 +129,21 @@ void CWindow::Initialize(WNDPROC pWndProc, HINSTANCE hInstance, std::string titl
 	ShowWindow(m_handle, nCmdShow);
 }
 #endif
+
+void CWindow::Render(CDeviceContext& deviceContext, CShaderProgram& shaderProgram, CCamera& camera, CCamera& otherCamera)
+{
+	if (m_scene.m_models.size() == 0)
+	{
+		std::cout << "Warning: Scene not loaded in window" << std::endl;
+	}
+	else
+	{
+		for (int i = 0; i < m_scene.m_models.size(); i++)
+		{
+			m_scene.Render(deviceContext, shaderProgram, camera, otherCamera);
+		}
+	}
+}
 
 bool CWindow::Resize()
 {

@@ -20,7 +20,7 @@ public:
 	GLFWwindow*			m_pointer;
 	Color				m_clearColor;
 
-	void Initialize(Rect dimensions, unsigned int displayMode, const char* name, Color color, std::vector <ModelData>& scene);
+	void Initialize(CDevice& device, Rect dimensions, unsigned int displayMode, const char* name, Color color, std::vector <ModelData>& scene);
 	GLFWwindow* GetPointer();
 	void Clear();
 #endif
@@ -40,7 +40,7 @@ public:
 	CWindow();
 	~CWindow();
 
-	void Render(CShaderProgram& shaderProgram, CCamera& camera, CCamera& otherCamera);
+	void Render(CDeviceContext& deviceContext, CShaderProgram& shaderProgram, CCamera& camera, CCamera& otherCamera);
 	bool Resize();
 
 

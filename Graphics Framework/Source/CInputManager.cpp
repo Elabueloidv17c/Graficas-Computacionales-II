@@ -22,6 +22,10 @@ CInputManager::~CInputManager()
 
 void CInputManager::Update(CCameraManager& camera, CScene& scene, float time)
 {
+	if (m_events & InputEvent::KeySpace)
+	{
+		camera.MoveUp();
+	}
 	if (m_events & InputEvent::KeyW)
 	{
 		camera.MoveForward();
@@ -47,10 +51,6 @@ void CInputManager::Update(CCameraManager& camera, CScene& scene, float time)
 	{
 		camera.Zoom();
 		m_events &= ~(InputEvent::KeyT);
-	}
-	if (m_events & InputEvent::KeySpace)
-	{
-		camera.MoveUp();
 	}
 	if (m_events & InputEvent::KeyP)
 	{

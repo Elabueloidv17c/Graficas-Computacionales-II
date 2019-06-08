@@ -74,26 +74,26 @@
     <ReferencePath>$(ReferencePath)</ReferencePath>
     <LibraryPath>$(DXSDK_DIR)lib\$(PlatformTarget);$(DEVLIBS)Assimp\lib\$(PlatformTarget);$(DEVLIBS)Glew\lib\$(PlatformTarget);$(DEVLIBS)Soil2\lib\$(PlatformTarget);$(DEVLIBS)GLFW\lib\$(PlatformTarget);$(LibraryPath)</LibraryPath>
     <ExecutablePath>$(SolutionDir)bin\x64;$(ExecutablePath)</ExecutablePath>
-    <OutDir>$(SolutionDir)build\$(PlatformTarget)\$(Configuration)\</OutDir>
-    <IntDir>$(SolutionDir)intermediate\$(PlatformTarget)\$(Configuration)\</IntDir>
+    <OutDir>$(SolutionDir)build\$(PlatformTarget)\Exe\$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)build\$(PlatformTarget)\Intermediate\$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <IncludePath>$(SolutionDir)Header;$(DXSDK_DIR)include;$(DEVLIBS)Soil2\include\;$(DEVLIBS)Glew\include\;$(DEVLIBS)Assimp\include\;$(DEVLIBS)GLFW\include\;$(IncludePath)</IncludePath>
     <LibraryPath>$(DXSDK_DIR)lib\$(PlatformTarget);$(DEVLIBS)Assimp\lib\$(PlatformTarget);$(DEVLIBS)Glew\lib\$(PlatformTarget);$(DEVLIBS)Soil2\lib\$(PlatformTarget);$(DEVLIBS)GLFW\lib\$(PlatformTarget);$(LibraryPath)</LibraryPath>
     <ReferencePath>$(ReferencePath)</ReferencePath>
     <ExecutablePath>$(ExecutablePath)</ExecutablePath>
-    <OutDir>$(SolutionDir)build\$(PlatformTarget)\$(Configuration)\</OutDir>
-    <IntDir>$(SolutionDir)intermediate\$(PlatformTarget)\$(Configuration)\</IntDir>
+    <OutDir>$(SolutionDir)build\$(PlatformTarget)\Exe\$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)build\$(PlatformTarget)\Intermediate\$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <OutDir>$(SolutionDir)build\$(PlatformTarget)\$(Configuration)\</OutDir>
-    <IntDir>$(SolutionDir)intermediate\$(PlatformTarget)\$(Configuration)\</IntDir>
+    <OutDir>$(SolutionDir)build\$(PlatformTarget)\Exe\$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)build\$(PlatformTarget)\Intermediate\$(Configuration)\</IntDir>
     <IncludePath>$(SolutionDir)Header;$(DXSDK_DIR)include;$(DEVLIBS)Soil2\include\;$(DEVLIBS)Glew\include\;$(DEVLIBS)Assimp\include\;$(DEVLIBS)GLFW\include\;$(IncludePath)</IncludePath>
     <LibraryPath>$(DXSDK_DIR)lib\$(PlatformTarget);$(DEVLIBS)Assimp\lib\$(PlatformTarget);$(DEVLIBS)Glew\lib\$(PlatformTarget);$(DEVLIBS)Soil2\lib\$(PlatformTarget);$(DEVLIBS)GLFW\lib\$(PlatformTarget);$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <OutDir>$(SolutionDir)build\$(PlatformTarget)\$(Configuration)\</OutDir>
-    <IntDir>$(SolutionDir)intermediate\$(PlatformTarget)\$(Configuration)\</IntDir>
+    <OutDir>$(SolutionDir)build\$(PlatformTarget)\Exe\$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)build\$(PlatformTarget)\Intermediate\$(Configuration)\</IntDir>
     <IncludePath>$(SolutionDir)Header;$(DXSDK_DIR)include;$(DEVLIBS)Soil2\include\;$(DEVLIBS)Glew\include\;$(DEVLIBS)Assimp\include\;$(DEVLIBS)GLFW\include\;$(IncludePath)</IncludePath>
     <LibraryPath>$(DXSDK_DIR)lib\$(PlatformTarget);$(DEVLIBS)Assimp\lib\$(PlatformTarget);$(DEVLIBS)Glew\lib\$(PlatformTarget);$(DEVLIBS)Soil2\lib\$(PlatformTarget);$(DEVLIBS)GLFW\lib\$(PlatformTarget);$(LibraryPath)</LibraryPath>
   </PropertyGroup>

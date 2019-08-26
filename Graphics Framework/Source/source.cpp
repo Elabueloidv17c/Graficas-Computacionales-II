@@ -67,7 +67,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	}
 	case WM_DESTROY:
 	{	
-		app.m_window.m_isInitialized = false;
 		PostQuitMessage(0);
 		break;
 	}
@@ -77,7 +76,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	}
 	}
 	return 0;
-
 }
 #endif
 
@@ -148,10 +146,26 @@ void SetCallBackFunctions()
 
 int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, INT nCmdShow)
 {
+#ifdef OPEN_GL
+	app.Initialize(WindowData{ "OpenGL", Rect{ 0, 0, 1280, 720 }, Color{ 0.0f, 0.125f, 0.6f, 1.0f } });
+	SetCallBackFunctions();
+
+	while (!glfwWindowShouldClose(app.m_window.m_pointer))
+	{
+		// Check if any events have been activiated
+		glfwPollEvents();
+
+		//Update and render the app
+		app.Update();
+		app.Render();
+	}
+
+	glfwTerminate();
+#endif
+#ifdef DIRECT_X
 	UNREFERENCED_PARAMETER(hPrevInstance);
 	UNREFERENCED_PARAMETER(lpCmdLine);
 
-#ifdef DIRECT_X
 	app.Initialize(WindowData{ "DirectX", Rect{ 0, 0, 1280, 720 }, Color{ 0.0f, 0.5f, 0.125f, 1.0f }, "class", WndProc, hInstance,  nCmdShow });
 
 	MSG msg = { 0 };
@@ -170,23 +184,5 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 		}
 	}
 	return (int)msg.wParam;
-#endif //DirectX
-
-#ifdef OPEN_GL
-
-	app.Initialize(WindowData{ "OpenGL", Rect{ 0, 0, 1280, 720 }, Color{ 0.0f, 0.5f, 0.125f, 1.0f } });
-	SetCallBackFunctions();
-
-	while (!glfwWindowShouldClose(app.m_window.m_pointer))
-	{        
-		// Check if any events have been activiated
-		glfwPollEvents();
-
-		//Update and render the app
-		app.Update();
-		app.Render();
-	}
-
-	glfwTerminate();
-#endif //OpenGL
+#endif
 }

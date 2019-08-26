@@ -3,8 +3,8 @@
 //------------------------------------------------------------------------------------------------------------------------------
 
 #pragma once
-//#define DIRECT_X
-#define OPEN_GL
+#define DIRECT_X
+//#define OPEN_GL
 
 //------------------------------------------------------------------------------------------------------------------------------
 //Shaders
@@ -14,12 +14,23 @@
 #define SPOT_LIGHT
 
 //------------------------------------------------------------------------------------------------------------------------------
+//VR
+//------------------------------------------------------------------------------------------------------------------------------
 
+#define STEAM_VR
+
+//------------------------------------------------------------------------------------------------------------------------------
 //Common utilities
+//------------------------------------------------------------------------------------------------------------------------------
+
 #include <iostream>
 #include <vector>
 #include <fstream>
 #include <string>
+
+
+//VR
+#include <OpenVR/openvr.h>
 
 //Load 3D Meshes
 #include <assimp/scene.h>
@@ -36,61 +47,57 @@
 #include "imGUI/imgui.h"
 
 //Type definitions
+typedef unsigned char unsignedInt8;
 typedef glm::vec2   VECTOR2;
 typedef glm::vec3   VECTOR3;
 typedef glm::vec4   VECTOR4;
 typedef glm::mat4x4 MATRIX4;
 
+//------------------------------------------------------------------------------------------------------------------------------
 //Structs
-struct Vertex
-{
+//------------------------------------------------------------------------------------------------------------------------------
+struct Vertex {
 	VECTOR3 Position;
 	VECTOR2 TexCoord;
 	VECTOR3 Normals;
 	VECTOR3 Tangents;
 };
 
-struct Point
-{
+struct Point {
 	int x;
 	int y;
 };
 
-struct Size
-{
+struct Size {
 	float width;
 	float height;
 };
 
-struct Rect
-{
+struct Rect {
 	Point pos;
 	Size size;
 };
 
-struct Color
-{
+struct Color {
 	float r;
 	float g;
 	float b;
 	float a;
 };
 
-struct Vector
-{
+struct Vector {
 	float x;
 	float y;
 	float z;
 };
 
-struct ModelData
-{
+struct ModelData {
 	const char* path;
-	MATRIX4 transform;
+	MATRIX4* transform;
+	bool isHeadset;
 };
 
-enum InputEvent
-{
+enum InputEvent {
 	RightMouse = 1,
 	MiddleMouse = 2,
 	LeftMouse = 4,
@@ -112,8 +119,7 @@ enum InputEvent
 	KeyJ = 262144
 };
 
-struct LightingData
-{
+struct LightingData {
 	Vector	directional;
 	float   specularPower;
 
@@ -130,8 +136,7 @@ struct LightingData
 	float   spotBeta;
 };
 
-struct ColorData
-{
+struct ColorData {
 	Color pointColor;
 	Color spotColor;
 
@@ -142,10 +147,45 @@ struct ColorData
 	float diffuseIntensity;
 	float specularIntensity;
 	float ambientIntensity;
+
+	float foo;
 };
 
-struct ShaderData
-{
+struct BrightData {
+	int LevelOfDetail;
+	float BloomThreshold;
+
+	VECTOR2 foo;
+};
+
+struct BlurHData {
+	Size ViewportDimensions;
+	int LevelOfDetail;
+
+	float foo;
+};
+
+struct BlurVData {
+	Size ViewportDimensions;
+	int LevelOfDetail;
+
+	float foo;
+};
+
+struct AddBrightData {
+	int LevelOfDetail;
+
+	VECTOR3 foo;
+};
+
+struct ToneMapData {
+	float Exposure;
+	float BloomMultiplier;
+
+	VECTOR2 foo;
+};
+
+struct ShaderData {
 	const char*	filePath;
 #ifdef DIRECT_X
 	const char*	entryPoint;
@@ -158,17 +198,20 @@ struct ShaderData
 	bool isBlinn;
 };
 
-struct ShaderProgramData
-{
+struct ShaderProgramData {
 	ShaderData vertex;
 	ShaderData pixel;
 };
 
 #ifdef OPEN_GL
-//GLEW
-#include <GL/glew.h>
+struct LayoutElement {
+	std::string Name;
+};
 
 typedef unsigned char* TextureData;
+
+//GLEW
+#include <GL/glew.h>
 
 //SOIL
 #include <SOIL2/SOIL2.h>
@@ -180,15 +223,21 @@ typedef unsigned char* TextureData;
 //GLFW
 #include <GLFW/glfw3.h>
 
+struct UniformData
+{
+	std::string name;
+	int location;
+};
+
 struct TextureDescription
 {
-	int					InternalFormat;
-	int					Type;
+	int							InternalFormat;
+	int							Type;
 	unsigned int		SamplerID;
 
-	Rect				BufferSize;
-	int					Format;
-	int					AtachmentType;
+	Rect						BufferSize;
+	int							Format;
+	int							AtachmentType;
 
 	TextureDescription()
 	{
@@ -197,34 +246,9 @@ struct TextureDescription
 		Type = 0;
 	}
 };
-
-struct SwapChainData
-{
-	TextureDescription	TextureDataInit;
-
-	bool depthBuffer;
-	bool stencilBuffer;
-
-	int depthID;
-
-	int numTagets;
-	unsigned int targetID[4];
-
-	SwapChainData()
-	{
-		depthBuffer = true;
-		stencilBuffer = true;
-
-		depthID = 0;
-
-		targetID[0] = 0;
-		targetID[1] = 0;
-		targetID[2] = 0;
-		targetID[3] = 0;
-	}
-};
 #endif
 #ifdef DIRECT_X
+
 //ImGui
 #include "ImGUI/imgui_impl_dx11.h"
 #include "imGUI/imgui_impl_win32.h"
@@ -241,11 +265,11 @@ struct SwapChainData
 #include <d3d11.h>
 #include <winnt.h>
 
+typedef D3D11_INPUT_ELEMENT_DESC LayoutElement;
 typedef ID3D11Texture2D* TextureData;
 #endif
 
-struct WindowData
-{
+struct WindowData {
 	std::string title;
 	Rect dimensions;
 	Color color;

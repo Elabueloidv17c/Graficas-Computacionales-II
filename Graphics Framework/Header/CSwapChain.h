@@ -3,6 +3,8 @@
 #include "CRenderTarget.h"
 #include "CDepthStencil.h"
 
+class CDevice;
+
 class CSwapChain
 {
 public:
@@ -11,27 +13,20 @@ public:
 	CDepthStencil m_depthStencil;
 
 #ifdef OPEN_GL
-	SwapChainData m_data;
-	unsigned int m_id;
-									
-	bool Initialize(SwapChainData renderTargetData);
-	bool AddRenderTarget(TextureDescription textureData);
-	void SetSwapChain(Rect* viewPort);						
-	bool Resize(Rect bufferSize);					
-	void Erase();												
-
-	unsigned int GetID();
+	unsigned int m_id;			
+	bool Initialize(Color color, Size size);
 #endif
-
 #ifdef DIRECT_X
 	DXGI_SWAP_CHAIN_DESC				m_description;
-	IDXGISwapChain*                     m_pointer;
-	Color								m_color;
-
+	IDXGISwapChain*             m_pointer;
+	
 	void Initialize(Color color, Size size, HWND hWindow);
-	void Resize(Size size);
-	void Present(UINT SyncInterval, UINT flags);
 #endif
+
+	Color												m_color;
+
+	void Resize(CDevice& device, Size size);
+	void Present(unsigned int SyncInterval, unsigned int flags);
 
 	CSwapChain();
 	~CSwapChain();

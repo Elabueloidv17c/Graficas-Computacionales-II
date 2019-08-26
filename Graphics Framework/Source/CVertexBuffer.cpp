@@ -70,7 +70,6 @@ void CVertexBuffer::Initialize(Vertex* data, unsigned int size)
 	m_stride = sizeof(Vertex);
 	m_offset = 0;
 #endif
-
 #ifdef OPEN_GL
 	m_stride = sizeof(Vertex);
 

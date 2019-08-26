@@ -7,18 +7,17 @@ public:
 	TextureData					m_data;
 	std::string					m_name;
 
+	int									m_width;
+	int									m_height;
+
 #ifdef DIRECT_X
 	D3D11_TEXTURE2D_DESC		m_description;
 	ID3D11ShaderResourceView*	m_pointer;
 #endif
-
 #ifdef OPEN_GL
 	unsigned int				m_id;
 	unsigned char				m_TextureTypeID;
 	unsigned int				m_SamplerID;
-
-	int							m_width;
-	int							m_height;
 
 	bool						LoadFromFile(std::string path);
 #endif

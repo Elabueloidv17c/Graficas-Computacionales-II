@@ -2,7 +2,7 @@
 #include "Header.h"
 #include "CMesh.h"
 
-class CShaderProgram;
+class CLightingPass;
 class CDeviceContext;
 class CDevice;
 class CCamera;
@@ -12,21 +12,21 @@ class CScene
 {
 public:
 
-	std::string				m_path;
+	std::string						m_path;
 	std::vector <CModel>	m_models;
 
-	bool					m_isParty;
+	bool									m_isParty;
 
-	bool					m_isPointOn;
-	bool					m_isPointChanged;
+	bool									m_isPointOn;
+	bool									m_isPointChanged;
 
-	bool					m_isSpotOn;
-	bool					m_isSpotChanged;
+	bool									m_isSpotOn;
+	bool									m_isSpotChanged;
 
-	ColorData				m_colorData;
-	LightingData			m_lightingData;
-	float					m_spotRadius;
-	float					m_pointRadius;
+	ColorData							m_colorData;
+	LightingData					m_lightingData;
+	float									m_spotRadius;
+	float									m_pointRadius;
 
 
 	void PartyMode();
@@ -43,8 +43,7 @@ public:
 	unsigned int GetNumMeshes();
 
 	bool Initialize(std::vector <ModelData> models, CDevice& device);
-	void Render(CDeviceContext& deviceContext, CShaderProgram& shaderProgram, CCamera& camera, CCamera& otheCamera);
-	void Update();
+	void Render(CDeviceContext& deviceContext, CLightingPass& shaderProgram, CCamera& camera, bool isVR);
 
 	CScene();
 	~CScene() = default;

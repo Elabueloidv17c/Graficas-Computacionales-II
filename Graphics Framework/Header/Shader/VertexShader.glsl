@@ -13,31 +13,31 @@ uniform mat4 Projection;
 	out vec3 Normal;
 	out vec3 Tangent;
 #else
-	uniform vec4	PointColor;
-	uniform vec4	SpotColor;
+	uniform vec4		PointColor;
+	uniform vec4		SpotColor;
 
-	uniform vec4	DiffuseColor;
-	uniform vec4	SpecularColor;
-	uniform vec4	AmbientColor;
+	uniform vec4		DiffuseColor;
+	uniform vec4		SpecularColor;
+	uniform vec4		AmbientColor;
 	
-	uniform float	DiffuseIntensity;
-	uniform float	SpecularIntensity;
-	uniform float	AmbientIntensity;
+	uniform float		DiffuseIntensity;
+	uniform float		SpecularIntensity;
+	uniform float		AmbientIntensity;
 	
-	uniform vec3	DirectionalLight;
-	uniform float	SpecularPower;
+	uniform vec3		DirectionalLight;
+	uniform float		SpecularPower;
 	
-	uniform vec3	PointPosition;
-	uniform float   PointRadius;
+	uniform vec3		PointPosition;
+	uniform float		PointRadius;
 	
-	uniform vec3	ViewPosition;
-	uniform float   SpotRadius;
+	uniform vec3		ViewPosition;
+	uniform float		SpotRadius;
 	
-	uniform vec3	SpotPosition;
-	uniform float   SpotAlpha;
+	uniform vec3		SpotPosition;
+	uniform float		SpotAlpha;
 	
-	uniform vec3	SpotLightDirection;
-	uniform float   SpotBeta;
+	uniform vec3		SpotLightDirection;
+	uniform float		SpotBeta;
 	
 	out vec4 Color;
 #endif
@@ -126,7 +126,7 @@ void main()
 	// Light aportation
 	vec3 Diffuse = DiffuseColor.xyz * DiffuseIntensity * NormalDotLightWS;
 	vec3 Specular = SpecularColor.xyz * SpecularIntensity * SpecularFactor;
-	float Ambient = AmbientIntensity * (1.0 - NormalDotLightWS);
+	vec3 Ambient = AmbientColor.xyz * AmbientIntensity * (1.0 - NormalDotLightWS);
 
 #ifdef POINT_LIGHT
 	Diffuse += PointColor.xyz * DiffuseIntensity * PointNormalDotLightWS;

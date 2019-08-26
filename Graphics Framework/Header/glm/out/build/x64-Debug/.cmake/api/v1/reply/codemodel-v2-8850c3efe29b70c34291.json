@@ -1,0 +1,64 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0,
+						1
+					]
+				}
+			],
+			"name" : "Debug",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "Project",
+					"targetIndexes" : 
+					[
+						0,
+						1
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "glm_shared::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-glm_shared-Debug-d4d6581b6eb58272c6a2.json",
+					"name" : "glm_shared",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "glm_static::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-glm_static-Debug-df62016fc8ddeaf8acb0.json",
+					"name" : "glm_static",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "D:/UAD/6/Graficas computacionales/Graphics Framework 2.0/Header/glm/out/build/x64-Debug",
+		"source" : "D:/UAD/6/Graficas computacionales/Graphics Framework 2.0/Header/glm"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 0
+	}
+}

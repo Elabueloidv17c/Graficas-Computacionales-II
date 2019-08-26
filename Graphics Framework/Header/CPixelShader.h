@@ -16,8 +16,8 @@ public:
 	ID3DBlob*								m_blob;
 #endif
 #ifdef OPEN_GL
+	int m_type;
 	int m_id;
-	int GetId();
 #endif
 
 

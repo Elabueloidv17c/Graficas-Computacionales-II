@@ -2,11 +2,17 @@
 
 CCamera::CCamera()
 {
+	m_viewMatrix = nullptr;
+	m_projectionMatrix = nullptr;
+
 	m_isZoomActive = false;
 }
 
 void CCamera::Initialize(VECTOR3 position, VECTOR3 up, VECTOR3 front, VECTOR3 right, float yaw, float pitch, float speed, float rotateSpeed)
 {
+	m_viewMatrix = new MATRIX4;
+	m_projectionMatrix = new MATRIX4;
+
 	m_mouseLastPosition = Point{ 0, 0 };
 
 	m_position = position;
@@ -20,8 +26,12 @@ void CCamera::Initialize(VECTOR3 position, VECTOR3 up, VECTOR3 front, VECTOR3 ri
 	m_yaw = yaw;
 	m_pitch = pitch;
 
+#ifdef DIRECT_X
 	m_movementSpeed = speed;
-
+#endif
+#ifdef OPEN_GL
+	m_movementSpeed = speed * 20.0f;
+#endif
 	m_rotateSpeed = rotateSpeed;
 
 	Update();
@@ -34,12 +44,12 @@ void CCamera::SetViewMatrix(float fieldOfView, Size aspectRatio, float nearZ, fl
 	m_near = nearZ;
 	m_far = farZ;
 
-	m_projectionMatrix = glm::perspective(m_fieldOfView, (aspectRatio.width / aspectRatio.height), nearZ, farZ);
+	*m_projectionMatrix = glm::perspective(m_fieldOfView, (aspectRatio.width / aspectRatio.height), nearZ, farZ);
 }
 
 void CCamera::Resize(Size aspectRatio)
 {
-	m_projectionMatrix = glm::perspective(m_fieldOfView, (aspectRatio.width / aspectRatio.height), m_near, m_far);
+	*m_projectionMatrix = glm::perspective(m_fieldOfView, (aspectRatio.width / aspectRatio.height), m_near, m_far);
 }
 
 void CCamera::Update()
@@ -66,7 +76,7 @@ void CCamera::Update()
 	m_right = glm::normalize(glm::cross(m_front, m_worldUp));
 	m_up = glm::normalize(glm::cross(m_right, m_front));
 
-	m_viewMatrix = glm::lookAt(m_position, (m_position + m_front), m_up);
+	*m_viewMatrix = glm::lookAt(m_position, (m_position + m_front), m_up);
 }
 
 void CCamera::MoveForward()

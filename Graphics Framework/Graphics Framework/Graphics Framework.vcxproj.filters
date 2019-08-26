@@ -14,98 +14,98 @@
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
     <Filter Include="Archivos de origen\ImGui">
-      <UniqueIdentifier>{787bfcc7-c20d-463b-875e-a4e6cba9b22e}</UniqueIdentifier>
+      <UniqueIdentifier>{0cd23835-8f04-4af2-9c2c-e9422fc3842c}</UniqueIdentifier>
     </Filter>
     <Filter Include="Archivos de encabezado\ImGui">
-      <UniqueIdentifier>{ee91cd30-757a-4225-8209-239ec8b21ac2}</UniqueIdentifier>
+      <UniqueIdentifier>{a0b905a7-88de-4ca5-9500-2657c3f01284}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de encabezado\Passes">
+      <UniqueIdentifier>{50d774b4-8e11-47ee-b926-fa00d87f3aac}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de encabezado\ResourceManagment">
+      <UniqueIdentifier>{4357ab2d-fa89-47de-8fb7-21aa02b77c00}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de encabezado\Geometry">
+      <UniqueIdentifier>{f936a308-861d-402f-b028-2d5e6b449a04}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de encabezado\States">
+      <UniqueIdentifier>{ae705b3f-5f6b-49c8-8736-129f97ba87d7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de encabezado\ShaderManagment">
+      <UniqueIdentifier>{8be50097-4afb-4ead-8c00-34b83ead9f84}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de encabezado\CameraManagment">
+      <UniqueIdentifier>{a3ac92d8-7876-4120-991a-ef462ddd426d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de encabezado\RenderManagment">
+      <UniqueIdentifier>{07b77466-68d0-4c38-9499-73589af92da5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de encabezado\Helpers">
+      <UniqueIdentifier>{1a666d18-ae36-467d-9cc9-4225365711ed}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de encabezado\TextureManagment">
+      <UniqueIdentifier>{da7f4bfb-0092-4678-8f95-bef1cb0718e4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de encabezado\ShaderManagment\Shaders">
+      <UniqueIdentifier>{c912ed23-ce8b-46d8-b853-ada36e51cf05}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de origen\CameraManagment">
+      <UniqueIdentifier>{1f8a1bf3-d591-4598-a773-e9e17d1e53ea}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de origen\Passes">
+      <UniqueIdentifier>{7d7441bc-63e5-4c36-a05a-b6f8acf79d68}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de origen\Helpers">
+      <UniqueIdentifier>{5928723c-da92-4056-b77a-a3c096455134}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de origen\RenderManagment">
+      <UniqueIdentifier>{15c7d9ea-cff9-465a-85fe-29fe6c021f62}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de origen\ResourceManagment">
+      <UniqueIdentifier>{384c8daf-d496-482f-9096-86a85c34e215}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de origen\ShaderManagment">
+      <UniqueIdentifier>{0482c330-c0fa-478d-92a9-85bbd23cea54}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de origen\States">
+      <UniqueIdentifier>{60648f9b-7f31-4bf1-91ae-7a9a6e041f08}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de origen\TextureManagment">
+      <UniqueIdentifier>{17b2eb5e-63f6-4ca5-bedc-6e4b349dca3e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de encabezado\ShaderManagment\Shaders\hlsl">
+      <UniqueIdentifier>{d77edc6c-1fec-4a8b-ad6e-bb89cf57a8b2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de encabezado\ShaderManagment\Shaders\glsl">
+      <UniqueIdentifier>{632e2b26-3784-455a-9acb-baa9786086a9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de origen\Geometry">
+      <UniqueIdentifier>{c64539cc-3d76-4916-a6ec-596cbbd600ec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de encabezado\VR">
+      <UniqueIdentifier>{cf532508-64c6-4db7-8821-a2dc86e71611}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de origen\VR">
+      <UniqueIdentifier>{346d0940-04c3-45f2-bac8-2acc299a0cc0}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\Source\CWindow.cpp">
+    <ClCompile Include="..\Source\CInputManager.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\CManager.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
-    <ClCompile Include="..\Source\CDevice.cpp">
-      <Filter>Archivos de origen</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\CTexture.cpp">
-      <Filter>Archivos de origen</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\CStringConverter.cpp">
-      <Filter>Archivos de origen</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\CShaderProgram.cpp">
-      <Filter>Archivos de origen</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\CSwapChain.cpp">
-      <Filter>Archivos de origen</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\CRenderTarget.cpp">
-      <Filter>Archivos de origen</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\CDepthStencil.cpp">
-      <Filter>Archivos de origen</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\CVertexBuffer.cpp">
-      <Filter>Archivos de origen</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\CViewportManager.cpp">
-      <Filter>Archivos de origen</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\CIndexBuffer.cpp">
-      <Filter>Archivos de origen</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\CScene.cpp">
-      <Filter>Archivos de origen</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\CMesh.cpp">
-      <Filter>Archivos de origen</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\CCamera.cpp">
-      <Filter>Archivos de origen</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\CInputManager.cpp">
-      <Filter>Archivos de origen</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\CDeviceContext.cpp">
-      <Filter>Archivos de origen</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\CCameraManager.cpp">
-      <Filter>Archivos de origen</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\CSamplerState.cpp">
+    <ClCompile Include="..\Source\CWindow.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\source.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
-    <ClCompile Include="..\Source\CConstantBuffer.cpp">
-      <Filter>Archivos de origen</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\CUserInterface.cpp">
-      <Filter>Archivos de origen</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\CModel.cpp">
-      <Filter>Archivos de origen</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\CRenderToTexture.cpp">
-      <Filter>Archivos de origen</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\CMaterial.cpp">
-      <Filter>Archivos de origen</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\CPixelShader.cpp">
-      <Filter>Archivos de origen</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\CShaderManager.cpp">
-      <Filter>Archivos de origen</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\CVertexShader.cpp">
-      <Filter>Archivos de origen</Filter>
-    </ClCompile>
     <ClCompile Include="..\Header\imGUI\imgui.cpp">
+      <Filter>Archivos de origen\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Header\imGUI\imgui_demo.cpp">
       <Filter>Archivos de origen\ImGui</Filter>
     </ClCompile>
     <ClCompile Include="..\Header\imGUI\imgui_draw.cpp">
@@ -126,92 +126,116 @@
     <ClCompile Include="..\Header\imGUI\imgui_widgets.cpp">
       <Filter>Archivos de origen\ImGui</Filter>
     </ClCompile>
+    <ClCompile Include="..\Source\CAddBrightPass.cpp">
+      <Filter>Archivos de origen\Passes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\CBlurHPass.cpp">
+      <Filter>Archivos de origen\Passes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\CBlurVPass.cpp">
+      <Filter>Archivos de origen\Passes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\CBrightPass.cpp">
+      <Filter>Archivos de origen\Passes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\CLightingPass.cpp">
+      <Filter>Archivos de origen\Passes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\CLuminancePass.cpp">
+      <Filter>Archivos de origen\Passes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\CRenderPass.cpp">
+      <Filter>Archivos de origen\Passes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\CToneMapPass.cpp">
+      <Filter>Archivos de origen\Passes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\CCamera.cpp">
+      <Filter>Archivos de origen\CameraManagment</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\CCameraManager.cpp">
+      <Filter>Archivos de origen\CameraManagment</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\CDepthState.cpp">
+      <Filter>Archivos de origen\States</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\CRasterizerState.cpp">
+      <Filter>Archivos de origen\States</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\CSamplerState.cpp">
+      <Filter>Archivos de origen\States</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\CViewportManager.cpp">
+      <Filter>Archivos de origen\CameraManagment</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\CConstantBuffer.cpp">
+      <Filter>Archivos de origen\ShaderManagment</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\CVertexShader.cpp">
+      <Filter>Archivos de origen\ShaderManagment</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\CPixelShader.cpp">
+      <Filter>Archivos de origen\ShaderManagment</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\CShaderProgram.cpp">
+      <Filter>Archivos de origen\ShaderManagment</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\CShaderManager.cpp">
+      <Filter>Archivos de origen\ShaderManagment</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\CDeviceContext.cpp">
+      <Filter>Archivos de origen\ResourceManagment</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\CDevice.cpp">
+      <Filter>Archivos de origen\ResourceManagment</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\CDepthStencil.cpp">
+      <Filter>Archivos de origen\RenderManagment</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\CRenderTarget.cpp">
+      <Filter>Archivos de origen\RenderManagment</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\CSwapChain.cpp">
+      <Filter>Archivos de origen\RenderManagment</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\CUserInterface.cpp">
+      <Filter>Archivos de origen\RenderManagment</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\CStringConverter.cpp">
+      <Filter>Archivos de origen\Helpers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\CMaterial.cpp">
+      <Filter>Archivos de origen\TextureManagment</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\CTexture.cpp">
+      <Filter>Archivos de origen\TextureManagment</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\CModel.cpp">
+      <Filter>Archivos de origen\Geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\CMesh.cpp">
+      <Filter>Archivos de origen\Geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\CIndexBuffer.cpp">
+      <Filter>Archivos de origen\Geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\CVertexBuffer.cpp">
+      <Filter>Archivos de origen\Geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\CScreenAlignedQuad.cpp">
+      <Filter>Archivos de origen\Geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\CScene.cpp">
+      <Filter>Archivos de origen\Geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\CVRManager.cpp">
+      <Filter>Archivos de origen\VR</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\CFlipPass.cpp">
+      <Filter>Archivos de origen\Passes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\Header\Header.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\CWindow.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\CManager.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\CDevice.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\CTexture.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\CStringConverter.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\CShaderProgram.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\CSwapChain.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\CRenderTarget.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\CDepthStencil.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\CVertexBuffer.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\CViewportManager.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\CIndexBuffer.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\CScene.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\CMesh.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\CCamera.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\CInputManager.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\CDeviceContext.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\CCameraManager.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\CSamplerState.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\CConstantBuffer.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\CUserInterface.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\CModel.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\CRenderToTexture.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\CMaterial.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\CPixelShader.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\CShaderManager.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\CVertexShader.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
     <ClInclude Include="..\Header\imGUI\imconfig.h">
       <Filter>Archivos de encabezado\ImGui</Filter>
     </ClInclude>
@@ -242,5 +266,186 @@
     <ClInclude Include="..\Header\imGUI\imstb_truetype.h">
       <Filter>Archivos de encabezado\ImGui</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CInputManager.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CManager.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CWindow.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Resource.h">
+      <Filter>Archivos de recursos</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CAddBrightPass.h">
+      <Filter>Archivos de encabezado\Passes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CBlurHPass.h">
+      <Filter>Archivos de encabezado\Passes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CBlurVPass.h">
+      <Filter>Archivos de encabezado\Passes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CBrightPass.h">
+      <Filter>Archivos de encabezado\Passes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CLightingPass.h">
+      <Filter>Archivos de encabezado\Passes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CLuminancePass.h">
+      <Filter>Archivos de encabezado\Passes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CRenderPass.h">
+      <Filter>Archivos de encabezado\Passes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CToneMapPass.h">
+      <Filter>Archivos de encabezado\Passes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CDevice.h">
+      <Filter>Archivos de encabezado\ResourceManagment</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CDeviceContext.h">
+      <Filter>Archivos de encabezado\ResourceManagment</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CMesh.h">
+      <Filter>Archivos de encabezado\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CModel.h">
+      <Filter>Archivos de encabezado\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CScreenAlignedQuad.h">
+      <Filter>Archivos de encabezado\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CVertexBuffer.h">
+      <Filter>Archivos de encabezado\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CIndexBuffer.h">
+      <Filter>Archivos de encabezado\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CRasterizerState.h">
+      <Filter>Archivos de encabezado\States</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CSamplerState.h">
+      <Filter>Archivos de encabezado\States</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CDepthState.h">
+      <Filter>Archivos de encabezado\States</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CConstantBuffer.h">
+      <Filter>Archivos de encabezado\ShaderManagment</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CPixelShader.h">
+      <Filter>Archivos de encabezado\ShaderManagment</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CShaderManager.h">
+      <Filter>Archivos de encabezado\ShaderManagment</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CShaderProgram.h">
+      <Filter>Archivos de encabezado\ShaderManagment</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CVertexShader.h">
+      <Filter>Archivos de encabezado\ShaderManagment</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CScene.h">
+      <Filter>Archivos de encabezado\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CCameraManager.h">
+      <Filter>Archivos de encabezado\CameraManagment</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CCamera.h">
+      <Filter>Archivos de encabezado\CameraManagment</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CViewportManager.h">
+      <Filter>Archivos de encabezado\CameraManagment</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CRenderTarget.h">
+      <Filter>Archivos de encabezado\RenderManagment</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CDepthStencil.h">
+      <Filter>Archivos de encabezado\RenderManagment</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CSwapChain.h">
+      <Filter>Archivos de encabezado\RenderManagment</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CStringConverter.h">
+      <Filter>Archivos de encabezado\Helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CMaterial.h">
+      <Filter>Archivos de encabezado\TextureManagment</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CTexture.h">
+      <Filter>Archivos de encabezado\TextureManagment</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CUserInterface.h">
+      <Filter>Archivos de encabezado\RenderManagment</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CVRManager.h">
+      <Filter>Archivos de encabezado\VR</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Header.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CFlipPass.h">
+      <Filter>Archivos de encabezado\Passes</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="..\Header\Shader\AddBrightPass.hlsl">
+      <Filter>Archivos de encabezado\ShaderManagment\Shaders\hlsl</Filter>
+    </FxCompile>
+    <FxCompile Include="..\Header\Shader\BlurHPass.hlsl">
+      <Filter>Archivos de encabezado\ShaderManagment\Shaders\hlsl</Filter>
+    </FxCompile>
+    <FxCompile Include="..\Header\Shader\BlurVPass.hlsl">
+      <Filter>Archivos de encabezado\ShaderManagment\Shaders\hlsl</Filter>
+    </FxCompile>
+    <FxCompile Include="..\Header\Shader\BrightPass.hlsl">
+      <Filter>Archivos de encabezado\ShaderManagment\Shaders\hlsl</Filter>
+    </FxCompile>
+    <FxCompile Include="..\Header\Shader\LuminancePass.hlsl">
+      <Filter>Archivos de encabezado\ShaderManagment\Shaders\hlsl</Filter>
+    </FxCompile>
+    <FxCompile Include="..\Header\Shader\PixelShader.hlsl">
+      <Filter>Archivos de encabezado\ShaderManagment\Shaders\hlsl</Filter>
+    </FxCompile>
+    <FxCompile Include="..\Header\Shader\ToneMapPass.hlsl">
+      <Filter>Archivos de encabezado\ShaderManagment\Shaders\hlsl</Filter>
+    </FxCompile>
+    <FxCompile Include="..\Header\Shader\VertexSAQ.hlsl">
+      <Filter>Archivos de encabezado\ShaderManagment\Shaders\hlsl</Filter>
+    </FxCompile>
+    <FxCompile Include="..\Header\Shader\VertexShader.hlsl">
+      <Filter>Archivos de encabezado\ShaderManagment\Shaders\hlsl</Filter>
+    </FxCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\Header\Shader\VertexShader.glsl">
+      <Filter>Archivos de encabezado\ShaderManagment\Shaders\glsl</Filter>
+    </None>
+    <None Include="..\Header\Shader\PixelShader.glsl">
+      <Filter>Archivos de encabezado\ShaderManagment\Shaders\glsl</Filter>
+    </None>
+    <None Include="..\Header\Shader\AddBrightPass.glsl">
+      <Filter>Archivos de encabezado\ShaderManagment\Shaders\glsl</Filter>
+    </None>
+    <None Include="..\Header\Shader\BlurHPass.glsl">
+      <Filter>Archivos de encabezado\ShaderManagment\Shaders\glsl</Filter>
+    </None>
+    <None Include="..\Header\Shader\BlurVPass.glsl">
+      <Filter>Archivos de encabezado\ShaderManagment\Shaders\glsl</Filter>
+    </None>
+    <None Include="..\Header\Shader\BrightPass.glsl">
+      <Filter>Archivos de encabezado\ShaderManagment\Shaders\glsl</Filter>
+    </None>
+    <None Include="..\Header\Shader\LuminancePass.glsl">
+      <Filter>Archivos de encabezado\ShaderManagment\Shaders\glsl</Filter>
+    </None>
+    <None Include="..\Header\Shader\ToneMapPass.glsl">
+      <Filter>Archivos de encabezado\ShaderManagment\Shaders\glsl</Filter>
+    </None>
+    <None Include="..\Header\Shader\VertexSAQ.glsl">
+      <Filter>Archivos de encabezado\ShaderManagment\Shaders\glsl</Filter>
+    </None>
   </ItemGroup>
 </Project>

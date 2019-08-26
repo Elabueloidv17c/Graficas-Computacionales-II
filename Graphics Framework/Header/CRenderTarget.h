@@ -5,20 +5,19 @@
 class CRenderTarget
 {
 public:
-#ifdef OPEN_GL
-	std::vector <CTexture*> m_view;
-#endif
 
 #ifdef DIRECT_X
-	ID3D11RenderTargetView* m_view;
-	D3D11_RENDER_TARGET_VIEW_DESC	m_description;
+	D3D11_RENDER_TARGET_VIEW_DESC		m_description;
+	ID3D11RenderTargetView*					m_view;
 #endif 
+#ifdef OPEN_GL
+	unsigned int										m_id;
+#endif
+
+	CTexture												m_texture;
+
+	void Initialize(Size size);
 
 	CRenderTarget();
 	~CRenderTarget();
-
-#ifdef OPEN_GL
-	void Initialize(SwapChainData renderTargetData);
-	void Erase();
-#endif
 };

@@ -1,5 +1,10 @@
 #include "..\Header\CCameraManager.h"
 
+CCameraManager::CCameraManager()
+{
+	m_activeCamera = 0;
+}
+
 //Initialize the main camera 
 void CCameraManager::Initialize(VECTOR3 position, VECTOR3 up, VECTOR3 front, VECTOR3 right, float yaw, float pitch, float speed, float rotateSpeed)
 {
@@ -7,9 +12,7 @@ void CCameraManager::Initialize(VECTOR3 position, VECTOR3 up, VECTOR3 front, VEC
 	{
 		m_cameras.push_back(CCamera());
 		m_cameras[0].Initialize(position, up, front, right, yaw, pitch, speed, rotateSpeed);
-		m_activeCamera = 0;
 	}
-
 	else
 	{
 		std::cout << "Warning:  Camera manager already initialized" << std::endl;
@@ -19,8 +22,7 @@ void CCameraManager::Initialize(VECTOR3 position, VECTOR3 up, VECTOR3 front, VEC
 void CCameraManager::AddCamera(VECTOR3 position, VECTOR3 up, VECTOR3 front, VECTOR3 right, float yaw, float pitch, float speed, float rotateSpeed)
 {
 	m_cameras.push_back(CCamera());
-	m_activeCamera = m_cameras.size() - 1;
-	m_cameras[m_activeCamera].Initialize(position, up, front, right, yaw, pitch, speed, rotateSpeed);
+	m_cameras[m_cameras.size() - 1].Initialize(position, up, front, right, yaw, pitch, speed, rotateSpeed);
 }
 
 void CCameraManager::Erase()

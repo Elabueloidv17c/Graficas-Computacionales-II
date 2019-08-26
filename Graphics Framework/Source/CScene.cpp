@@ -1,10 +1,9 @@
 #pragma once
-#include "../Header/CShaderProgram.h"
+#include "../Header/CLightingPass.h"
 #include "../Header/CScene.h"
 #include "../Header/CModel.h"
 
-CScene::CScene()
-{
+CScene::CScene() {
 	m_isParty = false;
 
 	m_isSpotChanged = false;
@@ -15,54 +14,36 @@ CScene::CScene()
 }
 
 
-bool CScene::Initialize(std::vector <ModelData> models, CDevice& device)
-{
-#ifdef DIRECT_X
+bool 
+CScene::Initialize(std::vector <ModelData> models, CDevice& device) {
 	m_models.resize(models.size());
-
-	for (int i = 0; i < models.size(); i++)
-	{
+	for (int i = 0; i < models.size(); i++) {
 		m_models[i].Initialize(models[i], device);
 	}
-#endif
-#ifdef OPEN_GL
-	m_models.resize(models.size());
-
-	for (int i = 0; i < models.size(); i++)
-	{
-		m_models[i].Initialize(models[i], device);
-	}
-
-#endif
 	return true;
 }
 
-void CScene::Render(CDeviceContext& deviceContext, CShaderProgram& shaderProgram, CCamera& camera, CCamera& otherCamera)
-{
-#ifdef DIRECT_X
-	deviceContext.UpdateColorData(shaderProgram.m_colorDataCB, m_colorData);
-
-	for (int i = 0; i < m_models.size(); i++)
-	{
-		m_models[i].Render(deviceContext, shaderProgram, camera, otherCamera);
+void 
+CScene::Render(CDeviceContext& deviceContext, CLightingPass& pass, CCamera& camera, bool isVR) {
+	deviceContext.UpdateColorData(pass.m_colorDataCB, m_colorData);
+	for (int i = 0; i < m_models.size(); i++) {
+		m_models[i].Render(deviceContext, pass, camera, isVR);
 	}
-#endif
-#ifdef OPEN_GL
-
-	shaderProgram.UpdateLight(m_lightingData);
-	shaderProgram.UpdateColor(m_colorData);
-
-	for (int i = 0; i < m_models.size(); i++)
-	{
-		m_models[i].Render(deviceContext, shaderProgram, camera, otherCamera);
-	}
-#endif
 }
 
-void CScene::Update()
-{
+void 
+CScene::PartyMode() {
+	if (m_isParty) {
+		m_colorData.diffuseColor = { 1.0f, 1.0f, 1.0f, 1.0f };
+	}
+	m_isParty = !m_isParty;
+}
+
+void 
+CScene::Update(float time) {
+	RotateLight(time);
 	if (m_isSpotChanged)
-	{		
+	{
 		if (m_lightingData.SpotRadius > 0.0f)
 		{
 			m_lightingData.SpotRadius = 0.0f;
@@ -73,69 +54,46 @@ void CScene::Update()
 		}
 		m_isSpotChanged = false;
 	}
-	if (m_isPointChanged)
-	{
-		if (m_lightingData.PointRadius > 0.0f)
-		{
+	if (m_isPointChanged) {
+		if (m_lightingData.PointRadius > 0.0f) {
 			m_lightingData.PointRadius = 0.0f;
 		}
-		else
-		{
+		else {
 			m_lightingData.PointRadius = m_pointRadius;
 		}
 		m_isPointChanged = false;
 	}
-}
-
-void CScene::PartyMode()
-{
-	if (m_isParty)
-	{
-		m_colorData.diffuseColor = { 1.0f, 1.0f, 1.0f, 1.0f };
-	}
-
-	m_isParty = !m_isParty;
-}
-
-void CScene::Update(float time)
-{
-	for (int i = 0; i < m_models.size(); i++)
-	{
+	for (int i = 0; i < m_models.size(); i++) {
 		m_models[i].Update(time);
 	}
-
-	if (m_isParty)
-	{
+	if (m_isParty) {
 		m_colorData.diffuseColor.r = sinf(time * 1.0f) + 1.0f;
 		m_colorData.diffuseColor.g = cosf(time * 3.0f) + 1.0f;
 		m_colorData.diffuseColor.b = sinf(time * 5.0f) + 1.0f;
 	}
 }
 
-void CScene::RotateLight(float time)
-{
+void 
+CScene::RotateLight(float time) {
 	m_lightingData.directional.x = sin(time);
 	m_lightingData.directional.y = cos(time);
 	m_lightingData.directional.z = cos(time) + sin(time);
 }
 
-void CScene::ChangeLightIntensity(float value)
+void 
+CScene::ChangeLightIntensity(float value)
 {
 	m_lightingData.specularPower += value;
-
-	if (m_lightingData.specularPower > 1.0f)
-	{
+	if (m_lightingData.specularPower > 1.0f) {
 		m_lightingData.specularPower = 1.0f;
 	}
-
-	else if (m_lightingData.specularPower < 0.0f)
-	{
+	else if (m_lightingData.specularPower < 0.0f) {
 		m_lightingData.specularPower = 0.0f;
 	}
 }
 
-void CScene::SetColorData(ColorData data)
-{
+void 
+CScene::SetColorData(ColorData data) {
 	m_colorData.diffuseColor = data.diffuseColor;
 	m_colorData.pointColor = data.pointColor;
 	m_colorData.spotColor = data.spotColor;
@@ -153,8 +111,8 @@ void CScene::SetColorData(ColorData data)
 	m_colorData.ambientIntensity = data.ambientIntensity;
 }
 
-void CScene::SetLightData(LightingData data)
-{
+void 
+CScene::SetLightData(LightingData data) {
 	m_lightingData.directional = data.directional;
 	m_lightingData.viewPosition = data.viewPosition;
 	m_lightingData.pointPosition = data.pointPosition;
@@ -168,45 +126,35 @@ void CScene::SetLightData(LightingData data)
 	m_lightingData.specularPower = data.specularPower;
 }
 
-unsigned int CScene::GetNumVertices()
-{
+unsigned int 
+CScene::GetNumVertices() {
 	unsigned int value = 0;
-
-	for (int i = 0; i < m_models.size(); i++)
-	{
+	for (int i = 0; i < m_models.size(); i++) {
 		value += m_models[i].GetNumVertices();
 	}
-
 	return value;
 }
 
-unsigned int CScene::GetNumFaces()
-{
+unsigned int 
+CScene::GetNumFaces() {
 	unsigned int value = 0;
-
-	for (int i = 0; i < m_models.size(); i++)
-	{
+	for (int i = 0; i < m_models.size(); i++) {
 		value += m_models[i].GetNumFaces();
 	}
-
 	return value;
 }
 
-unsigned int CScene::GetNumModels()
-{
+unsigned int 
+CScene::GetNumModels() {
 	unsigned int value = m_models.size();
-
 	return value;
 }
 
-unsigned int CScene::GetNumMeshes()
-{
+unsigned int 
+CScene::GetNumMeshes() {
 	unsigned int value = 0;
-
-	for (int i = 0; i < m_models.size(); i++)
-	{
+	for (int i = 0; i < m_models.size(); i++) {
 		value += m_models[i].m_meshes.size();
 	}
-
 	return value;
 }

@@ -5,8 +5,8 @@ class CCamera
 {
 public:
 
-	MATRIX4		m_viewMatrix;
-	MATRIX4		m_projectionMatrix;
+	MATRIX4*	m_viewMatrix;
+	MATRIX4*	m_projectionMatrix;
 
 	VECTOR3		m_position;
 	VECTOR3		m_front;

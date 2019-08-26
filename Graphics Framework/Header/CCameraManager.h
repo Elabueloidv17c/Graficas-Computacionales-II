@@ -9,7 +9,7 @@ public:
 	unsigned int			m_activeCamera;
 	std::vector <CCamera>	m_cameras;
 
-	CCameraManager() = default;
+	CCameraManager();
 	~CCameraManager() = default;
 
 	void Initialize(VECTOR3 position, VECTOR3 up, VECTOR3 front, VECTOR3 right, float yaw, float pitch, float speed, float rotateSpeed);

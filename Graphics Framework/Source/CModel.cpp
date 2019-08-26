@@ -1,7 +1,9 @@
-#include "../Header/CShaderProgram.h"
+#include "../Header/CLightingPass.h"
 #include "../Header/CCamera.h"
 #include "../Header/CModel.h"
 #include "../Header/CMesh.h"
+#include "../Header/CScene.h"
+#include "../Header/CMaterial.h"
 
 CModel::CModel()
 {
@@ -14,7 +16,7 @@ void CModel::Update(float time)
 
 }
 
-void CModel::SetTransform(MATRIX4 transform, unsigned int index)
+void CModel::SetTransform(MATRIX4*& transform, unsigned int index)
 {
 	if (index >= m_transforms.size())
 	{
@@ -30,7 +32,7 @@ void CModel::Rotate(float speed)
 {
 	for (int i = 0; i < m_transforms.size(); i++)
 	{
-		m_transforms[i] = glm::rotate(m_transforms[i], glm::radians(cos(speed)), VECTOR3(0.0f, 1.0f, 0.0f));
+		*m_transforms[i] = glm::rotate(*m_transforms[i], glm::radians(cos(speed)), VECTOR3(0.0f, 1.0f, 0.0f));
 	}
 }
 
@@ -47,7 +49,7 @@ void CModel::ChangeScale()
 
 	for (int i = 0; i < m_transforms.size(); i++)
 	{
-		m_transforms[i] = glm::scale(m_transforms[i], VECTOR3(m_scale));
+		*m_transforms[i] = glm::scale(*m_transforms[i], VECTOR3(m_scale));
 	}
 }
 
@@ -75,7 +77,7 @@ unsigned int  CModel::GetNumFaces()
 	return count / 3;
 }
 
-void CModel::AddTransform(MATRIX4 transform)
+void CModel::AddTransform(MATRIX4*& transform)
 {
 	m_transforms.push_back(transform);
 }
@@ -87,6 +89,7 @@ void CModel::Erase()
 
 bool CModel::Initialize(ModelData data, CDevice& device)
 {
+	m_isHeadset = data.isHeadset;
 	m_modelPath = data.path;
 
 	//Load mesh from file
@@ -216,9 +219,16 @@ bool CModel::Initialize(ModelData data, CDevice& device)
 				textureNames[1].erase(replace);
 				textureNames[1] += "n.png";
 			}
+
+			int replace2 = textureNames[1].find("a.jpg");
+
+			if (replace2 >= 0)
+			{
+				textureNames[1].erase(replace);
+				textureNames[1] += "n.jpg";
+			}
 		}
 
-		//Create Mesh
 		m_meshes[i].Initialize(textureNames);
 
 #ifdef DIRECT_X
@@ -234,35 +244,30 @@ bool CModel::Initialize(ModelData data, CDevice& device)
 	return true;
 }
 
-void CModel::Render(CDeviceContext& deviceContext, CShaderProgram& shaderProgram, CCamera& camera, CCamera& otherCamera)
+void CModel::Render(CDeviceContext& deviceContext, CLightingPass& pass, CCamera& camera, bool isVR)
 {
-#ifdef DIRECT_X
-	deviceContext.UpdateViewMatrix(shaderProgram.m_viewCB, camera);
-	deviceContext.UpdateProjectionMatrix(shaderProgram.m_projectionCB, camera);
+	if (m_isHeadset && isVR) {
+		return;
+	}
+	deviceContext.UpdateViewMatrix(pass.m_viewCB, camera);
+	deviceContext.UpdateProjectionMatrix(pass.m_projectionCB, camera);
 
 	for (int i = 0; i < m_meshes.size(); i++)
 	{
-		deviceContext.SetMesh(m_meshes[i]);
+		deviceContext.SetMesh(m_meshes[i], pass);
 
 		for (int j = 0; j < m_transforms.size(); j++)
 		{
-			deviceContext.UpdateModelMatrix(shaderProgram.m_modelCB, *this, j);
+			deviceContext.UpdateModelMatrix(pass.m_modelCB, *this, j);
 		}
 
 		deviceContext.Draw(m_meshes[i].m_numIndices);
-	}
-#endif
-#ifdef OPEN_GL
-	for (int i = 0; i < m_meshes.size(); i++)
-	{
-		for (int j = 0; j < m_transforms.size(); j++)
-		{
-			shaderProgram.UpdateModel(m_transforms[j]);
-		}
 
-		m_meshes[i].Render(shaderProgram.m_id);
-	}
+#ifdef OPEN_GL
+		m_meshes[i].m_material.EndRender();
+		glBindVertexArray(0);
 #endif
+	}
 }
 
 void InvertString(std::string& str)

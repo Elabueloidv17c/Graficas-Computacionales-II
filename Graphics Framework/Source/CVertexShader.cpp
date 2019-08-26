@@ -41,24 +41,7 @@ bool CVertexShader::Initialize(const ShaderData& data)
 	}
 
 #ifdef OPEN_GL
-
-	// Create a shader object.
-	m_id = glCreateShader(data.typeFlag);
-
-	// Copy the shader source code strings into the shader objects.
-	glShaderSource(m_id, 1, &m_code, NULL);
-
-	// Compile the shaders.
-	glCompileShader(m_id);
-
-	// Check to see if the shader compiled successfully.
-	int status = 0;
-	glGetShaderiv(m_id, GL_COMPILE_STATUS, &status);
-
-	if (status != 1)
-	{
-		return false;
-	}
+	m_type = data.typeFlag;
 #endif
 
 #ifdef DIRECT_X
@@ -166,7 +149,7 @@ bool CVertexShader::LoadSource(const ShaderData& data)
 }
 
 #ifdef DIRECT_X
-HRESULT CVertexShader::CreateLayout()
+long CVertexShader::CreateLayout()
 {
 	// Reflect shader info
 	ID3D11ShaderReflection* pVertexShaderReflection = nullptr;
@@ -265,12 +248,5 @@ HRESULT CVertexShader::CreateLayout()
 	}
 
 	return S_OK;
-}
-#endif
-
-#ifdef OPEN_GL
-int CVertexShader::GetId()
-{
-	return m_id;
 }
 #endif

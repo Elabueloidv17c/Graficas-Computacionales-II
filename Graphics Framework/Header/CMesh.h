@@ -8,16 +8,16 @@ class CMesh
 {
 public:
 
-	CVertexBuffer								m_vertexBuffer;
-	CIndexBuffer								m_indexBuffer;
+	CVertexBuffer										m_vertexBuffer;
+	CIndexBuffer										m_indexBuffer;
 
-	std::vector <unsigned int>					m_indices;
+	std::vector <unsigned int>			m_indices;
 	std::vector <Vertex>						m_vertices;
 
-	unsigned int								m_numIndices;
-	unsigned int								m_numVertices;
+	unsigned int										m_numIndices;
+	unsigned int										m_numVertices;
 
-	CMaterial									m_material;
+	CMaterial												m_material;
 
 	void Erase();
 
